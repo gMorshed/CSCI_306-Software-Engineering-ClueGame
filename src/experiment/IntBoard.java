@@ -46,7 +46,7 @@ public class IntBoard {
 	 * instance variable
 	 * 
 	 * */
-	public Set<BoardCell> calcTargets(BoardCell startCell, double pathLength){
+	public void calcTargets(BoardCell startCell, double pathLength){
 		//TODO
 		/*Algorithm:
 	 * 
@@ -55,7 +55,7 @@ public class IntBoard {
 	 * targets will ultimately contain the list of cells initially set to empty list
 	 * add the start location to the visited list (so no cycle through this cell)
 	 * call recursive function*/
-		return null;
+		
 	}
 	
 	/*
