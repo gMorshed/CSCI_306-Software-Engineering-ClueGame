@@ -10,7 +10,7 @@ import java.util.*;
  * A constructor
  * */
 public class IntBoard {
-	private static final int BOARD_X_DIMENSION = 4;
+	private static final int BOARD_X_DIMENSION = 4; // size of the game board
 	private static final int BOARD_Y_DIMENSION = 4;
 	private Map<BoardCell, Set<BoardCell>> adjMtx; // A hashmap to store
 													// adjacency list
@@ -73,8 +73,8 @@ public class IntBoard {
 
 			}
 		}
-		//System.out.println(adjMtx);
-		//System.out.println(getAdjList(getCell(0, 0)).contains(getCell(1, 0)));
+		// System.out.println(adjMtx);
+		// System.out.println(getAdjList(getCell(0, 0)).contains(getCell(1, 0)));
 
 	}
 
@@ -95,33 +95,31 @@ public class IntBoard {
 		 * empty list add the start location to the visited list (so no cycle through
 		 * this cell) call recursive function
 		 */
-		/* Psuedocode
+		/*
+		 * Psuedocode
 		 * 
-		 * for each adjCell in adjacentCell
-		 * -- if already in visited list, skip rest of this
-		 * 		--add adjCell to visited list
-		 * 		--if pathLength == 1, add adjCell to Targets
-		 * 		--else call calcTargets(adjCell, pathLength-1)
-		 * 		
-		 * 		--remove adjCell from visited list
-		 * */
+		 * for each adjCell in adjacentCell -- if already in visited list, skip rest of
+		 * this --add adjCell to visited list --if pathLength == 1, add adjCell to
+		 * Targets --else call calcTargets(adjCell, pathLength-1)
+		 * 
+		 * --remove adjCell from visited list
+		 */
 		visited.add(startCell); // we always add our startCell for visited list first
-		for(BoardCell adjCell: adjMtx.get(startCell)) { 
-			
-			if(!(visited.contains(adjCell))) {
-				
+		for (BoardCell adjCell : adjMtx.get(startCell)) {
+
+			if (!(visited.contains(adjCell))) {
+
 				visited.add(adjCell); // add adjCell to visited list
-				if(pathLength == 1) {
+				if (pathLength == 1) {
 					targets.add(adjCell); // where targets is initialized
-				}else {
-				// else we recursively call calcTargets again passing in adjacent cell
-				calcTargets(adjCell, pathLength-1);
+				} else {
+					// else we recursively call calcTargets again passing in adjacent cell
+					calcTargets(adjCell, pathLength - 1);
 				}
-				
+
 				visited.remove(adjCell);
 			}
-			
-			
+
 		}
 
 	}
@@ -144,10 +142,5 @@ public class IntBoard {
 		return adjMtx.get(cell);
 
 	}
-/*	public static void main(String args[]) {
-		IntBoard test = new IntBoard();
-		test.calcAdjacencies();
-		
-	}*/
 
 }

@@ -20,5 +20,4 @@ public class BoardCell {
 		this.column = column;
 	}
 
-
 }
