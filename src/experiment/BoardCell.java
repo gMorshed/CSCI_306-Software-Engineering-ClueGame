@@ -1,3 +1,6 @@
+/*
+ * Team members: Abhaya Shrestha, Gazi Mahbub Morshed, Kirwinl Vinodaq S Lawrence
+ * */
 package experiment;
 
 /*represents one cell in your grid
@@ -16,9 +19,6 @@ public class BoardCell {
 		this.row = row;
 		this.column = column;
 	}
-	@Override
-	public String toString() {
-		return "( " + this.row + " , " + this.column + " )"; 
-	} // to string method is used for testing
+
 
 }
