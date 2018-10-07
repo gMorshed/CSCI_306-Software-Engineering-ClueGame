@@ -16,6 +16,7 @@ public class IntBoardTests {
 	@Before
 	public void beforeAll() {
 		board = new IntBoard(); // constructor should call calcAdjacencies() so you can test them
+		board.calcAdjacencies();
 	}
 
 	/*
@@ -42,12 +43,13 @@ public class IntBoardTests {
 		 * Since we are are the bottom square we can only be adjacent to two squares
 		 * left and up
 		 */
+		
 		BoardCell cell = board.getCell(3, 3); // testing for bottom right corner
 		Set<BoardCell> testList = board.getAdjList(cell);
 		assertTrue(testList.contains(board.getCell(2, 3))); // left
 		assertTrue(testList.contains(board.getCell(3, 2))); // up
 		assertEquals(2, testList.size());
-
+	
 	}
 
 	@Test
@@ -62,7 +64,7 @@ public class IntBoardTests {
 		assertTrue(testList.contains(board.getCell(0, 3))); // left
 		assertTrue(testList.contains(board.getCell(1, 2))); // up
 		assertEquals(3, testList.size());
-
+	
 	}
 
 	@Test
@@ -70,6 +72,7 @@ public class IntBoardTests {
 		/*
 		 * Since we are at left edge we can be adjacent to 2 squares left, and down
 		 */
+		
 		BoardCell cell = board.getCell(3, 0); // testing for left
 		Set<BoardCell> testList = board.getAdjList(cell);
 		assertTrue(testList.contains(board.getCell(2, 0))); // left
@@ -83,6 +86,7 @@ public class IntBoardTests {
 		/*
 		 * Since we are in the middle column we have choices
 		 */
+		
 		BoardCell cell = board.getCell(1, 1); // testing second column
 		Set<BoardCell> testList = board.getAdjList(cell);
 		assertTrue(testList.contains(board.getCell(2, 1))); // right
@@ -90,7 +94,7 @@ public class IntBoardTests {
 		assertTrue(testList.contains(board.getCell(0, 1))); // left
 		assertTrue(testList.contains(board.getCell(1, 0))); // up
 		assertEquals(4, testList.size());
-
+	
 	}
 
 	@Test
@@ -105,7 +109,7 @@ public class IntBoardTests {
 		assertTrue(testList.contains(board.getCell(1, 2))); // left
 		assertTrue(testList.contains(board.getCell(2, 1))); // up
 		assertEquals(4, testList.size());
-
+		
 	}
 
 	/*
@@ -122,7 +126,7 @@ public class IntBoardTests {
 		assertEquals(2, targets.size());
 		assertTrue(targets.contains(board.getCell(1, 0))); // we can only go to these 2
 		assertTrue(targets.contains(board.getCell(0, 1))); // places
-
+		
 	}
 
 	@Test
@@ -137,6 +141,7 @@ public class IntBoardTests {
 		assertTrue(targets.contains(board.getCell(2, 0)));
 		assertTrue(targets.contains(board.getCell(1, 1)));
 		assertTrue(targets.contains(board.getCell(0, 2)));
+	
 	}
 
 	@Test
@@ -155,6 +160,7 @@ public class IntBoardTests {
 		assertTrue(targets.contains(board.getCell(1, 2)));
 		assertTrue(targets.contains(board.getCell(0, 3)));
 		assertTrue(targets.contains(board.getCell(1, 0)));
+	
 	}
 
 	@Test
@@ -172,6 +178,7 @@ public class IntBoardTests {
 		assertTrue(targets.contains(board.getCell(2, 0)));
 		assertTrue(targets.contains(board.getCell(2, 2)));
 		assertTrue(targets.contains(board.getCell(3, 1)));
+	
 	}
 
 	@Test
@@ -179,10 +186,11 @@ public class IntBoardTests {
 		/*
 		 * If we roll a 5
 		 */
+		
 		BoardCell cell = board.getCell(2, 2); // different point
-		board.calcTargets(cell, 4);
+		board.calcTargets(cell, 5);
 		Set<BoardCell> targets = board.getTargets();
-		assertEquals(7, targets.size());
+		assertEquals(8, targets.size());
 		assertTrue(targets.contains(board.getCell(0, 1)));
 		assertTrue(targets.contains(board.getCell(0, 3)));
 		assertTrue(targets.contains(board.getCell(1, 0)));
@@ -190,6 +198,10 @@ public class IntBoardTests {
 		assertTrue(targets.contains(board.getCell(2, 1)));
 		assertTrue(targets.contains(board.getCell(2, 3)));
 		assertTrue(targets.contains(board.getCell(3, 2)));
+		assertTrue(targets.contains(board.getCell(3, 0)));
+		
+	
+	
 	}
 
 	@Test
@@ -197,6 +209,7 @@ public class IntBoardTests {
 		/*
 		 * If we roll a 6
 		 */
+		
 		BoardCell cell = board.getCell(2, 2); // different point
 		board.calcTargets(cell, 4);
 		Set<BoardCell> targets = board.getTargets();
@@ -208,6 +221,7 @@ public class IntBoardTests {
 		assertTrue(targets.contains(board.getCell(2, 0)));
 		assertTrue(targets.contains(board.getCell(3, 1)));
 		assertTrue(targets.contains(board.getCell(3, 3)));
+	
 	}
 
 }
