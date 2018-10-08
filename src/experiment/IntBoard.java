@@ -73,8 +73,6 @@ public class IntBoard {
 
 			}
 		}
-		// System.out.println(adjMtx);
-		// System.out.println(getAdjList(getCell(0, 0)).contains(getCell(1, 0)));
 
 	}
 
