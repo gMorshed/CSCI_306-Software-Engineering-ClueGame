@@ -15,7 +15,11 @@ public class BoardCell {
 	private int column;
 	
 	private char initial; 
-
+	/**
+	 * comment that i added to check
+	 * @param row
+	 * @param column
+	 */
 	public BoardCell(int row, int column) {
 		super();
 		this.row = row;
