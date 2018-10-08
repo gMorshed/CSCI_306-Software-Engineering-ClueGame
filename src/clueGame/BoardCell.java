@@ -16,7 +16,7 @@ public class BoardCell {
 	
 	private char initial; 
 	/**
-	 * comment that i added to check
+	 * Deleted the comment
 	 * @param row
 	 * @param column
 	 */
