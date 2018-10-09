@@ -1,0 +1,41 @@
+commit 2d4fcb2cc84748fc1b0c13b085c5e6bded929121
+Author: Abhaya Shrestha <ashrestha@mymail.mines.edu>
+Date:   Sat Oct 6 20:11:56 2018 -0600
+
+    Added finishing touches to the code
+
+commit d2fc8289ef9208d4332791e26bdb609d556e71af
+Author: Abhaya Shrestha <ashrestha@mymail.mines.edu>
+Date:   Sat Oct 6 19:56:07 2018 -0600
+
+    Added team name on all the files
+
+commit d099437c9a7d815bda03a47f3b7d5e911569d30d
+Author: Abhaya Shrestha <ashrestha@mymail.mines.edu>
+Date:   Sat Oct 6 19:51:41 2018 -0600
+
+    Finished JUnit testing and IntBoard class
+
+commit e48f4678b42f5444c20edb12434d649fc5cde294
+Author: Abhaya Shrestha <ashrestha@mymail.mines.edu>
+Date:   Sat Oct 6 15:33:49 2018 -0600
+
+    made the gird, adjMtx. IntBoard Should print out map
+
+commit 3134abe411cf3bd902a01f8811818612adcacff1
+Author: Abhaya Shrestha <ashrestha@mymail.mines.edu>
+Date:   Sat Oct 6 14:05:10 2018 -0600
+
+    completed the part 1 for failure tests
+
+commit e947e1e042ec8f192e7a4b2958c060a90760ba74
+Author: Abhaya Shrestha <ashrestha@mines.edu>
+Date:   Fri Oct 5 18:04:59 2018 -0600
+
+    Test part 1 created
+
+commit cb8c532432344b71151ee09f412fc1972f8da867
+Author: kslawren <35381130+kslawren@users.noreply.github.com>
+Date:   Fri Oct 5 15:54:11 2018 -0600
+
+    Initial commit
