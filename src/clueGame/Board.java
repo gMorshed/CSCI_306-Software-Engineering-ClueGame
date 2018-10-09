@@ -16,25 +16,25 @@ public class Board {
 	private Set<BoardCell> targets;
 	private String boardConfigFile;
 	private String roomConfigFile;
-
+	private static Board theInstance = new Board();
 
 	/*Getters for NumRows and NumColumns*/
 	public int getNumRows() {
-		return numRows;
+		return 0;
 	}
 	
 	
 	public int getNumColumns() {
-		return numColumns;
+		return 0;
 	}
 
 	/*Getters for Legend*/
 	public Map<Character, String> getLegend() {
-		return legend;
+		return null;
 	}
 	
 	// variable used for singleton pattern
-	private static Board theInstance = new Board();
+	
 	
 	/*
 	 * Methods
@@ -51,7 +51,7 @@ public class Board {
 	 * returns the BoardCell from the board
 	 * */
 	public BoardCell getCellAt(int row, int column) {
-		return board[row][column];
+		return null;
 	}
 	public void initialize() {
 		//TODO implement this method using CTest_FileInitTest.java
