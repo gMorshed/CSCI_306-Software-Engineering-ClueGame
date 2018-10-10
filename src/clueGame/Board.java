@@ -42,6 +42,14 @@ public class Board {
 	// constructor is private to ensure only one can be created
 	
 	private Board() {
+		numColumns=0;
+		numRows=0;
+		board= new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
+		legend = new HashMap<Character, String>();
+		adjMatrix = new HashMap<BoardCell, Set<BoardCell>>();
+		targets = new HashSet<BoardCell>();
+		boardConfigFile = "";
+		roomConfigFile = "";
 	}
 	// this method returns the only Board
 	
@@ -55,10 +63,6 @@ public class Board {
 		return board[row][column];
 	}
 	public void initialize() {
-		numColumns=0;
-		numRows=0;
-		board= new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
-		legend = new HashMap<Character, String>();
 		// set the file names to use my config files
 		loadRoomConfig();
 		loadBoardConfig();
@@ -79,7 +83,7 @@ public class Board {
 				legend.put(key, line[1]);
 			}
 			in.close();
-			System.out.println("Legend's size: " + legend.size());
+
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 		}
@@ -125,7 +129,7 @@ public class Board {
 				numRows++;
 			}
 			in.close();
-			System.out.println(board);
+
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 		}

@@ -1,0 +1,11 @@
+S, Study, Card
+D, Dining room, Card
+L, Library, Card
+B, Billiard Room, Card
+P, Presidential Suite, Card
+F, Family Room, Card
+H, Home Office, Card
+N, Nursery, Card
+M, Mancave, Card
+X, Closet, Other
+W, Walkway, Other
