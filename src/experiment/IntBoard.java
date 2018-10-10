@@ -12,6 +12,7 @@ import java.util.*;
 public class IntBoard {
 	private static final int BOARD_X_DIMENSION = 4; // size of the game board
 	private static final int BOARD_Y_DIMENSION = 4;
+	private static final int MIN_DIMESNION = 0;
 	private Map<BoardCell, Set<BoardCell>> adjMtx; // A hashmap to store
 													// adjacency list
 	private Set<BoardCell> visited; // visited list
@@ -53,19 +54,20 @@ public class IntBoard {
 	public void calcAdjacencies() {
 		// iterate through the grid and put each BoardCell as key,
 		// and each board cell adjacent values and a set
+		
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid[i].length; j++) {
 				Set<BoardCell> adjacentPoints = new HashSet<BoardCell>();
-				if ((i + 1) < 4) {
+				if ((i + 1) < BOARD_X_DIMENSION) {
 					adjacentPoints.add(getCell(i + 1, j)); // these if statements check if
 				} // these points are in the gird
-				if ((i - 1) >= 0) {
+				if ((i - 1) >= MIN_DIMESNION) {
 					adjacentPoints.add(getCell(i - 1, j));
 				}
-				if ((j + 1) < 4) {
+				if ((j + 1) < BOARD_Y_DIMENSION) {
 					adjacentPoints.add(getCell(i, j + 1));
 				}
-				if ((j - 1) >= 0) {
+				if ((j - 1) >= MIN_DIMESNION) {
 					adjacentPoints.add(getCell(i, j - 1));
 				}
 
