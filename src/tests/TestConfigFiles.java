@@ -1,9 +1,6 @@
 package tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import java.util.Map;
 
@@ -11,17 +8,15 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 
+
 import clueGame.Board;
 import clueGame.BoardCell;
 import clueGame.DoorDirection;
-/**
- * author:
- * Part I. Create your own test class (do not modify mine). 
- * Design your own tests related to loading your configuration files. 
- * You will also create the skeleton classes so that your tests will compile. 
- * You will submit failing tests.
- */
-class testConfigFiles {
+
+
+
+
+class TestConfigFiles {
 	// Constants that we will use to test whether the file was loaded correctly
 	public static final int LEGEND_SIZE = 11;
 	public static final int NUM_ROWS = 23;

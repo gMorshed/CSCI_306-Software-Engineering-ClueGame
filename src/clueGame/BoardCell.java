@@ -74,22 +74,28 @@ public class BoardCell {
 	/*
 	 * Checks if the BoardCell is a walkway*/
 	public boolean isWalkway() {
-		//TODO implement this method using hints from CTest_FileInitTests.java
+		if(initial =='W') {
+			return true;
+		}
 		return false;
 	}
 	
 	/*
 	 * Checks if the BoardCell is a room*/
 	public boolean isRoom() {
-		//TODO implement this method using hints from CTest_FileInitTests.java
+		if( initial != 'W' || initial != 'X' ) {
+			return true;
+		}
 		return false;
 	}
 	
 	/*
 	 * Checks if the BoardCell is a Doorway*/
 	public boolean isDoorway() {
-		//TODO implement this method using hints from CTest_FileInitTests.java
-		return false; 
+		if(this.doorDirection != DoorDirection.NONE) {
+			return true;
+		}
+		return false;
 	}
 
 }
