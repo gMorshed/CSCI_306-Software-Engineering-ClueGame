@@ -18,10 +18,9 @@ public class BoardCell {
 	private int column;
 	
 	private char initial; 
-
+	
 	private DoorDirection doorDirection;
-	/*
-	 * Constructor*/
+
 	public BoardCell(int row, int column) {
 		super();
 		this.row = row;
