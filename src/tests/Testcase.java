@@ -12,6 +12,16 @@ import clueGame.Board;
 import clueGame.BoardCell;
 import clueGame.DoorDirection;
 
+/**
+ *
+ * @author Abhaya Shrestha, Kirwinlvinodaq S Lawrence, Gazi Mahbub Morshed
+ *         testcase class,tests our config files and if all the methods work
+ *         testroom to test if it matches legend, testboarddimensions is for
+ *         testing the board dimension, testdoordirection is making sure each
+ *         doorway has a enumerator type
+ * 
+ */
+
 public class Testcase {
 	// Constants that we will use to test whether the file was loaded correctly
 	public static final int LEGEND_SIZE = 11;
@@ -20,6 +30,9 @@ public class Testcase {
 
 	private static Board board;
 
+	/**
+	 * setUp(): setup test files
+	 */
 	@BeforeClass
 	public static void setUp() {
 		// Board is singleton, get the only instance
@@ -30,6 +43,10 @@ public class Testcase {
 		board.initialize();
 	}
 
+	/**
+	 * testRooms(): Testing whether the initials match for each room from the .txt
+	 * file
+	 */
 	@Test
 	public void testRooms() {
 		// Get the map of initial => room
@@ -52,6 +69,10 @@ public class Testcase {
 
 	}
 
+	/**
+	 * testBoardDimensions(): Testing whether the rows and columns from the files
+	 * match the expected rows and columns
+	 */
 	@Test
 	public void testBoardDimensions() {
 		// Ensure we have the proper number of rows and columns
@@ -59,12 +80,17 @@ public class Testcase {
 		assertEquals(NUM_COLUMNS, board.getNumColumns());
 	}
 
+	/**
+	 * FourDoorDirections(): Testing whether we can obtain at least one enumerated
+	 * type of DoorDirection and also to check if a room is or is not a doorway
+	 */
 	@Test
 	public void FourDoorDirections() {
 		BoardCell room = board.getCellAt(0, 4); // we are testing the door way for the billiard room which has a right
 												// direction.
 		assertTrue(room.isDoorway());
-		assertEquals(DoorDirection.RIGHT, room.getDoorDirection());
+		assertEquals(DoorDirection.RIGHT, room.getDoorDirection()); // at least one of each enumarated type is tested
+																	// for the cooresponding boardcell in our file
 		room = board.getCellAt(14, 1);
 		assertTrue(room.isDoorway());
 		assertEquals(DoorDirection.DOWN, room.getDoorDirection());
@@ -83,6 +109,10 @@ public class Testcase {
 
 	}
 
+	/**
+	 * testNumberOfDoorways(): There are 20 doorways in our file, and we will see if
+	 * the number of doorways we counted is equivalent to what the program counts.
+	 */
 	@Test
 	public void testNumberOfDoorways() {
 		int numDoors = 0;
@@ -92,9 +122,14 @@ public class Testcase {
 				if (cell.isDoorway())
 					numDoors++;
 			}
-		Assert.assertEquals(20, numDoors);
+		Assert.assertEquals(20, numDoors); // testing to see if the number of doorways counted match up with what
+		// should be expected from the file
 	}
 
+	/**
+	 * testRoomInitials(): Testing if the initials that the file read matches with
+	 * what we put the initial as in the file.
+	 */
 	@Test
 	public void testRoomInitials() {
 		// Test first cell in room

@@ -1,14 +1,14 @@
-/*
+/**
  * Team members: Abhaya Shrestha, Gazi Mahbub Morshed, Kirwinl Vinodaq S Lawrence
  * */
 package experiment;
 
 import java.util.*;
 
-/*contains grid and adjacency list
- * includes a data structure to contain the board cells
- * A constructor
- * */
+/**
+ * contains grid and adjacency list includes a data structure to contain the
+ * board cells A constructor
+ */
 public class IntBoard {
 	private static final int BOARD_X_DIMENSION = 4; // size of the game board
 	private static final int BOARD_Y_DIMENSION = 4;
@@ -36,25 +36,26 @@ public class IntBoard {
 		// TODO Auto-generated constructor stub
 	}
 
-	/*
+	/**
 	 * used to get the grid cell
 	 */
 	public BoardCell getCell(int row, int column) {
 		return grid[row][column];
 	}
-	/*
+
+	/**
 	 * Functions
 	 * 
 	 */
 
-	/*
+	/**
 	 * calcAdjacencies(): Calculates the adjacency list for each gird cell and
 	 * stores the result as a Map in an instance variable
 	 */
 	public void calcAdjacencies() {
 		// iterate through the grid and put each BoardCell as key,
 		// and each board cell adjacent values and a set
-		
+
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid[i].length; j++) {
 				Set<BoardCell> adjacentPoints = new HashSet<BoardCell>();
@@ -78,7 +79,7 @@ public class IntBoard {
 
 	}
 
-	/*
+	/**
 	 * 
 	 * calcTargets(): Calculates the targets that are pathLength distance from the
 	 * startCell. The list of targets will be stored as a Set in an instance
@@ -124,7 +125,7 @@ public class IntBoard {
 
 	}
 
-	/*
+	/**
 	 * getTargets(): returns the list of targets as a set. Type is Set<BoardCell>
 	 */
 	public Set<BoardCell> getTargets() {
@@ -132,7 +133,7 @@ public class IntBoard {
 		return targets;
 	}
 
-	/*
+	/**
 	 * getAdjList(): Returns the adjacency list for one cell
 	 * 
 	 * use a HashSet

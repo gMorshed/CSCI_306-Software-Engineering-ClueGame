@@ -6,6 +6,16 @@ import java.io.FileReader;
 import java.util.*;
 import clueGame.BadConfigFormatException;
 
+/**
+ *
+ * @author Abhaya Shrestha, Kirwinlvinodaq S Lawrence, Gazi Mahbub Morshed Board
+ *         class will give us all the methods for the board. We will mostly
+ *         focus on the initialize(); initializes the board based on the files
+ *         .csv and .txt, setConfigFiles(); sets the instance variable to
+ *         particular file name , loadRoomConfig() and loadBoardConfig() methods
+ *         which read the .csv and .txt files respectively.
+ * 
+ */
 public class Board {
 	// public constants
 	public static final int MAX_BOARD_SIZE = 50; // we do not know how big the grid might be
@@ -22,7 +32,7 @@ public class Board {
 	private String roomConfigFile;
 	private static Board theInstance = new Board();
 
-	/* Getters for NumRows and NumColumns */
+	/** Getters for NumRows and NumColumns */
 	public int getNumRows() {
 		return numRows;
 	}
@@ -31,7 +41,7 @@ public class Board {
 		return numColumns;
 	}
 
-	/* Getters for Legend */
+	/** Getters for Legend */
 	public Map<Character, String> getLegend() {
 		return legend;
 	}
@@ -41,7 +51,7 @@ public class Board {
 	/*
 	 * Methods
 	 */
-	// constructor is private to ensure only one can be created
+	/** constructor is private to ensure only one can be created */
 
 	private Board() {
 		numColumns = 0;
@@ -59,8 +69,9 @@ public class Board {
 		return theInstance;
 	}
 
-	/*
-	 * returns the BoardCell from the board
+	/**
+	 * getCellAt returns the BoardCell from the board given row and column
+	 * coordinates
 	 */
 	public BoardCell getCellAt(int row, int column) {
 		return board[row][column];
@@ -80,7 +91,7 @@ public class Board {
 	}
 
 	/**
-	 * loadRoomConfig() use the TXT file We're loading into Legend
+	 * loadRoomConfig() use the TXT file to load into Legend map <char, string>
 	 * 
 	 */
 	public void loadRoomConfig() throws BadConfigFormatException {
@@ -95,18 +106,23 @@ public class Board {
 				String[] line = in.nextLine().split(", "); // splitting the line by every occurance of comma
 				char key = line[0].charAt(0);
 				legend.put(key, line[1]);
-				if ((!line[2].equals("Card")) && (!line[2].equals("Other"))) {
+				if ((!line[2].equals("Card")) && (!line[2].equals("Other"))) { // throw our BadConfigFormatException if
+																				// it is anything else other than 'Card'
+																				// and 'Other'
 					throw new BadConfigFormatException(
 							"Invalid type for the kind of room. It has to be either Card or Other");
 				}
 			}
 			in.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * loadBoardConfig() we are loading into the board which is a 2*2 array of type
+	 * BoardCell
+	 */
 	public void loadBoardConfig() throws BadConfigFormatException {
 		Set<Integer> count = new HashSet<Integer>();
 		numRows = 0;
@@ -116,8 +132,12 @@ public class Board {
 			while (in.hasNextLine()) {
 				String[] line = in.nextLine().split(",");
 				numColumns = line.length;
-				count.add(numColumns); // so we put into a set to see if each row has an equivalent number of columns
+				count.add(numColumns); // we put the number of columns; each time should be expected number of cell
+				// if it is not then the set's length will be greater than 1
 				for (int i = 0; i < numColumns; i++) {
+					// in the two dimensional array, we create a new object, and initialize it's
+					// direction based on
+					// the length of the square's initial.
 					board[numRows][i] = new BoardCell(numRows, i);
 					board[numRows][i].setInitial(line[i].charAt(0));
 					if (line[i].length() > 1) {
@@ -150,7 +170,7 @@ public class Board {
 			System.out.println(e.getMessage());
 		}
 
-		if (count.size() > 1) {
+		if (count.size() > 1) { // check if the size is consistent for each row
 			throw new BadConfigFormatException("For some row, there is a mismatched coloumns");
 		}
 		for (int i = 0; i < numRows; i++) {
@@ -170,8 +190,8 @@ public class Board {
 		// TODO implement this method using CTest_FileInitTest.java
 	}
 
-	/*
-	 * Used for setting the files
+	/**
+	 * setConfigFiles(): Used for setting the files
 	 */
 	public void setConfigFiles(String _boardConfigFile, String _roomConfigFile) {
 		// TODO implement this method using CTest_FileInitTest.java

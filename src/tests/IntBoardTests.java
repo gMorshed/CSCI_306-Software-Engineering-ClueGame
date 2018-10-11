@@ -1,8 +1,7 @@
 package tests;
-/*
+/**
  * Team members: Abhaya Shrestha, Gazi Mahbub Morshed, Kirwinl Vinodaq S Lawrence
  * */
-
 
 import static org.junit.Assert.*;
 
@@ -25,12 +24,12 @@ public class IntBoardTests {
 		board.calcAdjacencies();
 	}
 
-	/*
+	/**
 	 * Methods to test adjacency
 	 */
 	@Test
 	public void testAdjTopLeftCorner() {
-		/*
+		/**
 		 * Since we are at the top corner, we can only be adjacent to two squares right
 		 * and down
 		 */
@@ -45,7 +44,7 @@ public class IntBoardTests {
 
 	@Test
 	public void testAdjBottomRightCorner() {
-		/*
+		/**
 		 * Since we are are the bottom square we can only be adjacent to two squares
 		 * left and up
 		 */
@@ -60,7 +59,7 @@ public class IntBoardTests {
 
 	@Test
 	public void testAdjRightEdge() {
-		/*
+		/**
 		 * Since we are at right edge we can be adjacent to 3 squares right, left, and
 		 * up
 		 */
@@ -75,7 +74,7 @@ public class IntBoardTests {
 
 	@Test
 	public void testAdjLeftEdge() {
-		/*
+		/**
 		 * Since we are at left edge we can be adjacent to 2 squares left, and down
 		 */
 
@@ -89,7 +88,7 @@ public class IntBoardTests {
 
 	@Test
 	public void testSecondColMiddle() {
-		/*
+		/**
 		 * Since we are in the middle column we have choices
 		 */
 
@@ -105,7 +104,7 @@ public class IntBoardTests {
 
 	@Test
 	public void testSecondLastColMiddle() {
-		/*
+		/**
 		 * Second last column in the middle also has choices
 		 */
 		BoardCell cell = board.getCell(2, 2); // testing the middle of grid
@@ -118,12 +117,12 @@ public class IntBoardTests {
 
 	}
 
-	/*
+	/**
 	 * 6 Test calcTargets method
 	 */
 	@Test
 	public void testTargetRoll1() {
-		/*
+		/**
 		 * If we roll a 1
 		 */
 		BoardCell cell = board.getCell(0, 0);
@@ -137,7 +136,7 @@ public class IntBoardTests {
 
 	@Test
 	public void testTargetRoll2() {
-		/*
+		/**
 		 * if we roll a 2
 		 */
 		BoardCell cell = board.getCell(0, 0);
@@ -152,7 +151,7 @@ public class IntBoardTests {
 
 	@Test
 	public void testTargetRoll3() {
-		/*
+		/**
 		 * If we roll a 3
 		 */
 		BoardCell cell = board.getCell(0, 0);
@@ -171,7 +170,7 @@ public class IntBoardTests {
 
 	@Test
 	public void testTargetRoll4() {
-		/*
+		/**
 		 * If we roll a 4
 		 */
 		BoardCell cell = board.getCell(0, 0);
@@ -189,7 +188,7 @@ public class IntBoardTests {
 
 	@Test
 	public void testTargetRoll5() {
-		/*
+		/**
 		 * If we roll a 5 on a different point
 		 */
 
@@ -211,7 +210,7 @@ public class IntBoardTests {
 
 	@Test
 	public void testTargetRoll6() {
-		/*
+		/**
 		 * If we roll a 6 with a different point
 		 */
 
