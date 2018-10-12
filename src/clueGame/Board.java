@@ -5,6 +5,7 @@ import java.io.FileReader;
 
 import java.util.*;
 import clueGame.BadConfigFormatException;
+import clueGame.BoardCell;
 
 /**
  *
@@ -31,6 +32,8 @@ public class Board {
 	private String boardConfigFile;
 	private String roomConfigFile;
 	private static Board theInstance = new Board();
+	private Set<BoardCell> visited; // visited list
+	
 
 	/** Getters for NumRows and NumColumns */
 	public int getNumRows() {
@@ -198,5 +201,22 @@ public class Board {
 		// set the file names to use my config files
 		this.boardConfigFile = _boardConfigFile;
 		this.roomConfigFile = _roomConfigFile;
+	}
+
+	public Set<BoardCell> getAdjList(int i, int j) {
+		Set <BoardCell> dummy = new HashSet<BoardCell>();
+		dummy.add(new BoardCell(i, j));
+		return dummy;
+	}
+
+	public void calcTargets(int i, int j, int k) {
+		// TODO Auto-generated method stub
+		return;
+	}
+
+	public Set<BoardCell> getTargets() {
+		Set <BoardCell> dummy = new HashSet<BoardCell>();
+		dummy.add(new BoardCell(0, 0));
+		return dummy;
 	}
 }
