@@ -2,6 +2,7 @@ package tests;
 
 /**
  * This program tests that adjacencies and targets are calculated correctly
+* Team members: Abhaya Shrestha, Gazi Mahbub Morshed, Kirwinl Vinodaq S Lawrence
  * for our excel spreadsheet
  *
  */
@@ -367,11 +368,12 @@ public class BoardAdjTargetTests {
 		assertTrue(targets.contains(board.getCellAt(20, 5)));
 		assertTrue(targets.contains(board.getCellAt(18, 5)));	
 	}
-	// testing target within a room, which should be zero
+	/**
+	 * testing target within a room, which should be zero
+	 */
 	@Test
 	public void testTargetWithinARoom() {
-		// Locations that are besides a room cell that is not a doorway
-		board.calcTargets(10,0,2);
+		board.calcTargets(10,0,2); // Locations that are besides a room cell that is not a doorway
 		Set<BoardCell> targets= board.getTargets();
 		assertEquals(0, targets.size());
 		board.calcTargets(20,8,5);

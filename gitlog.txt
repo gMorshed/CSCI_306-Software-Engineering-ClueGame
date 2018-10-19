@@ -1,3 +1,4 @@
+// we did most of the work as pair programming, still the commits are pretty even out between all the team members.
 commit b6b149713317f58a38cb58acaeef87fbb15c7dc0
 Author: Gazi Morshed <gmdmahbubmorshed@mymail.mines.edu>
 Date:   Fri Oct 19 16:50:53 2018 -0600

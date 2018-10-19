@@ -1,6 +1,7 @@
 package tests;
 
-/*
+/**
+ * Team members: Abhaya Shrestha, Gazi Mahbub Morshed, Kirwinl Vinodaq S Lawrence
  * This program tests that adjacencies and targets are calculated correctly.
  */
 
