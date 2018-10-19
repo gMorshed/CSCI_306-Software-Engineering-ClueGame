@@ -258,10 +258,12 @@ public class CTest_BoardAdjTargetTests {
 
 	@Test 
 	public void testTargetsIntoRoom()
-	{
+	{	
+		System.out.println(board.getTargets());
 		// One room is exactly 2 away
 		board.calcTargets(17, 16, 2);
 		Set<BoardCell> targets= board.getTargets();
+		System.out.println(board.getTargets());
 		assertEquals(7, targets.size());
 		// directly left (can't go right 2 steps)
 		assertTrue(targets.contains(board.getCellAt(17, 14)));

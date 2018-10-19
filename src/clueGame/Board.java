@@ -349,6 +349,11 @@ public class Board {
 	}
 
 	public void calcTargets(int row, int column, int pathLength) {
+		targets.clear();
+		calcTargetsHelper(row, column, pathLength);
+		
+	}
+	public void calcTargetsHelper(int row, int column, int pathLength) {
 		// TODO Auto-generated method stub
 		visited.add(getCellAt(row, column)); // we always add our startCell for visited list first
 		for (BoardCell adjCell : adjMatrix.get(getCellAt(row, column))) {
@@ -360,16 +365,18 @@ public class Board {
 					targets.add(adjCell); // where targets is initialized
 				} else {
 					// else we recursively call calcTargets again passing in adjacent cell
-					calcTargets(adjCell.getRow(), adjCell.getColumn(), pathLength - 1);
+					if(adjCell.isDoorway()) {
+						targets.add(adjCell);
+					}
+					calcTargetsHelper(adjCell.getRow(), adjCell.getColumn(), pathLength - 1);
 				}
-
 				visited.remove(adjCell);
 			}
 
 		}
-		System.out.println(getCellAt(row, column) + ":" + getAdjList(row, column)); 
+		//System.out.println(getCellAt(row, column) + ":" + getAdjList(row, column));
+		
 	}
-
 	public Set<BoardCell> getTargets() {
 		return targets;
 	}
