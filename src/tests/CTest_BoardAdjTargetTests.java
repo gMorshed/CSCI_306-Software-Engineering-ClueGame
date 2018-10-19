@@ -170,6 +170,11 @@ public class CTest_BoardAdjTargetTests {
 	}
 	
 	
+	private char[] getAdjList(int i, int j) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	// Tests of just walkways, 1 step, includes on edge of board
 	// and beside room
 	// Have already tested adjacency lists on all four edges, will

@@ -104,4 +104,10 @@ public class BoardCell {
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return "( " + row + ", " + column + ", " + initial + " )";
+	}
+
+	
 }
