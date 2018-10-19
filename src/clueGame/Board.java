@@ -110,7 +110,7 @@ public class Board {
 		try {
 			reader = new FileReader(roomConfigFile);
 
-			@SuppressWarnings("resource")
+			
 			Scanner in = new Scanner(reader);
 			while (in.hasNextLine()) {
 				String[] line = in.nextLine().split(", "); // splitting the line by every occurance of comma
@@ -350,6 +350,7 @@ public class Board {
 
 	public void calcTargets(int row, int column, int pathLength) {
 		targets.clear();
+		visited.clear();
 		calcTargetsHelper(row, column, pathLength);
 		
 	}
