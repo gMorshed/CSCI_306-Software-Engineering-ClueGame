@@ -27,7 +27,7 @@ public class BadConfigFormatException extends Exception {
 	 **/
 	public BadConfigFormatException() { // first constructor just prints the default message
 		super("The file is not valid because of imporper file configuration format.");
-		// TODO Auto-generated constructor stub
+	
 	}
 
 	public BadConfigFormatException(String message) { // second constructor will print the specific message.

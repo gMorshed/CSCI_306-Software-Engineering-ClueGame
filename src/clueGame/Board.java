@@ -26,17 +26,18 @@ public class Board {
 	public static final int MIN_BOARD_SIZE = 0; // we do not know what is the minimum a grid can go
 	/*
 	 * Instance variables
+	 *
 	 */
-	private int numRows;
-	private int numColumns;
-	private BoardCell[][] board;
-	private Map<Character, String> legend;
-	private Map<BoardCell, Set<BoardCell>> adjMatrix;
-	private Set<BoardCell> targets;
-	private String boardConfigFile;
-	private String roomConfigFile;
-	private static Board theInstance = new Board();
-	private Set<BoardCell> visited; // visited list
+	private int numRows; // number of rows we have for our board
+	private int numColumns; // number of columns we have for our board
+	private BoardCell[][] board; // board representation in a grid
+	private Map<Character, String> legend; // keeps track of what each room is
+	private Map<BoardCell, Set<BoardCell>> adjMatrix; // keeps track of all adjacent squares for each boardcell
+	private Set<BoardCell> targets; // used after calculating targets
+	private String boardConfigFile; // the file name for the csv file which represents the baord
+	private String roomConfigFile; // the file name for the txt file which stores what the initial is for each room
+	private static Board theInstance = new Board(); // since there is only one Board we make it static
+	private Set<BoardCell> visited; // the visited list that gets changed every time a square is visited
 
 
 	/** Getters for NumRows and NumColumns */
@@ -60,7 +61,7 @@ public class Board {
 	 */
 	/** constructor is private to ensure only one can be created */
 
-	private Board() {
+	private Board() { // to avoid null pointer exceptions, we allocated space for the board here
 		numColumns = 0;
 		numRows = 0;
 		board = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
@@ -89,20 +90,21 @@ public class Board {
 		// set the file names to use my config files
 
 		try {
-			loadRoomConfig();
+			loadRoomConfig(); // all we are doing here is initializing files
 			loadBoardConfig();
-			calcAdjacencies();
+			calcAdjacencies();// then calculating our adjacencies for our matrix
 		} catch (Exception e) {
 			e.getMessage();
 		}
 
 
 
-		// TODO implement this method using CTest_FileInitTest.java
 	}
 
 	/**
 	 * loadRoomConfig() use the TXT file to load into Legend map <char, string>
+	 * Where character represents the initial for room type (Ex: 'X' for closet)
+	 * String represents the room type (Library, closet etc.)
 	 * 
 	 */
 	public void loadRoomConfig() throws BadConfigFormatException {
