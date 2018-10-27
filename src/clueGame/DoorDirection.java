@@ -6,5 +6,13 @@ package clueGame;
  */
 public enum DoorDirection {
 
-	UP, DOWN, LEFT, RIGHT, NONE
+	UP('U'), DOWN('D'), LEFT('L'), RIGHT('R'), NONE('N');
+	private final char value;
+	DoorDirection(char value){
+		this.value = value;
+	}
+	public char getValue() {
+		return this.value;
+	}
+	
 }

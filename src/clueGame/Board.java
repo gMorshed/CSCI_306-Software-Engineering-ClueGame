@@ -153,23 +153,21 @@ public class Board {
 					// the length of the square's initial.
 					board[numRows][i] = new BoardCell(numRows, i);
 					board[numRows][i].setInitial(line[i].charAt(0));
-					if (line[i].length() > 1) {
-						switch (line[i].charAt(1)) {
-						case 'R':
-							board[numRows][i].setDoorDirection(DoorDirection.RIGHT);
-							break;
-						case 'L':
+					if (line[i].length() > 1) { // setting the direction based on the hardcoded directions on enum
+						if (line[i].charAt(1) == (DoorDirection.RIGHT).getValue()) // that is being read from the file
+						{	board[numRows][i].setDoorDirection(DoorDirection.RIGHT);
+						}
+						else if(line[i].charAt(1) == (DoorDirection.LEFT).getValue()) {
 							board[numRows][i].setDoorDirection(DoorDirection.LEFT);
-							break;
-						case 'D':
+						}
+						else if(line[i].charAt(1) == (DoorDirection.DOWN).getValue()) {
 							board[numRows][i].setDoorDirection(DoorDirection.DOWN);
-							break;
-						case 'U':
+						}
+						else if(line[i].charAt(1) == (DoorDirection.UP).getValue()) {
 							board[numRows][i].setDoorDirection(DoorDirection.UP);
-							break;
-						default:
+						}
+						else {
 							board[numRows][i].setDoorDirection(DoorDirection.NONE);
-							break;
 						}
 					} else {
 						board[numRows][i].setDoorDirection(DoorDirection.NONE);
