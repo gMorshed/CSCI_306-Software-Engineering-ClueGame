@@ -53,7 +53,13 @@ public class Board {
 	public Map<Character, String> getLegend() {
 		return legend;
 	}
+	
+	/** Returns a set of adjacency list for all the points*/
 
+	public Set<BoardCell> getAdjList(int row, int column) {
+		return adjMatrix.get(getCellAt(row, column));
+
+	}
 	// variable used for singleton pattern
 
 	/*
@@ -86,6 +92,20 @@ public class Board {
 		return board[row][column];
 	}
 
+	public Set<BoardCell> getTargets() {
+		return targets;
+	}
+	
+	/**
+	 * setConfigFiles(): Used for setting the files
+	 */
+	public void setConfigFiles(String _boardConfigFile, String _roomConfigFile) {
+		// TODO implement this method using CTest_FileInitTest.java
+		// set the file names to use my config files
+		this.boardConfigFile = _boardConfigFile;
+		this.roomConfigFile = _roomConfigFile;
+	}
+	
 	public void initialize() {
 		// set the file names to use my config files
 
@@ -191,15 +211,6 @@ public class Board {
 				}
 			}
 		}
-	}
-	/**
-	 * setConfigFiles(): Used for setting the files
-	 */
-	public void setConfigFiles(String _boardConfigFile, String _roomConfigFile) {
-		// TODO implement this method using CTest_FileInitTest.java
-		// set the file names to use my config files
-		this.boardConfigFile = _boardConfigFile;
-		this.roomConfigFile = _roomConfigFile;
 	}
 
 	/** initialize the adjMatrix */
@@ -343,12 +354,6 @@ public class Board {
 		}
 	}
 
-
-	public Set<BoardCell> getAdjList(int row, int column) {
-		return adjMatrix.get(getCellAt(row, column));
-
-	}
-
 	public void calcTargets(int row, int column, int pathLength) {
 		targets.clear();
 		visited.clear();
@@ -376,11 +381,7 @@ public class Board {
 			}
 
 		}
-		//System.out.println(getCellAt(row, column) + ":" + getAdjList(row, column));
 		
-	}
-	public Set<BoardCell> getTargets() {
-		return targets;
 	}
 
 }
