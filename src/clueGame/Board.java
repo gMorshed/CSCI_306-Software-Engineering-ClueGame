@@ -94,7 +94,7 @@ public class Board {
 			loadBoardConfig();
 			calcAdjacencies();// then calculating our adjacencies for our matrix
 		} catch (Exception e) {
-			e.getMessage();
+			System.out.println(e.getLocalizedMessage());
 		}
 
 
@@ -128,7 +128,7 @@ public class Board {
 			}
 			in.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage() + "Error in roomconfigfile");
 		}
 	}
 
