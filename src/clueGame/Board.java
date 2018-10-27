@@ -360,7 +360,7 @@ public class Board {
 		calcTargetsHelper(row, column, pathLength);
 		
 	}
-	public void calcTargetsHelper(int row, int column, int pathLength) {
+	private void calcTargetsHelper(int row, int column, int pathLength) {
 		// TODO Auto-generated method stub
 		visited.add(getCellAt(row, column)); // we always add our startCell for visited list first
 		for (BoardCell adjCell : adjMatrix.get(getCellAt(row, column))) {
