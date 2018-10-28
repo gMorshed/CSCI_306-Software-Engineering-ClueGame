@@ -78,30 +78,21 @@ public class BoardCell {
 	 * Checks if the BoardCell is a walkway
 	 */
 	public boolean isWalkway() {
-		if (initial == 'W') {
-			return true;
-		}
-		return false;
+		return (initial == 'W');
 	}
 
 	/**
 	 * Checks if the BoardCell is a room
 	 */
 	public boolean isRoom() {
-		if (initial != 'W' || initial != 'X') {
-			return true;
-		}
-		return false;
+		return (initial != 'W' || initial != 'X');
 	}
 
 	/**
 	 * Checks if the BoardCell is a Doorway
 	 */
 	public boolean isDoorway() {
-		if (this.doorDirection != DoorDirection.NONE) {
-			return true;
-		}
-		return false;
+		return(this.doorDirection != DoorDirection.NONE);
 	}
 
 	@Override
