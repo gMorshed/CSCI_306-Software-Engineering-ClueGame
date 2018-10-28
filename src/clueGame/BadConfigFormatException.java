@@ -26,7 +26,7 @@ public class BadConfigFormatException extends Exception {
 	 * Extra credit is done in this file
 	 **/
 	public BadConfigFormatException() { // first constructor just prints the default message
-		super("The file is not valid because of imporper file configuration format.");
+		super("The file is not valid because of improper file configuration format.");
 	
 	}
 

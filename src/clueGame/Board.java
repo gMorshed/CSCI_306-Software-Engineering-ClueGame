@@ -30,7 +30,7 @@ public class Board {
 	 */
 	private int numRows; // number of rows we have for our board
 	private int numColumns; // number of columns we have for our board
-	private BoardCell[][] board; // board representation in a grid
+	private BoardCell[][] grid; // board representation in a grid
 	private Map<Character, String> legend; // keeps track of what each room is
 	private Map<BoardCell, Set<BoardCell>> adjMatrix; // keeps track of all adjacent squares for each boardcell
 	private Set<BoardCell> targets; // used after calculating targets
@@ -70,7 +70,7 @@ public class Board {
 	private Board() { // to avoid null pointer exceptions, we allocated space for the board here
 		numColumns = 0;
 		numRows = 0;
-		board = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
+		grid = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
 		legend = new HashMap<Character, String>();
 		adjMatrix = new HashMap<BoardCell, Set<BoardCell>>();
 		targets = new HashSet<BoardCell>();
@@ -89,7 +89,7 @@ public class Board {
 	 * coordinates
 	 */
 	public BoardCell getCellAt(int row, int column) {
-		return board[row][column];
+		return grid[row][column];
 	}
 
 	public Set<BoardCell> getTargets() {
@@ -171,26 +171,26 @@ public class Board {
 					// in the two dimensional array, we create a new object, and initialize it's
 					// direction based on
 					// the length of the square's initial.
-					board[numRows][i] = new BoardCell(numRows, i);
-					board[numRows][i].setInitial(line[i].charAt(0));
+					grid[numRows][i] = new BoardCell(numRows, i);
+					grid[numRows][i].setInitial(line[i].charAt(0));
 					if (line[i].length() > 1) { // setting the direction based on the hardcoded directions on enum
 						if (line[i].charAt(1) == (DoorDirection.RIGHT).getValue()) // that is being read from the file
-						{	board[numRows][i].setDoorDirection(DoorDirection.RIGHT);
+						{	grid[numRows][i].setDoorDirection(DoorDirection.RIGHT);
 						}
 						else if(line[i].charAt(1) == (DoorDirection.LEFT).getValue()) {
-							board[numRows][i].setDoorDirection(DoorDirection.LEFT);
+							grid[numRows][i].setDoorDirection(DoorDirection.LEFT);
 						}
 						else if(line[i].charAt(1) == (DoorDirection.DOWN).getValue()) {
-							board[numRows][i].setDoorDirection(DoorDirection.DOWN);
+							grid[numRows][i].setDoorDirection(DoorDirection.DOWN);
 						}
 						else if(line[i].charAt(1) == (DoorDirection.UP).getValue()) {
-							board[numRows][i].setDoorDirection(DoorDirection.UP);
+							grid[numRows][i].setDoorDirection(DoorDirection.UP);
 						}
 						else {
-							board[numRows][i].setDoorDirection(DoorDirection.NONE);
+							grid[numRows][i].setDoorDirection(DoorDirection.NONE);
 						}
 					} else {
-						board[numRows][i].setDoorDirection(DoorDirection.NONE);
+						grid[numRows][i].setDoorDirection(DoorDirection.NONE);
 					}
 				}
 				numRows++;
@@ -206,7 +206,7 @@ public class Board {
 		}
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numColumns; j++) {
-				if (!legend.containsKey(board[i][j].getInitial())) {
+				if (!legend.containsKey(grid[i][j].getInitial())) {
 					throw new BadConfigFormatException("There is a room in the board that is not in legend list");
 				}
 			}
@@ -221,18 +221,18 @@ public class Board {
 			for (int j = 0; j < numColumns; j++) {
 				Set<BoardCell> adjacencies = new HashSet<BoardCell>(); // temporary set to add things in
 				
-				if(board[i][j].isWalkway()) { // if our coordinate is a walkway
+				if(grid[i][j].isWalkway()) { // if our coordinate is a walkway
 					// adding 1 to the x coordinate, looking DOWN for adjacency
 					if ((i + 1) < numRows) { // if the adjacency is within board length
 
-						if ((board[i + 1][j].isWalkway())) { // if it is a walkway we add
-							adjacencies.add(board[i + 1][j]);
+						if ((grid[i + 1][j].isWalkway())) { // if it is a walkway we add
+							adjacencies.add(grid[i + 1][j]);
 						}
 
-						if ((board[i + 1][j].isDoorway())) { // if it is a room cell but a doorway, then we can add
-							if ((board[i + 1][j]).getDoorDirection() == DoorDirection.UP) {// in the appropriate
+						if ((grid[i + 1][j].isDoorway())) { // if it is a room cell but a doorway, then we can add
+							if ((grid[i + 1][j]).getDoorDirection() == DoorDirection.UP) {// in the appropriate
 								// direction
-								adjacencies.add(board[i + 1][j]);
+								adjacencies.add(grid[i + 1][j]);
 							}
 						}
 
@@ -241,13 +241,13 @@ public class Board {
 					// adding one to the y coordinate, looking RIGHT for adjacency
 					if ((j + 1) < numColumns) {
 
-						if ((board[i][j + 1].isWalkway())) {
-							adjacencies.add(board[i][j + 1]);
+						if ((grid[i][j + 1].isWalkway())) {
+							adjacencies.add(grid[i][j + 1]);
 						}
 
-						if ((board[i][j + 1].isDoorway())) {
-							if ((board[i][j + 1]).getDoorDirection() == DoorDirection.LEFT) {
-								adjacencies.add(board[i][j + 1]);
+						if ((grid[i][j + 1].isDoorway())) {
+							if ((grid[i][j + 1]).getDoorDirection() == DoorDirection.LEFT) {
+								adjacencies.add(grid[i][j + 1]);
 							}
 						}
 
@@ -257,13 +257,13 @@ public class Board {
 
 					if ((i - 1) >= MIN_BOARD_SIZE) {
 
-						if ((board[i - 1][j].isWalkway())) {
-							adjacencies.add(board[i - 1][j]);
+						if ((grid[i - 1][j].isWalkway())) {
+							adjacencies.add(grid[i - 1][j]);
 						}
 
-						if ((board[i - 1][j].isDoorway())) {
-							if ((board[i - 1][j]).getDoorDirection() == DoorDirection.DOWN) {
-								adjacencies.add(board[i - 1][j]);
+						if ((grid[i - 1][j].isDoorway())) {
+							if ((grid[i - 1][j]).getDoorDirection() == DoorDirection.DOWN) {
+								adjacencies.add(grid[i - 1][j]);
 							}
 						}
 
@@ -272,67 +272,67 @@ public class Board {
 
 					if ((j - 1) >= MIN_BOARD_SIZE) {
 
-						if ((board[i][j - 1].isWalkway())) {
-							adjacencies.add(board[i][j - 1]);
+						if ((grid[i][j - 1].isWalkway())) {
+							adjacencies.add(grid[i][j - 1]);
 						}
 
-						if ((board[i][j - 1].isDoorway())) {
-							if ((board[i][j - 1]).getDoorDirection() == DoorDirection.RIGHT) {
-								adjacencies.add(board[i][j - 1]);
+						if ((grid[i][j - 1].isDoorway())) {
+							if ((grid[i][j - 1]).getDoorDirection() == DoorDirection.RIGHT) {
+								adjacencies.add(grid[i][j - 1]);
 							}
 						}
 
 					} 
 
-					adjMatrix.put(board[i][j], adjacencies);// put all the adjacencies into the adjMatrix
+					adjMatrix.put(grid[i][j], adjacencies);// put all the adjacencies into the adjMatrix
 				}
 
-				if(board[i][j].isDoorway()) { // if our coordinate is a doorway then we can only look for adjacencies in door direction
-					switch(board[i][j].getDoorDirection()) {
+				if(grid[i][j].isDoorway()) { // if our coordinate is a doorway then we can only look for adjacencies in door direction
+					switch(grid[i][j].getDoorDirection()) {
 					case RIGHT:
 						if((j + 1) < numColumns) {
-							if(board[i][j + 1].isWalkway()) {
-								adjacencies.add(board[i][j + 1]);
+							if(grid[i][j + 1].isWalkway()) {
+								adjacencies.add(grid[i][j + 1]);
 							}
-							if(board[i][j + 1].isDoorway()) {
-								if(board[i][j + 1].getDoorDirection() == DoorDirection.LEFT) {
-									adjacencies.add(board[i][j + 1]);
+							if(grid[i][j + 1].isDoorway()) {
+								if(grid[i][j + 1].getDoorDirection() == DoorDirection.LEFT) {
+									adjacencies.add(grid[i][j + 1]);
 								}
 							}
 						}
 						break;
 					case LEFT:
 						if((j - 1) >= MIN_BOARD_SIZE) {
-							if(board[i][j - 1].isWalkway()) {
-								adjacencies.add(board[i][j - 1]);
+							if(grid[i][j - 1].isWalkway()) {
+								adjacencies.add(grid[i][j - 1]);
 							}
-							if(board[i][j - 1].isDoorway()) {
-								if(board[i][j - 1].getDoorDirection() == DoorDirection.RIGHT) {
-									adjacencies.add(board[i][j - 1]);
+							if(grid[i][j - 1].isDoorway()) {
+								if(grid[i][j - 1].getDoorDirection() == DoorDirection.RIGHT) {
+									adjacencies.add(grid[i][j - 1]);
 								}
 							}
 						}
 						break;
 					case DOWN:
 						if((i + 1) < numRows) {
-							if(board[i + 1][j].isWalkway()) {
-								adjacencies.add(board[i + 1][j]);
+							if(grid[i + 1][j].isWalkway()) {
+								adjacencies.add(grid[i + 1][j]);
 							}
-							if(board[i + 1][j].isDoorway()) {
-								if(board[i + 1][j].getDoorDirection() == DoorDirection.UP) {
-									adjacencies.add(board[i + 1][j]);
+							if(grid[i + 1][j].isDoorway()) {
+								if(grid[i + 1][j].getDoorDirection() == DoorDirection.UP) {
+									adjacencies.add(grid[i + 1][j]);
 								}
 							}
 						}
 						break;
 					case UP:
 						if((i - 1) >= MIN_BOARD_SIZE) {
-							if(board[i - 1][j].isWalkway()) {
-								adjacencies.add(board[i - 1][j]);
+							if(grid[i - 1][j].isWalkway()) {
+								adjacencies.add(grid[i - 1][j]);
 							}
-							if(board[i - 1][j].isDoorway()) {
-								if(board[i - 1][j].getDoorDirection() == DoorDirection.DOWN) {
-									adjacencies.add(board[i - 1][j]);
+							if(grid[i - 1][j].isDoorway()) {
+								if(grid[i - 1][j].getDoorDirection() == DoorDirection.DOWN) {
+									adjacencies.add(grid[i - 1][j]);
 								}
 							}
 						}
@@ -341,11 +341,11 @@ public class Board {
 						// do nothing
 						break;
 					}
-					adjMatrix.put(board[i][j], adjacencies);					 
+					adjMatrix.put(grid[i][j], adjacencies);					 
 				}
 
 				else { // if it is neither a walkway or a doorway then we don't need to do anything else
-					adjMatrix.put(board[i][j], adjacencies);
+					adjMatrix.put(grid[i][j], adjacencies);
 				}
 
 
