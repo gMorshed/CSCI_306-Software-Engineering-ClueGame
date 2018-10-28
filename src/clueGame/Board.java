@@ -175,12 +175,14 @@ public class Board {
 					// the length of the square's initial.
 					grid[numRows][i] = new BoardCell(numRows, i);
 					grid[numRows][i].setInitial(line[i].charAt(0));
-					if (line[i].length() > 1) {
+					if (line[i].length() > 1) { // check to see if the character represents any of the 4 directions
 						setDirectionGrid(grid[numRows][i], line[i].charAt(1), DoorDirection.RIGHT);
 						setDirectionGrid(grid[numRows][i], line[i].charAt(1), DoorDirection.LEFT);
 						setDirectionGrid(grid[numRows][i], line[i].charAt(1), DoorDirection.DOWN);
 						setDirectionGrid(grid[numRows][i], line[i].charAt(1), DoorDirection.UP);
-						setDirectionGrid(grid[numRows][i], line[i].charAt(1), DoorDirection.NONE);
+						setDirectionGrid(grid[numRows][i], line[i].charAt(1), DoorDirection.NONE); // else nothing if
+						// it is none of the 4 direction, example is a boardCell with 2 characters
+						// ending with 'N'
 					} else {
 						grid[numRows][i].setDoorDirection(DoorDirection.NONE);
 					}
@@ -206,8 +208,10 @@ public class Board {
 	}
 
 	/** Helper functions for calcAdjacencies() Method */
-	private void calcAdjHelper(BoardCell cell, Set<BoardCell> adjList, DoorDirection direction) {
-		if (cell.isWalkway()) { // if our cell that we are testing for adjacencie is a walkway we just add
+	private void calcAdjHelper(BoardCell cell, Set<BoardCell> adjList, DoorDirection direction) { // checks if an
+																									// adjacent board
+																									// cell is valid
+		if (cell.isWalkway()) { // if our cell that we are testing for adjacencies is a walkway we just add
 			adjList.add(cell);
 		}
 		if ((cell.isDoorway()) && (cell.getDoorDirection() == direction)) {
@@ -243,8 +247,8 @@ public class Board {
 	private void checkDirectionsDoorway(int i, int j, Set<BoardCell> adjList) {
 		switch (grid[i][j].getDoorDirection()) {
 		case RIGHT: // we can only look one direction if we are a doorway for adjacencies.
-			if ((j + 1) < numColumns) {
-				calcAdjHelper(grid[i][j + 1], adjList, DoorDirection.LEFT);
+			if ((j + 1) < numColumns) { // if we can only look right we add 1 to the y direction and see
+				calcAdjHelper(grid[i][j + 1], adjList, DoorDirection.LEFT); // if we have a valid boardcell
 			}
 			break;
 		case LEFT:
@@ -268,7 +272,8 @@ public class Board {
 		}
 	}
 
-	/** initialize the adjMatrix */
+	/** initialize the adjMatrix 
+	 * So that we know all the adjacencies for each cell in the grid*/
 	public void calcAdjacencies() {
 
 		for (int i = 0; i < numRows; i++) {
@@ -295,10 +300,14 @@ public class Board {
 			}
 		}
 	}
-
+	/**
+	 * This method will calculate all the targets within a pathLength for the game*/
 	public void calcTargets(int row, int column, int pathLength) {
-		targets.clear();
-		visited.clear();
+		targets.clear(); // we have to clear our targets and visited every time we call the recursive
+							// method
+		visited.clear(); // this is because it will remember what the targets and visited list was which
+							// will give
+		// incorrect target boardcells.
 		calcTargetsHelper(row, column, pathLength);
 
 	}

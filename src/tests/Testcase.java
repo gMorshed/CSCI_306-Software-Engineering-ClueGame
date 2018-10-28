@@ -85,7 +85,7 @@ public class Testcase {
 	 * type of DoorDirection and also to check if a room is or is not a doorway
 	 */
 	@Test
-	public void FourDoorDirections() {
+	public void fourDoorDirections() {
 		BoardCell room = board.getCellAt(0, 4); // we are testing the door way for the billiard room which has a right
 												// direction.
 		assertTrue(room.isDoorway());
