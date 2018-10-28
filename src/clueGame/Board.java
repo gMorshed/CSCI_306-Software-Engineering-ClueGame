@@ -99,10 +99,10 @@ public class Board {
 	/**
 	 * setConfigFiles(): Used for setting the files
 	 */
-	public void setConfigFiles(String _boardConfigFile, String _roomConfigFile) {
+	public void setConfigFiles(String boardConfigFile, String roomConfigFile) {
 		// set the file names to use my config files
-		this.boardConfigFile = _boardConfigFile;
-		this.roomConfigFile = _roomConfigFile;
+		this.boardConfigFile = boardConfigFile;
+		this.roomConfigFile = roomConfigFile;
 	}
 	
 	public void initialize() {
@@ -248,10 +248,8 @@ public class Board {
 							adjacencies.add(grid[i][j + 1]);
 						}
 
-						if ((grid[i][j + 1].isDoorway())) {
-							if ((grid[i][j + 1]).getDoorDirection() == DoorDirection.LEFT) {
+						if ( grid[i][j + 1].isDoorway() && grid[i][j + 1].getDoorDirection() == DoorDirection.LEFT ) {
 								adjacencies.add(grid[i][j + 1]);
-							}
 						}
 
 					}
@@ -279,10 +277,8 @@ public class Board {
 							adjacencies.add(grid[i][j - 1]);
 						}
 
-						if ((grid[i][j - 1].isDoorway())) {
-							if ((grid[i][j - 1]).getDoorDirection() == DoorDirection.RIGHT) {
+						if ( grid[i][j - 1].isDoorway() && grid[i][j - 1].getDoorDirection() == DoorDirection.RIGHT ) {
 								adjacencies.add(grid[i][j - 1]);
-							}
 						}
 
 					} 
