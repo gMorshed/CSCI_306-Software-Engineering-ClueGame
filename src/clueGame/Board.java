@@ -5,17 +5,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
-import clueGame.BadConfigFormatException;
-import clueGame.BoardCell;
 
 /**
  *
- * @author Abhaya Shrestha, Kirwinlvinodaq S Lawrence, Gazi Mahbub Morshed 
+ * @author Abhaya Shrestha, Kirwinlvinodaq S Lawrence, Gazi Mahbub Morshed
  * 
- * 		    Board
- *         class will give us all the methods for the board. We will mostly
- *         focus on the initialize(); initializes the board based on the files
- *         .csv and .txt, setConfigFiles(); sets the instance variable to
+ *         Board class will give us all the methods for the board. We will
+ *         mostly focus on the initialize(); initializes the board based on the
+ *         files .csv and .txt, setConfigFiles(); sets the instance variable to
  *         particular file name , loadRoomConfig() and loadBoardConfig() methods
  *         which read the .csv and .txt files respectively.
  * 
@@ -39,7 +36,6 @@ public class Board {
 	private static Board theInstance = new Board(); // since there is only one Board we make it static
 	private Set<BoardCell> visited; // the visited list that gets changed every time a square is visited
 
-
 	/** Getters for NumRows and NumColumns */
 	public int getNumRows() {
 		return numRows;
@@ -53,8 +49,8 @@ public class Board {
 	public Map<Character, String> getLegend() {
 		return legend;
 	}
-	
-	/** Returns a set of adjacency list for all the points*/
+
+	/** Returns a set of adjacency list for all the points */
 
 	public Set<BoardCell> getAdjList(int row, int column) {
 		return adjMatrix.get(getCellAt(row, column));
@@ -71,10 +67,10 @@ public class Board {
 		numColumns = 0;
 		numRows = 0;
 		grid = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
-		legend = new HashMap<Character, String>();
-		adjMatrix = new HashMap<BoardCell, Set<BoardCell>>();
-		targets = new HashSet<BoardCell>();
-		visited = new HashSet<BoardCell>();
+		legend = new HashMap<>();
+		adjMatrix = new HashMap<>();
+		targets = new HashSet<>();
+		visited = new HashSet<>();
 		boardConfigFile = "";
 		roomConfigFile = "";
 	}
@@ -95,7 +91,7 @@ public class Board {
 	public Set<BoardCell> getTargets() {
 		return targets;
 	}
-	
+
 	/**
 	 * setConfigFiles(): Used for setting the files
 	 */
@@ -104,7 +100,7 @@ public class Board {
 		this.boardConfigFile = boardConfigFile;
 		this.roomConfigFile = roomConfigFile;
 	}
-	
+
 	public void initialize() {
 		// set the file names to use my config files
 
@@ -115,8 +111,6 @@ public class Board {
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
 		}
-
-
 
 	}
 
@@ -132,9 +126,8 @@ public class Board {
 		try {
 			reader = new FileReader(roomConfigFile);
 
-			
 			Scanner in = new Scanner(reader);
-			
+
 			while (in.hasNextLine()) {
 				String[] line = in.nextLine().split(", "); // splitting the line by every occurance of comma
 				char key = line[0].charAt(0);
@@ -150,9 +143,15 @@ public class Board {
 			reader.close();
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage() + "Error in roomconfigfile");
-		} catch (IOException e) { //this is to catch the resource leak
+		} catch (IOException e) { // this is to catch the resource leak
 			System.out.println(e.getMessage());
 		}
+	}
+
+	private void setDirectionGrid(BoardCell cell, char a, DoorDirection direction) { // helper function
+		if (a == (direction.getValue())) { // setting the cell direction respectively to what a char
+			cell.setDoorDirection(direction); // might be (EX: 'U' is UP, 'D' is DOWN etc. Look more in enum)
+		} // else do nothing
 	}
 
 	/**
@@ -160,7 +159,7 @@ public class Board {
 	 * BoardCell
 	 */
 	public void loadBoardConfig() throws BadConfigFormatException {
-		Set<Integer> count = new HashSet<Integer>();
+		Set<Integer> count = new HashSet<>();
 		numRows = 0;
 		try {
 			FileReader reader = new FileReader(boardConfigFile);
@@ -176,22 +175,12 @@ public class Board {
 					// the length of the square's initial.
 					grid[numRows][i] = new BoardCell(numRows, i);
 					grid[numRows][i].setInitial(line[i].charAt(0));
-					if (line[i].length() > 1) { // setting the direction based on the hardcoded directions on enum
-						if (line[i].charAt(1) == (DoorDirection.RIGHT).getValue()) // that is being read from the file
-						{	grid[numRows][i].setDoorDirection(DoorDirection.RIGHT);
-						}
-						else if(line[i].charAt(1) == (DoorDirection.LEFT).getValue()) {
-							grid[numRows][i].setDoorDirection(DoorDirection.LEFT);
-						}
-						else if(line[i].charAt(1) == (DoorDirection.DOWN).getValue()) {
-							grid[numRows][i].setDoorDirection(DoorDirection.DOWN);
-						}
-						else if(line[i].charAt(1) == (DoorDirection.UP).getValue()) {
-							grid[numRows][i].setDoorDirection(DoorDirection.UP);
-						}
-						else {
-							grid[numRows][i].setDoorDirection(DoorDirection.NONE);
-						}
+					if (line[i].length() > 1) {
+						setDirectionGrid(grid[numRows][i], line[i].charAt(1), DoorDirection.RIGHT);
+						setDirectionGrid(grid[numRows][i], line[i].charAt(1), DoorDirection.LEFT);
+						setDirectionGrid(grid[numRows][i], line[i].charAt(1), DoorDirection.DOWN);
+						setDirectionGrid(grid[numRows][i], line[i].charAt(1), DoorDirection.UP);
+						setDirectionGrid(grid[numRows][i], line[i].charAt(1), DoorDirection.NONE);
 					} else {
 						grid[numRows][i].setDoorDirection(DoorDirection.NONE);
 					}
@@ -216,138 +205,92 @@ public class Board {
 		}
 	}
 
+	/** Helper functions for calcAdjacencies() Method */
+	private void calcAdjHelper(BoardCell cell, Set<BoardCell> adjList, DoorDirection direction) {
+		if (cell.isWalkway()) { // if our cell that we are testing for adjacencie is a walkway we just add
+			adjList.add(cell);
+		}
+		if ((cell.isDoorway()) && (cell.getDoorDirection() == direction)) {
+			adjList.add(cell); // else if we are a doorway and we can go in the right direction we add
+		}
+	}
+
+	private void checkAllFourDirectionsWalkway(int i, int j, Set<BoardCell> adjList) {
+		// adding 1 to the x coordinate, looking DOWN for adjacency
+		if ((i + 1) < numRows) { // if the adjacency is within board length
+			calcAdjHelper(grid[i + 1][j], adjList, DoorDirection.UP);
+		}
+
+		// adding one to the y coordinate, looking RIGHT for adjacency
+		if ((j + 1) < numColumns) {
+			calcAdjHelper(grid[i][j + 1], adjList, DoorDirection.LEFT);
+		}
+
+		// subtracting 1 to the x coordinate, looking UP for adjacency
+
+		if ((i - 1) >= MIN_BOARD_SIZE) {
+			calcAdjHelper(grid[i - 1][j], adjList, DoorDirection.DOWN);
+
+		}
+		// subtracting 1 to the y coordinate, looking LEFT for adjacency
+
+		if ((j - 1) >= MIN_BOARD_SIZE) {
+			calcAdjHelper(grid[i][j - 1], adjList, DoorDirection.RIGHT);
+
+		}
+	}
+
+	private void checkDirectionsDoorway(int i, int j, Set<BoardCell> adjList) {
+		switch (grid[i][j].getDoorDirection()) {
+		case RIGHT: // we can only look one direction if we are a doorway for adjacencies.
+			if ((j + 1) < numColumns) {
+				calcAdjHelper(grid[i][j + 1], adjList, DoorDirection.LEFT);
+			}
+			break;
+		case LEFT:
+			if ((j - 1) >= MIN_BOARD_SIZE) {
+				calcAdjHelper(grid[i][j - 1], adjList, DoorDirection.RIGHT);
+			}
+			break;
+		case DOWN:
+			if ((i + 1) < numRows) {
+				calcAdjHelper(grid[i + 1][j], adjList, DoorDirection.UP);
+			}
+			break;
+		case UP:
+			if ((i - 1) >= MIN_BOARD_SIZE) {
+				calcAdjHelper(grid[i - 1][j], adjList, DoorDirection.DOWN);
+			}
+			break;
+		case NONE:
+			// do nothing
+			break;
+		}
+	}
+
 	/** initialize the adjMatrix */
 	public void calcAdjacencies() {
 
 		for (int i = 0; i < numRows; i++) {
 
 			for (int j = 0; j < numColumns; j++) {
-				Set<BoardCell> adjacencies = new HashSet<BoardCell>(); // temporary set to add things in
-				
-				if(grid[i][j].isWalkway()) { // if our coordinate is a walkway
-					// adding 1 to the x coordinate, looking DOWN for adjacency
-					if ((i + 1) < numRows) { // if the adjacency is within board length
+				Set<BoardCell> adjacencies = new HashSet<>(); // temporary set to add things in
 
-						if ((grid[i + 1][j].isWalkway())) { // if it is a walkway we add
-							adjacencies.add(grid[i + 1][j]);
-						}
-
-						if ((grid[i + 1][j].isDoorway())) { // if it is a room cell but a doorway, then we can add
-							if ((grid[i + 1][j]).getDoorDirection() == DoorDirection.UP) {// in the appropriate
-								// direction
-								adjacencies.add(grid[i + 1][j]);
-							}
-						}
-
-					}
-
-					// adding one to the y coordinate, looking RIGHT for adjacency
-					if ((j + 1) < numColumns) {
-
-						if ((grid[i][j + 1].isWalkway())) {
-							adjacencies.add(grid[i][j + 1]);
-						}
-
-						if ( grid[i][j + 1].isDoorway() && grid[i][j + 1].getDoorDirection() == DoorDirection.LEFT ) {
-								adjacencies.add(grid[i][j + 1]);
-						}
-
-					}
-
-					// subtracting 1 to the x coordinate, looking UP for adjacency
-
-					if ((i - 1) >= MIN_BOARD_SIZE) {
-
-						if ((grid[i - 1][j].isWalkway())) {
-							adjacencies.add(grid[i - 1][j]);
-						}
-
-						if ((grid[i - 1][j].isDoorway())) {
-							if ((grid[i - 1][j]).getDoorDirection() == DoorDirection.DOWN) {
-								adjacencies.add(grid[i - 1][j]);
-							}
-						}
-
-					}
-					// subtracting 1 to the y coordinate, looking LEFT for adjacency
-
-					if ((j - 1) >= MIN_BOARD_SIZE) {
-
-						if ((grid[i][j - 1].isWalkway())) {
-							adjacencies.add(grid[i][j - 1]);
-						}
-
-						if ( grid[i][j - 1].isDoorway() && grid[i][j - 1].getDoorDirection() == DoorDirection.RIGHT ) {
-								adjacencies.add(grid[i][j - 1]);
-						}
-
-					} 
-
+				if (grid[i][j].isWalkway()) { // if our coordinate is a walkway
+					checkAllFourDirectionsWalkway(i, j, adjacencies);
 					adjMatrix.put(grid[i][j], adjacencies);// put all the adjacencies into the adjMatrix
 				}
 
-				if(grid[i][j].isDoorway()) { // if our coordinate is a doorway then we can only look for adjacencies in door direction
-					switch(grid[i][j].getDoorDirection()) {
-					case RIGHT:
-						if((j + 1) < numColumns) {
-							if(grid[i][j + 1].isWalkway()) {
-								adjacencies.add(grid[i][j + 1]);
-							}
-							if(grid[i][j + 1].isDoorway()) {
-								if(grid[i][j + 1].getDoorDirection() == DoorDirection.LEFT) {
-									adjacencies.add(grid[i][j + 1]);
-								}
-							}
-						}
-						break;
-					case LEFT:
-						if((j - 1) >= MIN_BOARD_SIZE) {
-							if(grid[i][j - 1].isWalkway()) {
-								adjacencies.add(grid[i][j - 1]);
-							}
-							if(grid[i][j - 1].isDoorway()) {
-								if(grid[i][j - 1].getDoorDirection() == DoorDirection.RIGHT) {
-									adjacencies.add(grid[i][j - 1]);
-								}
-							}
-						}
-						break;
-					case DOWN:
-						if((i + 1) < numRows) {
-							if(grid[i + 1][j].isWalkway()) {
-								adjacencies.add(grid[i + 1][j]);
-							}
-							if(grid[i + 1][j].isDoorway()) {
-								if(grid[i + 1][j].getDoorDirection() == DoorDirection.UP) {
-									adjacencies.add(grid[i + 1][j]);
-								}
-							}
-						}
-						break;
-					case UP:
-						if((i - 1) >= MIN_BOARD_SIZE) {
-							if(grid[i - 1][j].isWalkway()) {
-								adjacencies.add(grid[i - 1][j]);
-							}
-							if(grid[i - 1][j].isDoorway()) {
-								if(grid[i - 1][j].getDoorDirection() == DoorDirection.DOWN) {
-									adjacencies.add(grid[i - 1][j]);
-								}
-							}
-						}
-						break;
-					case NONE:
-						// do nothing
-						break;
-					}
-					adjMatrix.put(grid[i][j], adjacencies);					 
-				}
-
-				else { // if it is neither a walkway or a doorway then we don't need to do anything else
+				if (grid[i][j].isDoorway()) { // if our coordinate is a doorway then we can only look for adjacencies in
+												// door direction
+					checkDirectionsDoorway(i, j, adjacencies);
 					adjMatrix.put(grid[i][j], adjacencies);
 				}
 
-
+				else { // if it is neither a walkway or a doorway then we don't need to do anything
+						// else
+					adjMatrix.put(grid[i][j], adjacencies);
+				}
 
 			}
 		}
@@ -357,8 +300,9 @@ public class Board {
 		targets.clear();
 		visited.clear();
 		calcTargetsHelper(row, column, pathLength);
-		
+
 	}
+
 	private void calcTargetsHelper(int row, int column, int pathLength) {
 		visited.add(getCellAt(row, column)); // we always add our startCell for visited list first
 		for (BoardCell adjCell : adjMatrix.get(getCellAt(row, column))) {
@@ -370,7 +314,7 @@ public class Board {
 					targets.add(adjCell); // where targets is initialized
 				} else {
 					// else we recursively call calcTargets again passing in adjacent cell
-					if(adjCell.isDoorway()) {
+					if (adjCell.isDoorway()) {
 						targets.add(adjCell);
 					}
 					calcTargetsHelper(adjCell.getRow(), adjCell.getColumn(), pathLength - 1);
@@ -379,7 +323,7 @@ public class Board {
 			}
 
 		}
-		
+
 	}
 
 }
