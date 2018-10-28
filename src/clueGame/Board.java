@@ -3,7 +3,7 @@ package clueGame;
 import java.io.FileNotFoundException;
 
 import java.io.FileReader;
-
+import java.io.IOException;
 import java.util.*;
 import clueGame.BadConfigFormatException;
 import clueGame.BoardCell;
@@ -100,7 +100,6 @@ public class Board {
 	 * setConfigFiles(): Used for setting the files
 	 */
 	public void setConfigFiles(String _boardConfigFile, String _roomConfigFile) {
-		// TODO implement this method using CTest_FileInitTest.java
 		// set the file names to use my config files
 		this.boardConfigFile = _boardConfigFile;
 		this.roomConfigFile = _roomConfigFile;
@@ -135,6 +134,7 @@ public class Board {
 
 			
 			Scanner in = new Scanner(reader);
+			
 			while (in.hasNextLine()) {
 				String[] line = in.nextLine().split(", "); // splitting the line by every occurance of comma
 				char key = line[0].charAt(0);
@@ -147,8 +147,11 @@ public class Board {
 				}
 			}
 			in.close();
+			reader.close();
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage() + "Error in roomconfigfile");
+		} catch (IOException e) { //this is to catch the resource leak
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -196,7 +199,7 @@ public class Board {
 				numRows++;
 			}
 			in.close();
-
+			reader.close();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -361,7 +364,6 @@ public class Board {
 		
 	}
 	private void calcTargetsHelper(int row, int column, int pathLength) {
-		// TODO Auto-generated method stub
 		visited.add(getCellAt(row, column)); // we always add our startCell for visited list first
 		for (BoardCell adjCell : adjMatrix.get(getCellAt(row, column))) {
 
