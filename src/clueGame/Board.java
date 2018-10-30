@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.lang.reflect.Field;
 import java.util.*;
 
@@ -363,7 +364,6 @@ public class Board {
 				color= convertColor(tempStrArray[1]);
 				int playerRow = Integer.parseInt(tempStrArray[3]);
 				int playerCol = Integer.parseInt(tempStrArray[4]);
-				System.out.println(tempStrArray[2]);
 				if(tempStrArray[2].equals("Human")) {
 					HumanPlayer dummyPlayer= new HumanPlayer(playerRow, playerCol, color, tempStrArray[0]);
 					playerList.add(dummyPlayer);
@@ -401,8 +401,29 @@ public class Board {
 		this.weaponConfigFile = weaponConfigFile;
 	}
 	public void loadDeckOfCards() {
-		Card dummyCard= new Card();
-		deckOfCards.add(dummyCard);
+		Set<Character> keys = legend.keySet();
+		keys.remove('W');
+		keys.remove('X');
+		for(Character dummyChar : keys) {
+			Card dummyCard= new Card(legend.get(dummyChar), CardType.ROOM);
+			deckOfCards.add(dummyCard);
+		}
+		for(Player dummyPlayer : playerList) {
+			Card dummyCard= new Card(dummyPlayer.getPlayerName(), CardType.PERSON);
+			deckOfCards.add(dummyCard);
+		}
+		try {
+			FileReader reader= new FileReader(weaponConfigFile);
+			Scanner in = new Scanner(reader);
+			while(in.hasNextLine()) {
+				Card dummyCard = new Card(in.nextLine(), CardType.WEAPON);
+				deckOfCards.add(dummyCard);
+			}
+			in.close();
+		} catch (FileNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+		 
 	}
 
 }

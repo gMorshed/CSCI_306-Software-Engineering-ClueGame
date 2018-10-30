@@ -24,8 +24,9 @@ public class gameSetupTests {
 		 * will be required for testing
 		 */
 		board = Board.getInstance();
-		board.setConfigFiles("BoardLayout.csv", "ClueRooms.txt");
+		board.setConfigFiles("Board_Layout.csv", "ClueRooms.txt");
 		board.setPlayerConfigFile("people.txt");
+		board.setWeaponConfigFile("weapon.txt");
 		//board.setWeaponConfigFile("Weapons.txt");
 		board.initialize();
 	}
@@ -58,7 +59,7 @@ public class gameSetupTests {
 	
 	@Test
 	public void testLoadDeckOfCards() {
-		// Ensure the deck contains the correct total number of cards 
+		// Ensure the deck contains the correct total number of cards
 		ArrayList<Card> testDeck = board.getDeckOfCards();
 		assertEquals(21 ,testDeck.size()); // should have 6 people, 6 weapons, and 9 rooms = 21 total
 		
