@@ -38,6 +38,7 @@ public class Board {
 	private String boardConfigFile; // the file name for the csv file which represents the baord
 	private String roomConfigFile; // the file name for the txt file which stores what the initial is for each room
 	private String playerConfigFile; 
+	private String weaponConfigFile;
 	private static Board theInstance = new Board(); // since there is only one Board we make it static
 	private Set<BoardCell> visited; // the visited list that gets changed every time a square is visited
 	private ArrayList <Player> playerList;
@@ -80,6 +81,7 @@ public class Board {
 		boardConfigFile = "";
 		roomConfigFile = "";
 		playerList = new ArrayList<Player>();
+		deckOfCards = new ArrayList<Card>();
 	}
 	// this method returns the only Board
 
@@ -116,6 +118,7 @@ public class Board {
 			loadRoomConfig(); // all we are doing here is initializing files
 			loadBoardConfig();
 			loadPeoplecConfigFile();
+			loadDeckOfCards();
 			calcAdjacencies();// then calculating our adjacencies for our matrix
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
@@ -392,6 +395,14 @@ public class Board {
 	public ArrayList<Card> getDeckOfCards() {
 		// TODO Auto-generated method stub
 		return deckOfCards;
+	}
+	
+	public void setWeaponConfigFile(String weaponConfigFile) {
+		this.weaponConfigFile = weaponConfigFile;
+	}
+	public void loadDeckOfCards() {
+		Card dummyCard= new Card();
+		deckOfCards.add(dummyCard);
 	}
 
 }

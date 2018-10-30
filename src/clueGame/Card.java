@@ -12,10 +12,23 @@ public class Card {
 		return cardType;
 	}
 
-	public Card() {
-		// TODO Auto-generated constructor stub
+	
+	
+	public Card(String cardName, CardType cardType) {
+		super();
+		this.cardName = cardName;
+		this.cardType = cardType;
 	}
 	
+
+
+
+	public Card() {
+		super();
+	}
+
+
+
 	public boolean equals() {
 		return false;}
 
