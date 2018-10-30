@@ -425,5 +425,10 @@ public class Board {
 		}
 		 
 	}
+	
+	public void dealCards(){
+		
+	}
+	
 
 }

@@ -1,9 +1,12 @@
 package tests;
 
 import static org.junit.Assert.*;
+import static org.junit.Assume.assumeTrue;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -17,7 +20,8 @@ import clueGame.CardType;
 public class gameSetupTests {
 
 	private static Board board;
-	
+	public static final int NUM_CARDS_IN_DECK=21;
+	public static final int NUM_OF_PLAYER=6;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		/**
@@ -90,6 +94,23 @@ public class gameSetupTests {
 		
 		//I choose one room, one weapon, and one person, 
 		// and ensure the deck contains each of those (to test loading the names). 
+	}
+	
+	@Test
+	public void testDealingCard() {
+		board.dealCards();
+		ArrayList<Card> testDeck = board.getDeckOfCards();
+		assertEquals(0 ,testDeck.size());  //checking if all the cards have been dealt or not 
+		ArrayList<Player> playerList = board.getPlayerList();
+		Set<Integer> numberOfCard= new HashSet<Integer>();
+		for (Player player : playerList) { // All players should have roughly the same number of cards
+			numberOfCard.add(player.getPlayersCards().size()) ;
+		}
+		assumeTrue(numberOfCard.size()==2); //if the cards are dealt correctly, players should only have two unique numbe rof cards
+		Set<Card> cards= new HashSet<Card>();
+		for (Player player : playerList) { //The same card should not be given to >1 player 
+			cards.addAll(player.getPlayersCards());
+		}
 	}
 	
 	

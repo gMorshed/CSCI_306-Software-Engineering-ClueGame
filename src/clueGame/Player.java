@@ -2,6 +2,8 @@ package clueGame;
 
 import java.awt.Color;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Player {
 
@@ -13,7 +15,12 @@ public class Player {
 	
 	private Color color;
 	private boolean human;
+	private ArrayList <Card> playersCards;
 	
+	public ArrayList<Card> getPlayersCards() {
+		return playersCards;
+	}
+
 	public Player(int row, int column, Color color, String playerName) {
 		this.row= row;
 		this.color=color;
@@ -22,7 +29,9 @@ public class Player {
 		this.human = false;
 	}
 	
-	
+	public void drawCard(Card cards) {
+		playersCards.add(cards);
+	}
 
 	public Card disproveSuggestion(Solution suggestion) { return null;}
 
