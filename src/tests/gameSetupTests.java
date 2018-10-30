@@ -36,6 +36,11 @@ public class gameSetupTests {
 		assertEquals(playerList.get(3).getPlayerName(), "Steve Rogers"); //one human player and the 3rd player
 		assertEquals(playerList.get(5).getPlayerName(), "Thor"); //last player
 		
+		//now check for color
+		assertEquals(playerList.get(0).getColor(), Color.RED); //1st player
+		assertEquals(playerList.get(3).getColor(), Color.ORANGE); //3rd player
+		assertEquals(playerList.get(5).getColor(), Color.MAGENTA); // last payer
+		assertEquals(playerList.get(2).getColor(), Color.BLUE); //4th player
 	}
 	
 	

@@ -1,0 +1,6 @@
+Mr. Stark, Red, Computer, 0, 6
+Pepper Potts, White, Computer, 5, 12
+Natalia Alianovna Romanova, Blue, Computer, 7, 13
+Steve Rogers, Orange, Human, 6, 2
+Bruce Banner, Green, Computer, 16, 0
+Thor, Magenta, Computer, 17, 11
