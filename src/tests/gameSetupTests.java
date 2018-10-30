@@ -41,6 +41,11 @@ public class gameSetupTests {
 		assertEquals(playerList.get(3).getColor(), Color.ORANGE); //3rd player
 		assertEquals(playerList.get(5).getColor(), Color.MAGENTA); // last payer
 		assertEquals(playerList.get(2).getColor(), Color.BLUE); //4th player
+		
+		//now check to see if they are human
+		assertTrue(playerList.get(0).isHuman());
+		assertTrue(playerList.get(3).isHuman());
+		assertTrue(playerList.get(5).isHuman());
 	}
 	
 	
