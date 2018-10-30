@@ -23,7 +23,7 @@ public class gameSetupTests {
 		 */
 		board = Board.getInstance();
 		board.setConfigFiles("BoardLayout.csv", "Legends.txt");
-		board.setPlayerConfigFile("Players.txt");
+		board.setPlayerConfigFile("people.txt");
 		//board.setWeaponConfigFile("Weapons.txt");
 		board.initialize();
 	}
@@ -43,9 +43,9 @@ public class gameSetupTests {
 		assertEquals(playerList.get(2).getColor(), Color.BLUE); //4th player
 		
 		//now check to see if they are human
-		assertTrue(playerList.get(0).isHuman());
-		assertTrue(playerList.get(3).isHuman());
-		assertTrue(playerList.get(5).isHuman());
+		assertFalse(playerList.get(0).isHuman()); //computer
+		assertTrue(playerList.get(3).isHuman()); //human
+		assertFalse(playerList.get(5).isHuman()); //computer
 		//now check some of the row and columns
 		assertEquals(playerList.get(0).getRow(), 0);
 		assertEquals(playerList.get(1).getColumn(), 12);

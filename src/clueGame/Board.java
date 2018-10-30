@@ -1,9 +1,11 @@
 package clueGame;
 
+import java.awt.Color;
 import java.io.FileNotFoundException;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.*;
 
 /**
@@ -343,13 +345,46 @@ public class Board {
 	public void setPlayerConfigFile(String playerConfigFile) {
 		this.playerConfigFile = playerConfigFile;
 	}
-	public void loadPeoplecConfigFile() {
-		Player dummy = new Player();
-		playerList.add(dummy);
+	public void loadPeoplecConfigFile() throws BadConfigFormatException {
+		try {
+			FileReader reader= new FileReader(playerConfigFile);
+			Scanner in = new Scanner(reader);
+			while(in.hasNextLine()) {
+				String tempStrArray[] = in.nextLine().split(", ");
+				if(tempStrArray.length != 5) { //the length of each line is 5
+					throw new BadConfigFormatException("bad format in " + playerConfigFile);
+				}
+				Color color;
+				color= convertColor(tempStrArray[1]);
+				int playerRow = Integer.parseInt(tempStrArray[3]);
+				int playerCol = Integer.parseInt(tempStrArray[4]);
+				System.out.println(tempStrArray[2]);
+				if(tempStrArray[2].equals("Human")) {
+					HumanPlayer dummyPlayer= new HumanPlayer(playerRow, playerCol, color, tempStrArray[0]);
+					playerList.add(dummyPlayer);
+				}
+				else {
+					ComputerPlayer dummyPlayer= new ComputerPlayer(playerRow, playerCol, color, tempStrArray[0]);
+					playerList.add(dummyPlayer);
+				}
+			}
+		} catch (FileNotFoundException e) {
+			
+			e.getMessage();
+		}
 	}
 	public ArrayList<Player> getPlayerList() {
 		return playerList;
 	}
-
+	private Color convertColor(String strColor) {
+		Color color;
+		try {
+			Field field = Class.forName("java.awt.Color").getField(strColor);
+			color =(Color)field.get(null);
+		} catch (Exception e) {
+			color=null;
+		}
+		return color;
+	}
 
 }

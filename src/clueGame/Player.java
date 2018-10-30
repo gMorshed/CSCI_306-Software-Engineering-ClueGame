@@ -14,12 +14,12 @@ public class Player {
 	private Color color;
 	private boolean human;
 	
-	public Player() {
-		row=0;
-		color=null;
-		column=0;
-		playerName="";
-		human = false;
+	public Player(int row, int column, Color color, String playerName) {
+		this.row= row;
+		this.color=color;
+		this.column=column;
+		this.playerName=playerName;
+		this.human = false;
 	}
 	
 	
@@ -41,11 +41,9 @@ public class Player {
 	public Color getColor() {
 		return color;
 	}
-
-
-
+	
 	public boolean isHuman() {
-		return false;
+		return human;
 	}
 
 
