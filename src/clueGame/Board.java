@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.*;
 
+
+
 /**
  *
  * @author Abhaya Shrestha, Kirwinlvinodaq S Lawrence, Gazi Mahbub Morshed
@@ -39,7 +41,7 @@ public class Board {
 	private static Board theInstance = new Board(); // since there is only one Board we make it static
 	private Set<BoardCell> visited; // the visited list that gets changed every time a square is visited
 	private ArrayList <Player> playerList;
-
+	private ArrayList<Card> deckOfCards;
 	/** Getters for NumRows and NumColumns */
 	public int getNumRows() {
 		return numRows;
@@ -385,6 +387,11 @@ public class Board {
 			color=null;
 		}
 		return color;
+	}
+
+	public ArrayList<Card> getDeckOfCards() {
+		// TODO Auto-generated method stub
+		return deckOfCards;
 	}
 
 }

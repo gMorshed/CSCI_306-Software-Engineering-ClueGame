@@ -11,6 +11,8 @@ import org.junit.Test;
 
 import clueGame.Board;
 import clueGame.Player;
+import clueGame.Card;
+import clueGame.CardType;
 
 public class gameSetupTests {
 
@@ -22,7 +24,7 @@ public class gameSetupTests {
 		 * will be required for testing
 		 */
 		board = Board.getInstance();
-		board.setConfigFiles("BoardLayout.csv", "Legends.txt");
+		board.setConfigFiles("BoardLayout.csv", "ClueRooms.txt");
 		board.setPlayerConfigFile("people.txt");
 		//board.setWeaponConfigFile("Weapons.txt");
 		board.initialize();
@@ -52,6 +54,39 @@ public class gameSetupTests {
 		assertEquals(playerList.get(3).getRow(), 6); //human
 		assertEquals(playerList.get(3).getColumn(), 2);
 		assertEquals(playerList.get(4).getRow(), 16);
+	}
+	
+	@Test
+	public void testLoadDeckOfCards() {
+		// Ensure the deck contains the correct total number of cards 
+		ArrayList<Card> testDeck = board.getDeckOfCards();
+		assertEquals(21 ,testDeck.size()); // should have 6 people, 6 weapons, and 9 rooms = 21 total
+		
+		// Ensure the deck contains the correct number of each type of card (room/weapon/person) 
+		int countWeapons = 0;
+		int countPeople = 0;
+		int countRooms = 0;
+		for(int i=0; i<testDeck.size(); i++) {
+			if((testDeck.get(i)).getCardType() == CardType.WEAPON) {
+				countWeapons++;
+			}
+			if((testDeck.get(i)).getCardType() == CardType.PERSON) {
+				countPeople++;
+			}
+			if((testDeck.get(i)).getCardType() == CardType.ROOM) {
+				countRooms++;
+			}
+			
+		}
+		
+		assert(countPeople == 6);
+		assert(countWeapons == 6);
+		assert(countRooms == 9);
+		
+		
+		
+		//I choose one room, one weapon, and one person, 
+		// and ensure the deck contains each of those (to test loading the names). 
 	}
 	
 	
