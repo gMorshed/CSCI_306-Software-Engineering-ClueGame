@@ -12,16 +12,41 @@ public class Player {
 	private int column;
 	
 	private Color color;
+	private boolean human;
 	
 	public Player() {
-		// TODO Auto-generated constructor stub
 		row=0;
 		color=null;
 		column=0;
 		playerName="";
+		human = false;
 	}
 	
+	
+
 	public Card disproveSuggestion(Solution suggestion) { return null;}
+
+	public String getPlayerName() {
+		return playerName;
+	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public int getColumn() {
+		return column;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+
+
+	public boolean isHuman() {
+		return false;
+	}
 
 
 }

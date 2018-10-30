@@ -33,8 +33,10 @@ public class Board {
 	private Set<BoardCell> targets; // used after calculating targets
 	private String boardConfigFile; // the file name for the csv file which represents the baord
 	private String roomConfigFile; // the file name for the txt file which stores what the initial is for each room
+	private String playerConfigFile; 
 	private static Board theInstance = new Board(); // since there is only one Board we make it static
 	private Set<BoardCell> visited; // the visited list that gets changed every time a square is visited
+	private ArrayList <Player> playerList;
 
 	/** Getters for NumRows and NumColumns */
 	public int getNumRows() {
@@ -73,9 +75,11 @@ public class Board {
 		visited = new HashSet<>();
 		boardConfigFile = "";
 		roomConfigFile = "";
+		playerList = new ArrayList<Player>();
 	}
 	// this method returns the only Board
 
+	
 	public static Board getInstance() {
 		return theInstance;
 	}
@@ -107,6 +111,7 @@ public class Board {
 		try {
 			loadRoomConfig(); // all we are doing here is initializing files
 			loadBoardConfig();
+			loadPeoplecConfigFile();
 			calcAdjacencies();// then calculating our adjacencies for our matrix
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
@@ -334,5 +339,17 @@ public class Board {
 		}
 
 	}
+
+	public void setPlayerConfigFile(String playerConfigFile) {
+		this.playerConfigFile = playerConfigFile;
+	}
+	public void loadPeoplecConfigFile() {
+		Player dummy = new Player();
+		playerList.add(dummy);
+	}
+	public ArrayList<Player> getPlayerList() {
+		return playerList;
+	}
+
 
 }
