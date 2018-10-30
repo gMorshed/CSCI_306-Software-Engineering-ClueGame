@@ -17,8 +17,9 @@ import clueGame.CardType;
 public class gameSetupTests {
 
 	private static Board board;
-	@Before
-	public void setUp() {
+	
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
 		/**
 		 * This test will set up the board  of variety of cards of each type that 
 		 * will be required for testing
@@ -30,6 +31,7 @@ public class gameSetupTests {
 		//board.setWeaponConfigFile("Weapons.txt");
 		board.initialize();
 	}
+	
 
 	@Test
 	public void testLoadPeople() {
