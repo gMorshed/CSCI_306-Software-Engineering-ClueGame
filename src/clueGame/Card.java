@@ -12,7 +12,9 @@ public class Card {
 		return cardType;
 	}
 
-	
+	public String getCardName() {
+		return cardName;
+	}
 	
 	public Card(String cardName, CardType cardType) {
 		super();

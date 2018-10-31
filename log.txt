@@ -314,3 +314,6 @@ The file is not valid because of imporper file configuration format.Invalid type
 The file is not valid because of imporper file configuration format.For some row, there is a mismatched coloumns
 The file is not valid because of imporper file configuration format.There is a room in the board that is not in legend list
 The file is not valid because of imporper file configuration format.Invalid type for the kind of room. It has to be either Card or Other
+The file is not valid because of imporper file configuration format.For some row, there is a mismatched coloumns
+The file is not valid because of imporper file configuration format.There is a room in the board that is not in legend list
+The file is not valid because of imporper file configuration format.Invalid type for the kind of room. It has to be either Card or Other

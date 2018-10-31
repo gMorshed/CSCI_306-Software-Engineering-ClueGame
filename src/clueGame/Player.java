@@ -27,10 +27,11 @@ public class Player {
 		this.column=column;
 		this.playerName=playerName;
 		this.human = false;
+		playersCards = new ArrayList<Card>(); 
 	}
 	
-	public void drawCard(Card cards) {
-		playersCards.add(cards);
+	public void receiveCard(Card card) {
+		playersCards.add(card);
 	}
 
 	public Card disproveSuggestion(Solution suggestion) { return null;}

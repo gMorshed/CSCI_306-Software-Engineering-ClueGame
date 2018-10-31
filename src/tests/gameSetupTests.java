@@ -1,5 +1,6 @@
 package tests;
 
+
 import static org.junit.Assert.*;
 import static org.junit.Assume.assumeTrue;
 
@@ -17,17 +18,28 @@ import clueGame.Player;
 import clueGame.Card;
 import clueGame.CardType;
 
+/**
+ * 
+ * @author Kirwinlvinodaq S Lawrence, Abhaya  Shrestha. Gazi Mahbub Morshed
+ *
+ *testunit is for testing the methods of loading people, creating deck of cards and dealing the cards
+ *
+ */
+
+
 public class gameSetupTests {
 
 	private static Board board;
 	public static final int NUM_CARDS_IN_DECK=21;
 	public static final int NUM_OF_PLAYER=6;
+	
+	/**
+	 * This test will set up the board  of variety of cards of each type that 
+	 * will be required for testing
+	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		/**
-		 * This test will set up the board  of variety of cards of each type that 
-		 * will be required for testing
-		 */
+	
 		board = Board.getInstance();
 		board.setConfigFiles("Board_Layout.csv", "ClueRooms.txt");
 		board.setPlayerConfigFile("people.txt");
@@ -36,9 +48,14 @@ public class gameSetupTests {
 		board.initialize();
 	}
 	
-
+	/**
+	 * test1LoadPeople tests that the players are being loaded correctly.
+	 * This will check if the player has respective color, is human or computer, is in the right coordinate, 
+	 * and has the respective name.
+	 * 
+	 * */
 	@Test
-	public void testLoadPeople() {
+	public void test1LoadPeople() {
 		ArrayList<Player> playerList = board.getPlayerList(); //get the playerList from board
 		
 		assertEquals(playerList.get(0).getPlayerName(), "Mr. Stark"); //one computer player and the first player
@@ -63,28 +80,43 @@ public class gameSetupTests {
 		assertEquals(playerList.get(4).getRow(), 16);
 	}
 	
+	/**
+	 * test2LoadDeckOfCards tests the deck is loaded properly, deck has each type of CardType, 
+	 * and counting the number of players, weapons, and rooms are the same */
 	@Test
-	public void testLoadDeckOfCards() {
+	public void test2LoadDeckOfCards() {
 		// Ensure the deck contains the correct total number of cards
 		ArrayList<Card> testDeck = board.getDeckOfCards();
-		assertEquals(21 ,testDeck.size()); // should have 6 people, 6 weapons, and 9 rooms = 21 total
+		assertEquals(NUM_CARDS_IN_DECK ,testDeck.size()); // should have 6 people, 6 weapons, and 9 rooms = 21 total
 		
 		// Ensure the deck contains the correct number of each type of card (room/weapon/person) 
 		int countWeapons = 0;
 		int countPeople = 0;
 		int countRooms = 0;
+		ArrayList<String> CardNames = new ArrayList<String>(); // list to put all the card names that appear
+		
+		Card person = new Card("Mr. Stark", CardType.PERSON); // ensure the deck contains each one of these
+		Card weapon = new Card("Revolver", CardType.WEAPON);
+		Card room = new Card("Mancave", CardType.ROOM);
+		
 		for(int i=0; i<testDeck.size(); i++) {
 			if((testDeck.get(i)).getCardType() == CardType.WEAPON) {
 				countWeapons++;
+				CardNames.add((testDeck.get(i)).getCardName());
 			}
 			if((testDeck.get(i)).getCardType() == CardType.PERSON) {
 				countPeople++;
+				CardNames.add((testDeck.get(i)).getCardName());
 			}
 			if((testDeck.get(i)).getCardType() == CardType.ROOM) {
 				countRooms++;
+				CardNames.add((testDeck.get(i)).getCardName());
 			}
 			
 		}
+		assertTrue(CardNames.contains(person.getCardName())); // testing that each one of these enum types are in the deck
+		assertTrue(CardNames.contains(weapon.getCardName()));
+		assertTrue(CardNames.contains(room.getCardName()));
 		
 		assert(countPeople == 6);
 		assert(countWeapons == 6);
@@ -95,9 +127,16 @@ public class gameSetupTests {
 		//I choose one room, one weapon, and one person, 
 		// and ensure the deck contains each of those (to test loading the names). 
 	}
-	
+	/**
+	 * test3DealingCard() tests Deal cards (all cards dealt, players have roughly same # of cards, no card dealt twice)
+	 * the first assert is to check that all the cards have been distributed, the second assert is to check
+	 * that all cards have been somewhat distributed
+	 * and the last assert is to check each player has a unique card where card has a list of all cards of
+	 *  a player for all players
+	 *  
+	 */
 	@Test
-	public void testDealingCard() {
+	public void test3DealingCard() {
 		board.dealCards();
 		ArrayList<Card> testDeck = board.getDeckOfCards();
 		assertEquals(0 ,testDeck.size());  //checking if all the cards have been dealt or not 
@@ -106,11 +145,12 @@ public class gameSetupTests {
 		for (Player player : playerList) { // All players should have roughly the same number of cards
 			numberOfCard.add(player.getPlayersCards().size()) ;
 		}
-		assumeTrue(numberOfCard.size()==2); //if the cards are dealt correctly, players should only have two unique numbe rof cards
+		assumeTrue(numberOfCard.size()==2); //if the cards are dealt correctly, players should only have two unique number of cards
 		Set<Card> cards= new HashSet<Card>();
 		for (Player player : playerList) { //The same card should not be given to >1 player 
 			cards.addAll(player.getPlayersCards());
 		}
+		assertEquals(NUM_CARDS_IN_DECK, cards.size());
 	}
 	
 	

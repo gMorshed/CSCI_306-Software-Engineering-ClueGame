@@ -118,9 +118,9 @@ public class Board {
 		try {
 			loadRoomConfig(); // all we are doing here is initializing files
 			loadBoardConfig();
+			calcAdjacencies();// then calculating our adjacencies for our matrix
 			loadPeoplecConfigFile();
 			loadDeckOfCards();
-			calcAdjacencies();// then calculating our adjacencies for our matrix
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
 		}
@@ -351,6 +351,12 @@ public class Board {
 	public void setPlayerConfigFile(String playerConfigFile) {
 		this.playerConfigFile = playerConfigFile;
 	}
+	/**
+	 * 
+	 * @throws BadConfigFormatException
+	 * the loadpeopleconfigfile method reads in the playercongfig file and parses accordingly based on the format we decided
+	 * into human and computer player and their starting locations
+	 */
 	public void loadPeoplecConfigFile() throws BadConfigFormatException {
 		try {
 			FileReader reader= new FileReader(playerConfigFile);
@@ -365,14 +371,15 @@ public class Board {
 				int playerRow = Integer.parseInt(tempStrArray[3]);
 				int playerCol = Integer.parseInt(tempStrArray[4]);
 				if(tempStrArray[2].equals("Human")) {
-					HumanPlayer dummyPlayer= new HumanPlayer(playerRow, playerCol, color, tempStrArray[0]);
-					playerList.add(dummyPlayer);
+					HumanPlayer hplayer= new HumanPlayer(playerRow, playerCol, color, tempStrArray[0]);
+					playerList.add(hplayer);
 				}
 				else {
-					ComputerPlayer dummyPlayer= new ComputerPlayer(playerRow, playerCol, color, tempStrArray[0]);
-					playerList.add(dummyPlayer);
+					ComputerPlayer cPlayer= new ComputerPlayer(playerRow, playerCol, color, tempStrArray[0]);
+					playerList.add(cPlayer);
 				}
 			}
+			in.close();
 		} catch (FileNotFoundException e) {
 			
 			e.getMessage();
@@ -381,6 +388,12 @@ public class Board {
 	public ArrayList<Player> getPlayerList() {
 		return playerList;
 	}
+	/**
+	 *  convertcolor uses reflection with the in built color class for each players piece color
+	 * @param strColor
+	 * @return
+	 */
+	
 	private Color convertColor(String strColor) {
 		Color color;
 		try {
@@ -396,28 +409,35 @@ public class Board {
 		// TODO Auto-generated method stub
 		return deckOfCards;
 	}
-	
+	/**
+	 * set the weapon config file
+	 * @param weaponConfigFile
+	 */
 	public void setWeaponConfigFile(String weaponConfigFile) {
 		this.weaponConfigFile = weaponConfigFile;
 	}
-	public void loadDeckOfCards() {
+	/**
+	 * loaddeckofcards method ensures the deck is loaded with all the different types of cards from three different atrributes
+	 * althuogh the rooms were made to remove walkway and closet
+	 */
+	public void loadDeckOfCards() { 
 		Set<Character> keys = legend.keySet();
 		keys.remove('W');
 		keys.remove('X');
-		for(Character dummyChar : keys) {
-			Card dummyCard= new Card(legend.get(dummyChar), CardType.ROOM);
-			deckOfCards.add(dummyCard);
+		for(Character character : keys) {
+			Card card= new Card(legend.get(character), CardType.ROOM);
+			deckOfCards.add(card);
 		}
-		for(Player dummyPlayer : playerList) {
-			Card dummyCard= new Card(dummyPlayer.getPlayerName(), CardType.PERSON);
-			deckOfCards.add(dummyCard);
+		for(Player player : playerList) {
+			Card card= new Card(player.getPlayerName(), CardType.PERSON);
+			deckOfCards.add(card);
 		}
 		try {
 			FileReader reader= new FileReader(weaponConfigFile);
 			Scanner in = new Scanner(reader);
 			while(in.hasNextLine()) {
-				Card dummyCard = new Card(in.nextLine(), CardType.WEAPON);
-				deckOfCards.add(dummyCard);
+				Card card = new Card(in.nextLine(), CardType.WEAPON);
+				deckOfCards.add(card);
 			}
 			in.close();
 		} catch (FileNotFoundException e) {
@@ -425,10 +445,27 @@ public class Board {
 		}
 		 
 	}
-	
+	/**
+	 * dealcards method just deals the card in random order to simulate shuffling and distributes them to
+	 *  each player until deck is empty
+	 */
 	public void dealCards(){
-		
+		for (int i = 0; i < deckOfCards.size(); i++) {
+			int j = (int)(Math.random() *  deckOfCards.size()); // Get a random index out of 52
+			Card temp = deckOfCards.get(i); // Swap the cards
+			deckOfCards.set(i, deckOfCards.get(j));
+			deckOfCards.set(j, temp);
+		}
+
+		while(!deckOfCards.isEmpty()) {
+			for(Player player : playerList)
+			{	if(!deckOfCards.isEmpty())
+			{player.receiveCard(deckOfCards.get(0));
+			deckOfCards.remove(deckOfCards.get(0));}
+			}
+		}
+
 	}
-	
+
 
 }
