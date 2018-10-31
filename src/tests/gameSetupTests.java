@@ -44,7 +44,6 @@ public class gameSetupTests {
 		board.setConfigFiles("Board_Layout.csv", "ClueRooms.txt");
 		board.setPlayerConfigFile("people.txt");
 		board.setWeaponConfigFile("weapon.txt");
-		//board.setWeaponConfigFile("Weapons.txt");
 		board.initialize();
 	}
 	
@@ -114,18 +113,16 @@ public class gameSetupTests {
 			}
 			
 		}
-		assertTrue(CardNames.contains(person.getCardName())); // testing that each one of these enum types are in the deck
+		assertTrue(CardNames.contains(person.getCardName())); 
+		//I choose one room, one weapon, and one person, 
+		// and ensure the deck contains each of those (to test loading the names). 
 		assertTrue(CardNames.contains(weapon.getCardName()));
 		assertTrue(CardNames.contains(room.getCardName()));
 		
-		assert(countPeople == 6);
-		assert(countWeapons == 6);
-		assert(countRooms == 9);
+		assertEquals( 6, countPeople);  //Ensure the deck contains the correct number of each type of card
+		assertEquals(6,countWeapons);
+		assertEquals(9,countRooms);
 		
-		
-		
-		//I choose one room, one weapon, and one person, 
-		// and ensure the deck contains each of those (to test loading the names). 
 	}
 	/**
 	 * test3DealingCard() tests Deal cards (all cards dealt, players have roughly same # of cards, no card dealt twice)
@@ -147,10 +144,21 @@ public class gameSetupTests {
 		}
 		assumeTrue(numberOfCard.size()==2); //if the cards are dealt correctly, players should only have two unique number of cards
 		Set<Card> cards= new HashSet<Card>();
+		boolean duplicateCard = false;
 		for (Player player : playerList) { //The same card should not be given to >1 player 
-			cards.addAll(player.getPlayersCards());
+			ArrayList<Card> playersCard = new ArrayList<Card>();
+			playersCard= player.getPlayersCards();
+			for( Card card : playersCard) {
+				if(cards.contains(card)) { //if the set contains a duplicate card, this statement will be true
+					duplicateCard = true;
+					break;
+				}
+				else {
+					cards.add(card);
+				}
+			}
+			assertFalse(duplicateCard); //when theres no duplicate card on a player's hand, the boolean variable is false which is set initially
 		}
-		assertEquals(NUM_CARDS_IN_DECK, cards.size());
 	}
 	
 	

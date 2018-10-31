@@ -458,10 +458,11 @@ public class Board {
 		}
 
 		while(!deckOfCards.isEmpty()) {
-			for(Player player : playerList)
-			{	if(!deckOfCards.isEmpty())
-			{player.receiveCard(deckOfCards.get(0));
-			deckOfCards.remove(deckOfCards.get(0));}
+			for(Player player : playerList)  {	
+				if(!deckOfCards.isEmpty() ) {
+				player.receiveCard(deckOfCards.get(0));
+				deckOfCards.remove(deckOfCards.get(0));
+				}
 			}
 		}
 
