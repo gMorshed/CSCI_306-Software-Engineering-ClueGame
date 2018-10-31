@@ -42,8 +42,15 @@ public class Board {
 	private String weaponConfigFile;
 	private static Board theInstance = new Board(); // since there is only one Board we make it static
 	private Set<BoardCell> visited; // the visited list that gets changed every time a square is visited
-	private ArrayList <Player> playerList;
-	private ArrayList<Card> deckOfCards;
+	private ArrayList <Player> playerList; // list of players in the game
+	private ArrayList<Card> deckOfCards, allCards; // deck of cards, and allCards is the copy
+	private Solution gameSolution; // Solution for the game
+	
+	
+	public Solution getGameSolution() {
+		return gameSolution;
+	}
+
 	/** Getters for NumRows and NumColumns */
 	public int getNumRows() {
 		return numRows;
@@ -83,6 +90,8 @@ public class Board {
 		roomConfigFile = "";
 		playerList = new ArrayList<Player>();
 		deckOfCards = new ArrayList<Card>();
+		gameSolution = new Solution("", "", "");
+		allCards = new ArrayList<Card>();
 	}
 	// this method returns the only Board
 
@@ -456,15 +465,48 @@ public class Board {
 			deckOfCards.set(i, deckOfCards.get(j));
 			deckOfCards.set(j, temp);
 		}
-
+		
+		//Solution must be placed into list 
+		
+		for(Card card : deckOfCards) { // must place a weapon into solution
+			
+			if(card.getCardType() == CardType.WEAPON) {
+				gameSolution.setWeapon(card.getCardName());
+				allCards.add(card); // copy all the cards
+				deckOfCards.remove(card);
+				break;
+			}
+		}
+		for(Card card : deckOfCards) { // must place a person into solution
+			if(card.getCardType() == CardType.PERSON) {
+				gameSolution.setPerson(card.getCardName());
+				allCards.add(card);
+				deckOfCards.remove(card);
+				break;
+			}
+		}
+		for(Card card : deckOfCards) { // must place a room into solution
+			if(card.getCardType() == CardType.ROOM) {
+				gameSolution.setRoom(card.getCardName());
+				allCards.add(card);
+				deckOfCards.remove(card);
+				break;
+			}
+		}
+		
+		// dealing the remaining deck of cards to the players
 		while(!deckOfCards.isEmpty()) {
 			for(Player player : playerList)  {	
 				if(!deckOfCards.isEmpty() ) {
+						
 				player.receiveCard(deckOfCards.get(0));
-				deckOfCards.remove(deckOfCards.get(0));
+				allCards.add(deckOfCards.get(0)); 
+				deckOfCards.remove(deckOfCards.get(0));	
+				}
+				
 				}
 			}
-		}
+		
 
 	}
 

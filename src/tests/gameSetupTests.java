@@ -123,6 +123,10 @@ public class gameSetupTests {
 		assertEquals(6,countWeapons);
 		assertEquals(9,countRooms);
 		
+		
+		
+		
+		
 	}
 	/**
 	 * test3DealingCard() tests Deal cards (all cards dealt, players have roughly same # of cards, no card dealt twice)
@@ -137,12 +141,14 @@ public class gameSetupTests {
 		board.dealCards();
 		ArrayList<Card> testDeck = board.getDeckOfCards();
 		assertEquals(0 ,testDeck.size());  //checking if all the cards have been dealt or not 
+		
 		ArrayList<Player> playerList = board.getPlayerList();
 		Set<Integer> numberOfCard= new HashSet<Integer>();
-		for (Player player : playerList) { // All players should have roughly the same number of cards
+		for (Player player : playerList) { // All players should have roughly the same number of cards
 			numberOfCard.add(player.getPlayersCards().size()) ;
 		}
-		assumeTrue(numberOfCard.size()==2); //if the cards are dealt correctly, players should only have two unique number of cards
+		assertTrue(numberOfCard.size() <= 2); //if the cards are dealt correctly, players should only have two unique number of cards
+		
 		Set<Card> cards= new HashSet<Card>();
 		boolean duplicateCard = false;
 		for (Player player : playerList) { //The same card should not be given to >1 player 
@@ -159,6 +165,10 @@ public class gameSetupTests {
 			}
 			assertFalse(duplicateCard); //when theres no duplicate card on a player's hand, the boolean variable is false which is set initially
 		}
+		
+		
+		
+		
 	}
 	
 	

@@ -33,5 +33,16 @@ public class Card {
 
 	public boolean equals() {
 		return false;}
+	
+	public boolean isNotSolution(String person, String weapon, String room) {
+		if(! (this.cardName.equals(person)) ) {
+			if((! (this.cardName.equals(weapon)))){
+				if((! (this.cardName.equals(room)))) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
 }
