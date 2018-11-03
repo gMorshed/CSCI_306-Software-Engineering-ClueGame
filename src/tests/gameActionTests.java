@@ -35,11 +35,11 @@ public class gameActionTests {
 		// Run the test a large number of times
 		for (int i=0; i<100; i++)  { 
 			BoardCell selected = player.pickLocation(board.getTargets());
-			if (selected == board.getCellAt(12, 0)) 
+			if (selected == board.getCellAt(16,0)) 
 				loc_16_0 = true; 
-			else if (selected == board.getCellAt(14, 2)) 
+			else if (selected == board.getCellAt(17, 2)) 
 				loc_17_2 = true;
-			else if (selected == board.getCellAt(15, 1)) 
+			else if (selected == board.getCellAt(16, 1)) 
 				loc_16_1 = true;
 			else fail("Invalid target selected"); 
 		}
@@ -48,20 +48,31 @@ public class gameActionTests {
 		assertTrue(loc_17_2); 
 		assertTrue(loc_16_1);
 		
-		//One ensures that the room is always selected if it isn't the last visited
-		//One ensures that if the room is the last visited, a random choice is made.
+		//selecting a cell that has a room in range
+		// we make sure if there is a room in range, the room only visited once
 		player.setRow(2);
 		player.setColumn(5);
 		board.calcTargets(2, 5, 1);
-		BoardCell lastVisted = (player.getVisited_list()).get((player.getVisited_list()).size()-1);
-		Set<BoardCell> targets  = board.getTargets();
-		assertFalse(targets.contains(lastVisted)); // stuck here
-		for( BoardCell cell: board.getTargets()) {
-			if((player.getVisited_list()).get((player.getVisited_list()).size()-1).equals(cell)) {
-				
+		boolean loc_1_5 = false; //rooms coordinate
+		boolean loc_4_5 = false;
+		boolean loc_2_6 = false;
+		int countRoomVisited=0;
+		for (int i=0; i<100; i++)  { 
+			BoardCell selected = player.pickLocation(board.getTargets());
+			if (selected == board.getCellAt(1,5))  {//rooms coordinate
+				loc_1_5 = true; 
+				countRoomVisited++;
 			}
+			else if (selected == board.getCellAt(4,5)) 
+				loc_4_5 = true;
+			else if (selected == board.getCellAt(2,6)) 
+				loc_2_6 = true;
+			else fail("Invalid target selected"); 
 		}
- 
+		assertTrue(loc_1_5); 
+		assertTrue(loc_4_5); 
+		assertTrue(loc_2_6);
+		assertEquals(countRoomVisited, 1); //visit the room once if it has been selected once
 		
 	}
 	
