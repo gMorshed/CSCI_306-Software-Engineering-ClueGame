@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.Before;
@@ -175,7 +176,81 @@ public class gameActionTests {
 		assertTrue(rope);
 		assertTrue(leadPipe);
 		assertTrue(revolver);
+		
+		
+		//room matches suggestions
+		BoardCell currentCell = board.getCellAt(1,4);
+		Map<Character, String> tempLegend = board.getLegend();
+		String currentRoom = tempLegend.get(currentCell.getInitial());
+		Solution suggestion = computerPlayer.createSuggestion(testDeck, currentRoom);
+		assertEquals(currentRoom, suggestion.getRoom());
+		
+		//tests for seen cards not be in returned suggestions
+		//first for weapon cards
+		computerPlayer.clearSeenCard();;
+		computerPlayer.addSeenCard(new Card("Mr. Stark", CardType.PERSON));
+		computerPlayer.addSeenCard(new Card("Candlestick", CardType.WEAPON));
+		
+		//Weapon is chosen randomly and not the seen Cards
+		candleStick = false; //candleStick is in the seen cards list, not it shouldn't show up in the suggeested cards
+		dumbell = false;
+		leadPipe = false;
+		revolver = false;
+		
+		//Run 100 calculations
+		for (int i=0; i<100; i++) {
+			suggestion = computerPlayer.createSuggestion(testDeck, "Study");
+			if (suggestion.getWeapon().equals("Candlestick"))
+				candleStick = true;
+			else if (suggestion.getWeapon().equals("Lead Pipe"))
+				leadPipe = true;
+			else if (suggestion.getWeapon().equals("Dumbell"))
+				dumbell = true;
+			else if (suggestion.getWeapon().equals("Revolver"))
+				revolver = true;
+			else
+				fail("Invalid target selected");
+		}
+		
+		//Ensure each option was selected once
+		assertFalse(candleStick);
+		assertTrue(leadPipe);
+		assertTrue(revolver);
+		assertTrue(dumbell);
+		
+		//now seen cards tests for Person
+		computerPlayer.clearSeenCard();;
+		computerPlayer.addSeenCard(new Card("Pepper Potts", CardType.PERSON));
+		computerPlayer.addSeenCard(new Card("Lead Pipe", CardType.WEAPON));
+		
+		//Person is chosen randomly
+		boolean  potts = false;
+		stark = false;
+		natalia = false;
+		boolean rogers = false;
+		
+		//Run 100 calculations
+		for (int i=0; i<100; i++) {
+			suggestion = computerPlayer.createSuggestion(testDeck, "Study");
+			if (suggestion.getPerson().equals("Pepper Potts"))
+				potts = true;
+			else if (suggestion.getPerson().equals("Mr. Stark"))
+				stark = true;
+			else if (suggestion.getPerson().equals("Natalia Alianovna Romanova"))
+				natalia = true;
+			else if (suggestion.getPerson().equals("Steve Rogers"))
+				rogers = true;
+			else
+				fail("Invalid target selected");
+		}
+		
+		//Ensure each option was selected once
+		assertTrue(rogers);
+		assertTrue(stark);
+		assertTrue(natalia);
+		assertFalse(potts);
 	}
+	
 	
 }
 
