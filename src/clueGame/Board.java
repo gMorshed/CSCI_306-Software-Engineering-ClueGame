@@ -50,6 +50,10 @@ public class Board {
 	public Solution getGameSolution() {
 		return gameSolution;
 	}
+	
+	public void setGameSolution(Solution answer) {
+		this.gameSolution = answer;
+	}
 
 	/** Getters for NumRows and NumColumns */
 	public int getNumRows() {
@@ -509,11 +513,28 @@ public class Board {
 		
 
 	}
+	
+	
 
 	public boolean checkAccusation(Solution accusation) {
-		// TODO Auto-generated method stub
-		
+		boolean correctPerson = false;
+		boolean correctRoom = false;
+		boolean correctWeapon = false;
+
+		if(gameSolution.getPerson().equals(accusation.person)) {
+			correctPerson = true;
+		}
+		if(gameSolution.getWeapon().equals(accusation.person)) {
+			correctWeapon = true;
+		}
+		if(gameSolution.getRoom().equals(accusation.person)) {
+			correctRoom = true;
+		}
+		if(correctPerson && correctRoom && correctWeapon) {
+			return true;
+		}
 		return false;
+		
 	}
 
 

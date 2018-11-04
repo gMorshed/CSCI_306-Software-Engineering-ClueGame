@@ -83,7 +83,12 @@ public class gameActionTests {
 		cardSolutionRoom = new Card("Mancave",CardType.ROOM);
 		wrongCardSolutionRoom = new Card("Study",CardType.ROOM);
 		
+	
+		
 		solution = new Solution(cardSolutionPerson.getCardName(),cardSolutionWeapon.getCardName(),cardSolutionRoom.getCardName());
+		
+		board.setGameSolution(solution);
+		
 		wrongPersonSolution = new Solution(wrongCardSolutionPerson.getCardName(),cardSolutionWeapon.getCardName(),cardSolutionRoom.getCardName());
 		wrongWeaponSolution = new Solution(cardSolutionPerson.getCardName(),wrongCardSolutionWeapon.getCardName(),cardSolutionRoom.getCardName());
 		wrongRoomSolution = new Solution(cardSolutionPerson.getCardName(),cardSolutionWeapon.getCardName(),wrongCardSolutionRoom.getCardName());
