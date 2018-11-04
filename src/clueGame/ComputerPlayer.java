@@ -27,11 +27,40 @@ public class ComputerPlayer extends Player {
 
 	public ComputerPlayer(int row, int column, Color color, String playerName) {
 		super(row, column, color, playerName);
+		seenCards=new ArrayList <Card> ();
 	}
 
 	public Solution createSuggestion(ArrayList<Card> playersCard, String roomName) {
-		Solution solution=new Solution("abcd", "efgh","ijkf");
-		return solution;
+		Card selectedPerson = new Card("INVALID", clueGame.CardType.PERSON); //make some dummy cards 
+		Card selectedWeapon = new Card("INVALID", clueGame.CardType.WEAPON);
+		//randomize the deck
+		for (int i = 0; i < playersCard.size(); i++) {
+			int j = (int)(Math.random() *  playersCard.size()); // Get a random index out of 52
+			Card temp = playersCard.get(i); // Swap the cards
+			playersCard.set(i, playersCard.get(j));
+			playersCard.set(j, temp);
+		}
+		for(Card c : playersCard) {
+			boolean haveSeen=false;
+			for(Card seenC: seenCards) {
+				if(c.getCardName().equals(seenC.getCardName())) {
+					haveSeen=true;
+				}
+			}
+			
+			if(!haveSeen) {
+				
+				//System.out.println(c.getCardName()+ c.getCardType());
+				if(c.getCardType() == clueGame.CardType.PERSON) {
+					selectedPerson = c;
+				}
+				else if(c.getCardType() == clueGame.CardType.WEAPON) {
+					selectedWeapon = c;
+				}
+			}
+		}
+		Solution lastSolution = new Solution(selectedPerson.getCardName(), roomName, selectedWeapon.getCardName());
+		return lastSolution;
 	}
 	public void addSeenCard(Card c) {
 		seenCards.add(c);
@@ -40,4 +69,5 @@ public class ComputerPlayer extends Player {
 	public void clearSeenCard() {
 		seenCards.clear();
 	}
+	
 }

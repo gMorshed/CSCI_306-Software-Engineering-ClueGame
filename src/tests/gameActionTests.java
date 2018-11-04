@@ -34,7 +34,7 @@ public class gameActionTests {
 		testDeck.add(new Card("Pepper Potts", CardType.PERSON));
 		testDeck.add(new Card("Natalia Alianovna Romanova", CardType.PERSON));
 		testDeck.add(new Card("Steve Rogers", CardType.PERSON));
-		testDeck.add(new Card("Bruce Banne", CardType.PERSON));
+		testDeck.add(new Card("Bruce Banner", CardType.PERSON));
 		
 		testDeck.add(new Card("Candlestick", CardType.WEAPON));
 		testDeck.add(new Card("Dumbell", CardType.WEAPON));
@@ -126,15 +126,15 @@ public class gameActionTests {
 		//Run 100 calculations
 		for (int i=0; i<100; i++) {
 			Solution suggested = computerPlayer.createSuggestion(testDeck, "Presidential Suite");
-			if (suggested.getPerson().equals("Orden"))
+			if (suggested.getPerson().equals("Mr. Stark"))
 				stark = true;
-			else if (suggested.getPerson().equals("Tanner"))
+			else if (suggested.getPerson().equals("Pepper Potts"))
 				pepper = true;
-			else if (suggested.getPerson().equals("McKenna"))
+			else if (suggested.getPerson().equals("Natalia Alianovna Romanova"))
 				natalia = true;
-			else if (suggested.getPerson().equals("Andreas"))
+			else if (suggested.getPerson().equals("Steve Rogers"))
 				steve = true;
-			else if (suggested.getPerson().equals("Andreas"))
+			else if (suggested.getPerson().equals("Bruce Banner"))
 				banner = true;
 			else
 				fail("Invalid target selected");
@@ -156,16 +156,16 @@ public class gameActionTests {
 		//Run 100 calculations
 		for (int i=0; i<100; i++) {
 			Solution suggestion = computerPlayer.createSuggestion(testDeck, "Study");
-			if (suggestion.getWeapon().equals("CandleStick"))
+			if (suggestion.getWeapon().equals("Candlestick"))
 				candleStick = true;
 			else if (suggestion.getWeapon().equals("Dumbell"))
 				dumbell = true;
 			else if (suggestion.getWeapon().equals("Lead Pipe"))
 				leadPipe = true;
 			else if (suggestion.getWeapon().equals("Revolver"))
-				rope = true;
-			else if (suggestion.getWeapon().equals("Rope"))
 				revolver = true;
+			else if (suggestion.getWeapon().equals("Rope"))
+				rope = true;
 			else
 				fail("Invalid target selected");
 		}
@@ -196,7 +196,7 @@ public class gameActionTests {
 		dumbell = false;
 		leadPipe = false;
 		revolver = false;
-		
+		rope=false;
 		//Run 100 calculations
 		for (int i=0; i<100; i++) {
 			suggestion = computerPlayer.createSuggestion(testDeck, "Study");
@@ -208,6 +208,8 @@ public class gameActionTests {
 				dumbell = true;
 			else if (suggestion.getWeapon().equals("Revolver"))
 				revolver = true;
+			else if (suggestion.getWeapon().equals("Rope"))
+				rope = true;
 			else
 				fail("Invalid target selected");
 		}
@@ -217,6 +219,7 @@ public class gameActionTests {
 		assertTrue(leadPipe);
 		assertTrue(revolver);
 		assertTrue(dumbell);
+		assertTrue(rope);
 		
 		//now seen cards tests for Person
 		computerPlayer.clearSeenCard();;
@@ -228,7 +231,7 @@ public class gameActionTests {
 		stark = false;
 		natalia = false;
 		boolean rogers = false;
-		
+		banner= false;
 		//Run 100 calculations
 		for (int i=0; i<100; i++) {
 			suggestion = computerPlayer.createSuggestion(testDeck, "Study");
@@ -240,6 +243,8 @@ public class gameActionTests {
 				natalia = true;
 			else if (suggestion.getPerson().equals("Steve Rogers"))
 				rogers = true;
+			else if (suggestion.getPerson().equals("Bruce Banner"))
+				banner = true;
 			else
 				fail("Invalid target selected");
 		}
