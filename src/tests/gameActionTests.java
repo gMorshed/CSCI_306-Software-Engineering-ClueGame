@@ -145,6 +145,36 @@ public class gameActionTests {
 		assertTrue(natalia);
 		assertTrue(steve);
 		assertTrue(banner);
+		//now checking random weapon
+		boolean candleStick = false;
+		boolean dumbell = false;
+		boolean leadPipe = false;
+		boolean rope = false;
+		boolean revolver=false;
+		
+		//Run 100 calculations
+		for (int i=0; i<100; i++) {
+			Solution suggestion = computerPlayer.createSuggestion(testDeck, "Study");
+			if (suggestion.getWeapon().equals("CandleStick"))
+				candleStick = true;
+			else if (suggestion.getWeapon().equals("Dumbell"))
+				dumbell = true;
+			else if (suggestion.getWeapon().equals("Lead Pipe"))
+				leadPipe = true;
+			else if (suggestion.getWeapon().equals("Revolver"))
+				rope = true;
+			else if (suggestion.getWeapon().equals("Rope"))
+				revolver = true;
+			else
+				fail("Invalid target selected");
+		}
+		
+		//Ensure each option was selected once
+		assertTrue(candleStick);
+		assertTrue(dumbell);
+		assertTrue(rope);
+		assertTrue(leadPipe);
+		assertTrue(revolver);
 	}
 	
 }
