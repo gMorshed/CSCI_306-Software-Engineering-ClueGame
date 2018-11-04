@@ -3,6 +3,7 @@ package tests;
 import static org.junit.Assert.*;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Set;
 
 import org.junit.Before;
@@ -11,10 +12,16 @@ import org.junit.Test;
 
 import clueGame.Board;
 import clueGame.BoardCell;
+import clueGame.Card;
+import clueGame.CardType;
 import clueGame.ComputerPlayer;
+import clueGame.Solution;
 
 public class gameActionTests {
 	private static Board board;
+	private static Solution solution,wrongPersonSolution,wrongWeaponSolution,wrongRoomSolution;
+	private static Card cardSolutionPerson, cardSolutionWeapon, cardSolutionRoom,wrongCardSolutionPerson,wrongCardSolutionWeapon,wrongCardSolutionRoom;
+	
 	@Before
 	public void setUp() {
 		board = Board.getInstance();
@@ -22,9 +29,10 @@ public class gameActionTests {
 		board.setPlayerConfigFile("people.txt");
 		board.setWeaponConfigFile("weapon.txt");
 		board.initialize();
+	
 	}
 
-	@Test
+//	@Test
 	public void test1targetLocation() {
 		ComputerPlayer player = new ComputerPlayer(5,0, Color.blue, "Mr. Stark");
 		//a location with no rooms in target, just three targets
@@ -62,6 +70,39 @@ public class gameActionTests {
 			}
 		}
  
+		
+	}
+	
+	@Test
+	public void test2makeAccusation() {
+		//setting up a solution
+		cardSolutionPerson = new Card("Mr. Stark",CardType.PERSON);
+		wrongCardSolutionPerson = new Card("Steve Rogers",CardType.PERSON);
+		cardSolutionWeapon = new Card("Revolver",CardType.WEAPON);
+		wrongCardSolutionWeapon = new Card("Dumbell",CardType.WEAPON);
+		cardSolutionRoom = new Card("Mancave",CardType.ROOM);
+		wrongCardSolutionRoom = new Card("Study",CardType.ROOM);
+		
+		solution = new Solution(cardSolutionPerson.getCardName(),cardSolutionWeapon.getCardName(),cardSolutionRoom.getCardName());
+		wrongPersonSolution = new Solution(wrongCardSolutionPerson.getCardName(),cardSolutionWeapon.getCardName(),cardSolutionRoom.getCardName());
+		wrongWeaponSolution = new Solution(cardSolutionPerson.getCardName(),wrongCardSolutionWeapon.getCardName(),cardSolutionRoom.getCardName());
+		wrongRoomSolution = new Solution(cardSolutionPerson.getCardName(),cardSolutionWeapon.getCardName(),wrongCardSolutionRoom.getCardName());
+		
+		
+		//solution that is correct
+		assertTrue(board.checkAccusation(solution));
+		
+		//solution with wrong person
+		assertFalse(board.checkAccusation(wrongPersonSolution));
+		
+		//solution with wrong weapon
+		assertFalse(board.checkAccusation(wrongWeaponSolution));
+		
+		//solution with wrong room
+		assertFalse(board.checkAccusation(wrongRoomSolution));
+		
+		
+		
 		
 	}
 	

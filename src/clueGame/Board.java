@@ -510,5 +510,11 @@ public class Board {
 
 	}
 
+	public boolean checkAccusation(Solution accusation) {
+		// TODO Auto-generated method stub
+		
+		return false;
+	}
+
 
 }
