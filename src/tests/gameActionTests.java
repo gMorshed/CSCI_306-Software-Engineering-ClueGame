@@ -21,6 +21,9 @@ import clueGame.Solution;
 public class gameActionTests {
 	private static Board board;
 	ArrayList <Card> testDeck;
+	private static Solution solution,wrongPersonSolution,wrongWeaponSolution,wrongRoomSolution;
+	private static Card cardSolutionPerson, cardSolutionWeapon, cardSolutionRoom,wrongCardSolutionPerson,wrongCardSolutionWeapon,wrongCardSolutionRoom;
+
 	@Before
 	public void setUp() {
 		board = Board.getInstance();
@@ -47,9 +50,7 @@ public class gameActionTests {
 		testDeck.add(new Card("Billiard Room", CardType.ROOM));
 		testDeck.add(new Card("Presidential Suite", CardType.ROOM));
 		testDeck.add(new Card("Family Room", CardType.ROOM));
-		
-		
-		
+	
 	}
 
 	@Test
@@ -254,6 +255,44 @@ public class gameActionTests {
 		assertTrue(stark);
 		assertTrue(natalia);
 		assertFalse(potts);
+	}
+	
+	@Test
+	public void test2makeAccusation() {
+		//setting up a solution
+		cardSolutionPerson = new Card("Mr. Stark",CardType.PERSON);
+		wrongCardSolutionPerson = new Card("Steve Rogers",CardType.PERSON);
+		cardSolutionWeapon = new Card("Revolver",CardType.WEAPON);
+		wrongCardSolutionWeapon = new Card("Dumbell",CardType.WEAPON);
+		cardSolutionRoom = new Card("Mancave",CardType.ROOM);
+		wrongCardSolutionRoom = new Card("Study",CardType.ROOM);
+		
+	
+		
+		solution = new Solution(cardSolutionPerson.getCardName(),cardSolutionWeapon.getCardName(),cardSolutionRoom.getCardName());
+		
+		board.setGameSolution(solution);
+		
+		wrongPersonSolution = new Solution(wrongCardSolutionPerson.getCardName(),cardSolutionWeapon.getCardName(),cardSolutionRoom.getCardName());
+		wrongWeaponSolution = new Solution(cardSolutionPerson.getCardName(),wrongCardSolutionWeapon.getCardName(),cardSolutionRoom.getCardName());
+		wrongRoomSolution = new Solution(cardSolutionPerson.getCardName(),cardSolutionWeapon.getCardName(),wrongCardSolutionRoom.getCardName());
+		
+		
+		//solution that is correct
+		assertTrue(board.checkAccusation(solution));
+		
+		//solution with wrong person
+		assertFalse(board.checkAccusation(wrongPersonSolution));
+		
+		//solution with wrong weapon
+		assertFalse(board.checkAccusation(wrongWeaponSolution));
+		
+		//solution with wrong room
+		assertFalse(board.checkAccusation(wrongRoomSolution));
+		
+		
+		
+		
 	}
 	
 	

@@ -50,6 +50,10 @@ public class Board {
 	public Solution getGameSolution() {
 		return gameSolution;
 	}
+	
+	public void setGameSolution(Solution answer) {
+		gameSolution = answer;
+	}
 
 	/** Getters for NumRows and NumColumns */
 	public int getNumRows() {
@@ -508,6 +512,29 @@ public class Board {
 			}
 		
 
+	}
+	
+	
+	/**
+	 * checkAccusation method checks a an accusation passed in as solution type and if accusation matches all three
+	 * conditions then its a pass if not then false
+	 * @param accusation
+	 * @return
+	 */
+	
+
+	public boolean checkAccusation(Solution accusation) {
+		
+		
+		if((gameSolution.getPerson().equals(accusation.person)) && (gameSolution.getWeapon().equals(accusation.weapon)))  {
+			if((gameSolution.getRoom().equals(accusation.room))) {
+				return true;
+			}
+		}
+		
+		return false;
+
+		
 	}
 
 
