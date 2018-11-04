@@ -52,7 +52,7 @@ public class Board {
 	}
 	
 	public void setGameSolution(Solution answer) {
-		this.gameSolution = answer;
+		gameSolution = answer;
 	}
 
 	/** Getters for NumRows and NumColumns */
@@ -515,25 +515,25 @@ public class Board {
 	}
 	
 	
+	/**
+	 * checkAccusation method checks a an accusation passed in as solution type and if accusation matches all three
+	 * conditions then its a pass if not then false
+	 * @param accusation
+	 * @return
+	 */
+	
 
 	public boolean checkAccusation(Solution accusation) {
-		boolean correctPerson = false;
-		boolean correctRoom = false;
-		boolean correctWeapon = false;
-
-		if(gameSolution.getPerson().equals(accusation.person)) {
-			correctPerson = true;
+		
+		
+		if((gameSolution.getPerson().equals(accusation.person)) && (gameSolution.getWeapon().equals(accusation.weapon)))  {
+			if((gameSolution.getRoom().equals(accusation.room))) {
+				return true;
+			}
 		}
-		if(gameSolution.getWeapon().equals(accusation.person)) {
-			correctWeapon = true;
-		}
-		if(gameSolution.getRoom().equals(accusation.person)) {
-			correctRoom = true;
-		}
-		if(correctPerson && correctRoom && correctWeapon) {
-			return true;
-		}
+		
 		return false;
+
 		
 	}
 
