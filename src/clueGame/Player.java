@@ -30,6 +30,10 @@ public class Player {
 		playersCards = new ArrayList<Card>(); 
 	}
 	
+	public void setPlayersCards(ArrayList<Card> playersCards) {
+		this.playersCards = playersCards;
+	}
+
 	public void receiveCard(Card card) {
 		playersCards.add(card);
 	}
