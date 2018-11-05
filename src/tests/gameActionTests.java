@@ -17,6 +17,7 @@ import clueGame.Card;
 import clueGame.CardType;
 import clueGame.ComputerPlayer;
 import clueGame.HumanPlayer;
+import clueGame.Player;
 import clueGame.Solution;
 
 public class gameActionTests {
@@ -361,11 +362,11 @@ public class gameActionTests {
 		
 
 	}
-//	@Test
+	@Test
 	public void test5handleSuggestion() {
 		//Setup: Create a small number of players with known cards
 		Steve = new HumanPlayer(6,2,Color.GRAY, "Steve Rogers" );
-		Stark = new ComputerPlayer( 0, 6, Color.RED, "Mr. Stark");
+		Stark = new ComputerPlayer( 20,0, Color.RED, "Mr. Stark");
 		Bruce = new ComputerPlayer( 16, 0, Color.GREEN, "Bruce Banner");
 		Natalia = new ComputerPlayer(1,6,Color.BLUE, "Natalia Alianovna");
 		Bruce.receiveCard(new Card("Bruce Banner", CardType.PERSON));
@@ -380,17 +381,63 @@ public class gameActionTests {
 		Natalia.receiveCard(new Card("Natalia Alianovna Romanova", CardType.PERSON));
 		Natalia.receiveCard(new Card("Rope", CardType.WEAPON));
 		Natalia.receiveCard(new Card("Dining room", CardType.ROOM));
+		ArrayList<Player> tempPlayerList=new ArrayList<Player>();
+		tempPlayerList.add(Steve);
+		tempPlayerList.add(Bruce);
+		tempPlayerList.add(Stark);
+		tempPlayerList.add(Natalia);
+		
+		board.setPlayerList(tempPlayerList);
 		
 
-
+		
 
 		//Suggestion no one can disprove returns null	
+		Solution disapprovableSuggestion = new Solution("Pepper Potts","Nursery","Candlestick");
+		Card card=board.handleSuggestion(disapprovableSuggestion, Steve);
+		assertEquals(null, card);
+		
+		
 		//Suggestion only accusing player can disprove returns null
+		Solution fakeCompSuggestion = new Solution("Mr. Stark","Mancave","Revolver");
+		card=board.handleSuggestion(fakeCompSuggestion, Stark);
+		assertEquals(null, card);
 		//Suggestion only human can disprove returns answer (i.e., card that disproves suggestion)
+		Solution humanDisapporveSugg = new Solution("Pepper Potts","Nursery","Dumbell");
+		card=board.handleSuggestion(humanDisapporveSugg, Stark);
+		boolean humanApprove=false;
+		for(Card c: Steve.getPlayersCards()) {
+			if(c.equals(card)) {
+				humanApprove=true;
+			}
+		}
+		assertTrue(humanApprove);
+		
 		//Suggestion only human can disprove, but human is accuser, returns null
+		Solution onlyHumanDisapporveSugg = new Solution("Steve Rogers","Study","Dumbell");
+		card=board.handleSuggestion(onlyHumanDisapporveSugg, Steve);
+		assertEquals(null, card);
+		
 		//Suggestion that two players can disprove, correct player (based on starting with next player in list) returns answer
+		Solution multiDisapproveSuggestion = new Solution("Pepper Potts","Study","Revolver");
+		card=board.handleSuggestion(multiDisapproveSuggestion, tempPlayerList.get(0));
+		assertEquals("Study", card.getCardName());
+		assertNotEquals("Revolver", card.getCardName()); //ensures players are not asked after one can disprove, 
+		//we are making sure that player 2 cannot disapprove
+		
+		Solution multiDisapproveSuggestionBeforeLast = new Solution("Pepper Potts","Nursery","Revolver");
+		card=board.handleSuggestion(multiDisapproveSuggestionBeforeLast, tempPlayerList.get(0));
+		assertEquals("Revolver", card.getCardName()); // in this test we are checking with player 2 where the player 0 is the accuser
+		
+		Solution multiDisapproveSuggestionLast = new Solution("Pepper Potts","Nursery","Rope");
+		card=board.handleSuggestion(multiDisapproveSuggestionLast, tempPlayerList.get(0));
+		assertEquals("Rope", card.getCardName()); // in this test we are checking with player 3 where the player 0 is the accuser
+		
 		//Suggestion that human and another player can disprove, other player is next in list, ensure other player returns answer
-
+		Solution multiDisapproveSuggestionHumanAndComp = new Solution("Pepper Potts","Study","Dumbell");
+		card=board.handleSuggestion(multiDisapproveSuggestionHumanAndComp, tempPlayerList.get(3));
+		assertEquals("Dumbell", card.getCardName()); 
+		assertNotEquals("Study", card.getCardName());
 
 	}
 

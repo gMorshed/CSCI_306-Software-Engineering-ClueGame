@@ -54,6 +54,10 @@ public class Board {
 	public void setGameSolution(Solution answer) {
 		gameSolution = answer;
 	}
+	
+	public void setPlayerList(ArrayList<Player> playerList) {
+		this.playerList = playerList;
+	}
 
 	/** Getters for NumRows and NumColumns */
 	public int getNumRows() {
@@ -535,6 +539,11 @@ public class Board {
 		return false;
 
 		
+	}
+
+	public Card handleSuggestion(Solution suggested, Player player) {
+		Card card =new Card("not a card", CardType.PERSON);
+		return card;
 	}
 
 
