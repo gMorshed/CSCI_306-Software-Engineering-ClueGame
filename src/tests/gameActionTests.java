@@ -272,13 +272,13 @@ public class gameActionTests {
 
 
 
-		solution = new Solution(cardSolutionPerson.getCardName(),cardSolutionWeapon.getCardName(),cardSolutionRoom.getCardName());
+		solution = new Solution(cardSolutionPerson.getCardName(),cardSolutionRoom.getCardName(),cardSolutionWeapon.getCardName());
 
 		board.setGameSolution(solution);
 
-		wrongPersonSolution = new Solution(wrongCardSolutionPerson.getCardName(),cardSolutionWeapon.getCardName(),cardSolutionRoom.getCardName());
-		wrongWeaponSolution = new Solution(cardSolutionPerson.getCardName(),wrongCardSolutionWeapon.getCardName(),cardSolutionRoom.getCardName());
-		wrongRoomSolution = new Solution(cardSolutionPerson.getCardName(),cardSolutionWeapon.getCardName(),wrongCardSolutionRoom.getCardName());
+		wrongPersonSolution = new Solution(wrongCardSolutionPerson.getCardName(),cardSolutionRoom.getCardName(),cardSolutionWeapon.getCardName());
+		wrongWeaponSolution = new Solution(cardSolutionPerson.getCardName(),cardSolutionRoom.getCardName(),wrongCardSolutionWeapon.getCardName());
+		wrongRoomSolution = new Solution(cardSolutionPerson.getCardName(),wrongCardSolutionRoom.getCardName(),cardSolutionWeapon.getCardName());
 
 
 		//solution that is correct
@@ -321,23 +321,18 @@ public class gameActionTests {
 		cardSolutionRoom = new Card("Mancave",CardType.ROOM);
 		wrongCardSolutionRoom = new Card("Study",CardType.ROOM);
 
-		Solution oneMatchSuggestionPerson = new Solution(cardSolutionPerson.getCardName(),wrongCardSolutionWeapon.getCardName(),wrongCardSolutionRoom.getCardName());
-		Solution oneMatchSuggestionWeapon = new Solution(wrongCardSolutionPerson.getCardName(),cardSolutionWeapon.getCardName(),wrongCardSolutionRoom.getCardName());
-		Solution oneMatchSuggestionRoom = new Solution(wrongCardSolutionPerson.getCardName(),wrongCardSolutionWeapon.getCardName(),cardSolutionRoom.getCardName());
-		//Solution multipleMatchSuggestion = new Solution(cardSolutionPerson.getCardName(),cardSolutionWeapon.getCardName(),cardSolutionRoom.getCardName());
-		Solution noMatchSuggestion = new Solution(wrongCardSolutionPerson.getCardName(),wrongCardSolutionWeapon.getCardName(),wrongCardSolutionRoom.getCardName());
+		Solution oneMatchSuggestionPerson = new Solution(cardSolutionPerson.getCardName(),wrongCardSolutionRoom.getCardName(),wrongCardSolutionWeapon.getCardName());
+		Solution oneMatchSuggestionWeapon = new Solution(wrongCardSolutionPerson.getCardName(),wrongCardSolutionRoom.getCardName(),cardSolutionWeapon.getCardName());
+		Solution oneMatchSuggestionRoom = new Solution(wrongCardSolutionPerson.getCardName(),cardSolutionRoom.getCardName(),wrongCardSolutionWeapon.getCardName());
+		Solution multipleMatchSuggestion = new Solution(cardSolutionPerson.getCardName(),cardSolutionWeapon.getCardName(),cardSolutionRoom.getCardName());
+		Solution noMatchSuggestion = new Solution(wrongCardSolutionPerson.getCardName(),wrongCardSolutionRoom.getCardName(),wrongCardSolutionWeapon.getCardName());
 		
 		
-		wrongPersonSolution = new Solution(wrongCardSolutionPerson.getCardName(),cardSolutionWeapon.getCardName(),cardSolutionRoom.getCardName());
-		wrongWeaponSolution = new Solution(cardSolutionPerson.getCardName(),wrongCardSolutionWeapon.getCardName(),cardSolutionRoom.getCardName());
-		wrongRoomSolution = new Solution(cardSolutionPerson.getCardName(),cardSolutionWeapon.getCardName(),wrongCardSolutionRoom.getCardName());
-
-
 		
 		//If player has only one matching card it should be returned
-		assertEquals(oneMatchSuggestionPerson, Stark.disproveSuggestion(oneMatchSuggestionPerson));
-		assertEquals(oneMatchSuggestionWeapon, Stark.disproveSuggestion(oneMatchSuggestionWeapon));
-		assertEquals(oneMatchSuggestionRoom, Stark.disproveSuggestion(oneMatchSuggestionRoom));
+		assertEquals(oneMatchSuggestionPerson.getPerson(), Stark.disproveSuggestion(oneMatchSuggestionPerson).getCardName());
+		assertEquals(oneMatchSuggestionWeapon.getWeapon(), Stark.disproveSuggestion(oneMatchSuggestionWeapon).getCardName());
+		assertEquals(oneMatchSuggestionRoom.getRoom(), Stark.disproveSuggestion(oneMatchSuggestionRoom).getCardName());
 		
 		//If players has >1 matching card, returned card should be chosen randomly
 		boolean firstTest = false;
@@ -345,11 +340,11 @@ public class gameActionTests {
 		boolean thirdTest = false;
 		boolean allPass =false;
 		for (int i=0; i<100; i++) {
-			if (solution.getPerson().equals(Stark.disproveSuggestion(solution).getCardName()))
+			if (multipleMatchSuggestion.getPerson().equals(Stark.disproveSuggestion(multipleMatchSuggestion).getCardName()))
 				firstTest = true;
-			else if (solution.getPerson().equals(Stark.disproveSuggestion(solution).getCardName()))
+			else if (multipleMatchSuggestion.getWeapon().equals(Stark.disproveSuggestion(multipleMatchSuggestion).getCardName()))
 				secondTest = true;
-			else if (solution.getPerson().equals(Stark.disproveSuggestion(solution).getCardName()))
+			else if (multipleMatchSuggestion.getRoom().equals(Stark.disproveSuggestion(multipleMatchSuggestion).getCardName()))
 				thirdTest = true;
 		}
 		if(firstTest && secondTest && thirdTest  ) {
@@ -361,7 +356,7 @@ public class gameActionTests {
 		//If player has no matching cards, null is returned
 		assertEquals(null, Stark.disproveSuggestion(noMatchSuggestion));
 		assertEquals(null, Natalia.disproveSuggestion(noMatchSuggestion));
-		assertEquals(null, Steve.disproveSuggestion(solution));
+		assertEquals(null, Steve.disproveSuggestion(multipleMatchSuggestion));
 		
 		
 

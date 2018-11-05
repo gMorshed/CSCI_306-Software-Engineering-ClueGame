@@ -38,7 +38,25 @@ public class Player {
 		playersCards.add(card);
 	}
 
-	public Card disproveSuggestion(Solution suggestion) { return null;}
+	public Card disproveSuggestion(Solution suggestion) { 
+		for (int i = 0; i < playersCards.size(); i++) {
+			int j = (int)(Math.random() *  playersCards.size()); // Get a random index out of 52
+			Card temp = playersCards.get(i); // Swap the cards
+			playersCards.set(i, playersCards.get(j));
+			playersCards.set(j, temp);
+		}
+		
+		for(Card card : playersCards)
+		{
+			if((suggestion.getPerson().equals(card.getCardName()) ) || (suggestion.getWeapon().equals(card.getCardName())) || (suggestion.getRoom().equals(card.getCardName()) ) ) {
+				
+				return card;
+				
+			}
+		}
+		
+		
+		return null;}
 
 	public String getPlayerName() {
 		return playerName;
