@@ -103,7 +103,7 @@ public class GameControlGUI extends JPanel {
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Clue Game");
-		frame.setSize(1000, 300);	
+		frame.setSize(750, 250);	
 		// Create the JPanel and add it to the JFrame
 		GameControlGUI gui = new GameControlGUI();
 		frame.add(gui, BorderLayout.CENTER);
