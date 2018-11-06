@@ -37,7 +37,12 @@ public class Player {
 	public void receiveCard(Card card) {
 		playersCards.add(card);
 	}
-
+/**
+ * disprovesuggestion randomizes or shuffles the cards in the players hand and check if the suggestion or accusation matches any one card than 
+ * returns that card and if not thn returns null
+ * @param suggestion
+ * @return
+ */
 	public Card disproveSuggestion(Solution suggestion) { 
 		for (int i = 0; i < playersCards.size(); i++) {
 			int j = (int)(Math.random() *  playersCards.size()); // Get a random index out of 52
@@ -56,7 +61,8 @@ public class Player {
 		}
 		
 		
-		return null;}
+		return null;
+		}
 
 	public String getPlayerName() {
 		return playerName;

@@ -540,9 +540,29 @@ public class Board {
 
 		
 	}
+	/**
+	 * handlesuggestion method cross check the suggestion made by th eplayer with every other player in the list 
+	 * and returns the dissaprovable card if possible and if not then it will return null
+	 * first for loop is from next to player to end and next is from begiining to before player
+	 * @param suggested
+	 * @param player
+	 * @return
+	 */
 
 	public Card handleSuggestion(Solution suggested, Player player) {
-		Card card =new Card("not a card", CardType.PERSON);
+		Card card =null;
+		for(int i=playerList.indexOf(player)+1; i<playerList.size(); i++) { //start after the player
+			card = (playerList.get(i)).disproveSuggestion(suggested);
+			if(card != null) {
+				return card;
+			}
+		}
+		for(int i=0; i<playerList.indexOf(player); i++) { //start after the player
+			card = (playerList.get(i)).disproveSuggestion(suggested);
+			if(card != null) {
+				return card;
+			}
+		}
 		return card;
 	}
 
