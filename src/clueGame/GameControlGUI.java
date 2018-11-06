@@ -11,11 +11,15 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+/**
+*
+* @author Abhaya Shrestha, Kirwinlvinodaq S Lawrence, Gazi Mahbub Morshed
 
-public class ClueGameGUI extends JPanel {
+* */
+public class GameControlGUI extends JPanel {
 	private JTextField textField; // used for text field
 
-	public ClueGameGUI()
+	public GameControlGUI()
 	{
 		// Create a layout with 2 rows
 		setLayout(new GridLayout(2,0));
@@ -30,6 +34,7 @@ public class ClueGameGUI extends JPanel {
 		add(panel);
 		panel = createGuessResultPanel();
 		add(panel);
+		
 	}
 	//display of the roll of the die
 	 private JPanel createRollDiePanel() {
@@ -48,13 +53,14 @@ public class ClueGameGUI extends JPanel {
 	 //display of whose turn it is
 	 private JPanel createTurnPanel() {
 		 JPanel panel = new JPanel();
-		 panel.setLayout(new GridLayout(2, 2));
-		 JLabel nameLabel = new JLabel("Whose turn?");
+		 panel.setLayout(new GridLayout(1, 2));
+		 JLabel nameLabel = new JLabel("");
 		 textField = new JTextField();
 		 textField.setEditable(false);
 		 
 		 panel.add(nameLabel); // this is just going to be a panel rather than having the border as well
 		 panel.add(textField);
+		 panel.setBorder(new TitledBorder(new EtchedBorder(), "Whose turn?"));
 		 return panel;
 	 }
 	 // display of guesses made by other players
@@ -86,7 +92,7 @@ public class ClueGameGUI extends JPanel {
 		JButton nextPlayerButton = new JButton("Next Player");
 		JButton accusationButton = new JButton("Make an accuasation");
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(1, 2));
+		panel.setLayout(new GridLayout(2, 2)); // 2 rows 2 elements which are both buttons
 		panel.add(nextPlayerButton);
 		panel.add(accusationButton);
 		return panel;
@@ -99,7 +105,7 @@ public class ClueGameGUI extends JPanel {
 		frame.setTitle("Clue Game");
 		frame.setSize(1000, 300);	
 		// Create the JPanel and add it to the JFrame
-		ClueGameGUI gui = new ClueGameGUI();
+		GameControlGUI gui = new GameControlGUI();
 		frame.add(gui, BorderLayout.CENTER);
 		// Now let's view it
 		frame.setVisible(true);
