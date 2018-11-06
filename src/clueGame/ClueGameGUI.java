@@ -20,20 +20,16 @@ public class ClueGameGUI extends JPanel {
 		// Create a layout with 2 rows
 		setLayout(new GridLayout(2,0));
 		JPanel panel;
-		JPanel panel2;
-		JPanel panel3;
-		JPanel panel4;
-		JPanel panel5;
 		panel = createTurnPanel();
 		add(panel);
-		panel2 = createButtonPanel();
-		add(panel2);
-		panel3 = createRollDiePanel();
-		add(panel3);
-		panel4 = createGuessPanel();
-		add(panel4);
-		panel5 = createGuessResultPanel();
-		add(panel5);
+		panel = createButtonPanel();
+		add(panel);
+		panel = createRollDiePanel();
+		add(panel);
+		panel = createGuessPanel();
+		add(panel);
+		panel = createGuessResultPanel();
+		add(panel);
 	}
 	//display of the roll of the die
 	 private JPanel createRollDiePanel() {
@@ -43,10 +39,9 @@ public class ClueGameGUI extends JPanel {
 		 	JLabel nameLabel = new JLabel("Roll");
 			textField = new JTextField(20);
 			textField.setEditable(false); // can't edit this text field
-			//textField.setSize(3, 5);
-			panel.add(nameLabel);
+			panel.add(nameLabel); // add the nameLabel and the textfield in the panel
 			panel.add(textField);
-			panel.setBorder(new TitledBorder (new EtchedBorder(), "Die"));
+			panel.setBorder(new TitledBorder (new EtchedBorder(), "Die")); // titling the border Die
 			panel.setPreferredSize(new Dimension(2, 2));
 			return panel;
 	}
@@ -58,7 +53,7 @@ public class ClueGameGUI extends JPanel {
 		 textField = new JTextField();
 		 textField.setEditable(false);
 		 
-		 panel.add(nameLabel);
+		 panel.add(nameLabel); // this is just going to be a panel rather than having the border as well
 		 panel.add(textField);
 		 return panel;
 	 }
@@ -88,7 +83,6 @@ public class ClueGameGUI extends JPanel {
 	 }
 	//Creates the buttons Next Player and make an accusation 
 	private JPanel createButtonPanel() {
-		// no layout specified, so this is flow
 		JButton nextPlayerButton = new JButton("Next Player");
 		JButton accusationButton = new JButton("Make an accuasation");
 		JPanel panel = new JPanel();
