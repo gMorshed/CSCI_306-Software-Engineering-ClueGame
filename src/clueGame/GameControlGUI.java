@@ -18,7 +18,10 @@ import javax.swing.border.TitledBorder;
 * */
 public class GameControlGUI extends JPanel {
 	private JTextField textField; // used for text field
-
+	/**
+	 * The game Control GUI constructor will add all the panels
+	 * and the buttons
+	 */
 	public GameControlGUI()
 	{
 		// Create a layout with 2 rows
@@ -30,7 +33,7 @@ public class GameControlGUI extends JPanel {
 		JButton nextPlayerButton = new JButton("Next Player"); // creates the button
 	    JButton accusationButton = new JButton("Make an accuasation");
 	
-		add(panel);
+		add(panel); // adds it to the first row
 		add(intermediatePanel);
 		panel.add(createTurnPanel());
 		panel.add(nextPlayerButton);
@@ -41,7 +44,10 @@ public class GameControlGUI extends JPanel {
 		intermediatePanel.add(createGuessResultPanel());
 		
 	}
-	//display of the roll of the die
+	/**
+	 * display of the roll of the die
+	 * @return
+	 */
 	 private JPanel createRollDiePanel() {
 		 	JPanel diePanel = new JPanel();
 		 	// diePanel.setLayout(new GridLayout(1,1));
@@ -57,7 +63,10 @@ public class GameControlGUI extends JPanel {
 			diePanel.add(textField);
 			return diePanel;
 	}
-	 //display of whose turn it is
+	 /**
+	  * display of whose turn it is
+	  * @return
+	  */
 	 private JPanel createTurnPanel() {
 		 JPanel panel = new JPanel();
 		 panel.setLayout(new GridLayout(2, 2));
@@ -73,7 +82,10 @@ public class GameControlGUI extends JPanel {
 		 panelBackground.add(panel);
 		 return panelBackground;
 	 }
-	 // display of guesses made by other players
+	 /**
+	  * display of guesses made by other players
+	  * @return
+	  */
 	 private JPanel createGuessPanel() {
 		 JPanel panel = new JPanel();
 		 panel.setLayout(new GridLayout(2, 2));
@@ -87,7 +99,10 @@ public class GameControlGUI extends JPanel {
 		 panel.setBorder(new TitledBorder (new EtchedBorder(), "Guess"));
 		 return panel;
 	 }
-	 //display of the result
+	 /**
+	  * display of the result
+	  * @return
+	  */
 	 private JPanel createGuessResultPanel() {
 		 JPanel panel = new JPanel();
 		 panel.setLayout(new GridLayout(2, 2));
@@ -101,7 +116,10 @@ public class GameControlGUI extends JPanel {
 		 panel.setBorder(new TitledBorder (new EtchedBorder(), "Guess Result"));
 		 return panel;
 	 }
-	//main method to display the panel
+	/**
+	 * main method to display the panel
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		// Create a JFrame with all the normal functionality
 		JFrame frame = new JFrame();
