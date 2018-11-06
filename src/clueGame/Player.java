@@ -1,5 +1,9 @@
 package clueGame;
-
+/**
+*
+* @author Abhaya Shrestha, Kirwinlvinodaq S Lawrence, Gazi Mahbub Morshed
+*
+* */
 import java.awt.Color;
 import java.io.FileReader;
 import java.util.ArrayList;

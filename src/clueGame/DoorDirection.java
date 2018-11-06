@@ -1,6 +1,10 @@
 package clueGame;
-
 /**
+*
+* @author Abhaya Shrestha, Kirwinlvinodaq S Lawrence, Gazi Mahbub Morshed
+
+*
+*
  * Enumerator DoorDirection has attributes UP, DOWN, LEFT, RIGHT, NONE
  * These are the directions for the doorway
  */
