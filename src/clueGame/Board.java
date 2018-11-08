@@ -566,5 +566,9 @@ public class Board {
 		return card;
 	}
 
+	public ArrayList<Card> getAllCards() {
+		return allCards;
+	}
+
 
 }
