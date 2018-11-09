@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.io.FileNotFoundException;
 
 import java.io.FileReader;
@@ -8,6 +9,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Field;
 import java.util.*;
+
+import javax.swing.JPanel;
 
 
 
@@ -22,7 +25,7 @@ import java.util.*;
  *         which read the .csv and .txt files respectively.
  * 
  */
-public class Board {
+public class Board extends JPanel{
 	// public constants
 	public static final int MAX_BOARD_SIZE = 50; // we do not know how big the grid might be
 	public static final int MIN_BOARD_SIZE = 0; // we do not know what is the minimum a grid can go
@@ -100,6 +103,8 @@ public class Board {
 		deckOfCards = new ArrayList<Card>();
 		gameSolution = new Solution("", "", "");
 		allCards = new ArrayList<Card>();
+		//setBackground(Color.PINK); //find me the color
+		setVisible(true);
 	}
 	// this method returns the only Board
 
@@ -569,6 +574,20 @@ public class Board {
 	public ArrayList<Card> getAllCards() {
 		return allCards;
 	}
+	
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);	
+		for(int i = 0 ; i < numRows; i++) {
+			
+			for(int j = 0 ; j < numColumns; j++) {
+				
+				grid[i][j].draw(g);
+			}
+			
+		}
+		
+	}
+	
 
 
 }

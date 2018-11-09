@@ -26,9 +26,9 @@ public class DetectiveNotes extends JDialog {
 		setLayout(new GridLayout(3, 2));
 		add(showPeople(board));
 		add(showPersonGuess(board));
-		add(showRooms());
+		add(showRooms(board));
 		add(showRoomGuess(board));
-		add(showWeapons());
+		add(showWeapons(board));
 		add(showWeaponGuess(board));
 		setVisible(true);
 		//setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
@@ -66,8 +66,10 @@ public class DetectiveNotes extends JDialog {
 			}
 		}
 		personGuess.addItem("Unsure");
+		//JPanel interPanel = new JPanel();
+		//interPanel.add(personGuess);
 		JPanel personGuessPanel = new JPanel();
-		personGuessPanel.add(personGuess, BorderLayout.WEST);
+		personGuessPanel.add(personGuess);
 		personGuessPanel.setBorder(new TitledBorder(new EtchedBorder(), "Person Guess"));
 		personGuessPanel.setLayout(new GridLayout(1, 2));
 		return personGuessPanel;
@@ -78,8 +80,15 @@ public class DetectiveNotes extends JDialog {
 	 * for this dialog class
 	 * @return
 	 */
-	public JPanel showRooms() {
-		return new JPanel();
+	public JPanel showRooms(Board board) {
+		JPanel roomPanel = new JPanel();
+		roomPanel.setBorder(new TitledBorder(new EtchedBorder(), "Rooms"));
+		roomPanel.setLayout(new GridLayout(5, 2));
+		for(Card card : board.getAllCards()) {
+			if(card.getCardType()==CardType.ROOM)
+				roomPanel.add(new JCheckBox(card.getCardName()));
+		}
+		return roomPanel;
 	}
 	
 	/**
@@ -108,8 +117,15 @@ public class DetectiveNotes extends JDialog {
 	 * for this dialog class
 	 * @return
 	 */
-	public JPanel showWeapons() {
-		return new JPanel();
+	public JPanel showWeapons(Board board) {
+		JPanel weaponPanel = new JPanel();
+		weaponPanel.setBorder(new TitledBorder(new EtchedBorder(), "Weapons"));
+		weaponPanel.setLayout(new GridLayout(3, 2));
+		for(Card card : board.getAllCards()) {
+			if(card.getCardType()==CardType.WEAPON)
+				weaponPanel.add(new JCheckBox(card.getCardName()));
+		}
+		return weaponPanel;
 	}
 	/**
 	 * Creates the Weapon Guess

@@ -1,6 +1,9 @@
 
 package clueGame;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 /**
 *
 * @author Abhaya Shrestha, Kirwinlvinodaq S Lawrence, Gazi Mahbub Morshed
@@ -23,11 +26,18 @@ public class BoardCell {
 	private char initial;
 
 	private DoorDirection doorDirection;
+	
+	//private Color color; // color of the board cell
+	
+	// Constants variables used for the draw method
+	public static final int WIDTH = 25;
+	public static final int DOOR_LENGTH = 5;
 
 	public BoardCell(int row, int column) {
 		super();
 		this.row = row;
 		this.column = column;
+		
 	}
 
 	/**
@@ -81,6 +91,7 @@ public class BoardCell {
 		return (initial == 'W');
 	}
 
+
 	/**
 	 * Checks if the BoardCell is a room
 	 */
@@ -98,6 +109,40 @@ public class BoardCell {
 	@Override
 	public String toString() {
 		return "( " + row + ", " + column + ", " + initial + " )";
+	}
+	
+	public void draw(Graphics g) {
+		int x = row * WIDTH;
+		int y = column*WIDTH;
+		if(this.isWalkway()) {
+			g.setColor(Color.YELLOW);
+			g.fillRect(x, y, WIDTH, WIDTH);
+			g.setColor(Color.BLACK);
+			g.drawRect(x, y, WIDTH, WIDTH);
+		}
+		else if(this.isDoorway()) {
+			g.setColor(Color.LIGHT_GRAY);
+			g.fillRect(x, y, WIDTH, WIDTH);
+			g.setColor(Color.BLUE);
+			if(this.doorDirection == DoorDirection.RIGHT) {
+				g.drawRect(x+WIDTH-DOOR_LENGTH, y, DOOR_LENGTH, WIDTH);
+			}
+			else if(this.doorDirection == DoorDirection.LEFT) {
+				g.drawRect(x, y, DOOR_LENGTH, WIDTH);
+			}
+			else if(this.doorDirection == DoorDirection.DOWN) {
+				g.drawRect(x, y+WIDTH - DOOR_LENGTH, DOOR_LENGTH, WIDTH);
+			}
+			else if(this.doorDirection == DoorDirection.UP) {
+				g.drawRect(x, y, WIDTH, DOOR_LENGTH);
+			}
+		}
+		else {
+			g.setColor(Color.LIGHT_GRAY);
+			g.fillRect(x, y, WIDTH, WIDTH);
+			
+		}
+		
 	}
 
 	
