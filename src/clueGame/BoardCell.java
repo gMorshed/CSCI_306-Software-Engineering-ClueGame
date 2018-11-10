@@ -3,6 +3,10 @@ package clueGame;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+
+import javax.swing.JLabel;
 
 /**
 *
@@ -30,9 +34,8 @@ public class BoardCell {
 	//private Color color; // color of the board cell
 	
 	// Constants variables used for the draw method
-	public static final int WIDTH = 25;
+	public static final int WIDTH = 30;
 	public static final int DOOR_LENGTH = 5;
-
 	public BoardCell(int row, int column) {
 		super();
 		this.row = row;
@@ -114,36 +117,38 @@ public class BoardCell {
 	public void draw(Graphics g) {
 		int x = row * WIDTH;
 		int y = column*WIDTH;
+		
 		if(this.isWalkway()) {
 			g.setColor(Color.YELLOW);
-			g.fillRect(x, y, WIDTH, WIDTH);
+			g.fillRect(y, x, WIDTH, WIDTH);
 			g.setColor(Color.BLACK);
-			g.drawRect(x, y, WIDTH, WIDTH);
+			g.drawRect(y, x, WIDTH, WIDTH);
 		}
 		else if(this.isDoorway()) {
 			g.setColor(Color.LIGHT_GRAY);
-			g.fillRect(x, y, WIDTH, WIDTH);
+			g.fillRect(y, x, WIDTH, WIDTH);
 			g.setColor(Color.BLUE);
 			if(this.doorDirection == DoorDirection.RIGHT) {
-				g.drawRect(x+WIDTH-DOOR_LENGTH, y, DOOR_LENGTH, WIDTH);
+				//g.drawRect(x+WIDTH-DOOR_LENGTH, y, DOOR_LENGTH, WIDTH);
+				g.drawRect(y+WIDTH-DOOR_LENGTH, x, DOOR_LENGTH, WIDTH );
+				g.fillRect(y+WIDTH-DOOR_LENGTH, x, DOOR_LENGTH, WIDTH );
 			}
 			else if(this.doorDirection == DoorDirection.LEFT) {
-				g.drawRect(x, y, DOOR_LENGTH, WIDTH);
+				g.drawRect(y, x, DOOR_LENGTH,WIDTH);
+				g.fillRect(y, x, DOOR_LENGTH,WIDTH);
 			}
 			else if(this.doorDirection == DoorDirection.DOWN) {
-				g.drawRect(x, y+WIDTH - DOOR_LENGTH, DOOR_LENGTH, WIDTH);
+				g.drawRect(y, x+WIDTH-DOOR_LENGTH, WIDTH, DOOR_LENGTH);
+				g.fillRect(y, x+WIDTH-DOOR_LENGTH, WIDTH, DOOR_LENGTH);
 			}
 			else if(this.doorDirection == DoorDirection.UP) {
-				g.drawRect(x, y, WIDTH, DOOR_LENGTH);
+				g.drawRect(y, x, WIDTH, DOOR_LENGTH);
+				g.fillRect(y, x, WIDTH, DOOR_LENGTH);
 			}
 		}
 		else {
 			g.setColor(Color.LIGHT_GRAY);
-			g.fillRect(x, y, WIDTH, WIDTH);
-			
-		}
-		
+			g.fillRect(y, x, WIDTH, WIDTH);
+		}	
 	}
-
-	
 }

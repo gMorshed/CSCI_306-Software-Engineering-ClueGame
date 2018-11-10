@@ -1,7 +1,9 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.io.FileNotFoundException;
 
 import java.io.FileReader;
@@ -10,7 +12,9 @@ import java.io.Reader;
 import java.lang.reflect.Field;
 import java.util.*;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 
 
@@ -49,6 +53,7 @@ public class Board extends JPanel{
 	private ArrayList<Card> deckOfCards, allCards; // deck of cards, and allCards is the copy
 	private Solution gameSolution; // Solution for the game
 	
+	private boolean isName=false;
 	
 	public Solution getGameSolution() {
 		return gameSolution;
@@ -104,6 +109,11 @@ public class Board extends JPanel{
 		gameSolution = new Solution("", "", "");
 		allCards = new ArrayList<Card>();
 		//setBackground(Color.PINK); //find me the color
+		//setLayout(new GridLayout(1,0));
+//		JLabel textField = new JLabel("Presidential Suite"); // textfield with 3 columns
+//		//textField.setFont(new Font("Presidential Suite", Font.BOLD, 12));
+//		textField.setLocation(18, 8);
+//		add(textField);
 		setVisible(true);
 	}
 	// this method returns the only Board
@@ -576,16 +586,28 @@ public class Board extends JPanel{
 	}
 	
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);	
 		for(int i = 0 ; i < numRows; i++) {
-			
 			for(int j = 0 ; j < numColumns; j++) {
-				
 				grid[i][j].draw(g);
 			}
 			
 		}
-		
+		//just magic draw jazz hands
+		g.setColor(Color.BLACK);
+		g.drawString("Presidential Suite", 1*30, 3*30);
+		g.drawString("Library", 8*30, 2*30);
+		g.drawString("Study", 15*30, 3*30);
+		g.drawString("Billiard Room", 1*30, 12*30);
+		g.drawString("Family Room", 14*30, 12*30);
+		g.drawString("Mancave", 1*30, 20*30);
+		g.drawString("Dining room", 7*30, 20*30);
+		g.drawString("Nursery", 15*30, 16*30);
+		g.drawString("Home Office", 14*30, 21*30);
+		g.drawString("Closet", 9*30, 11*30);
+		// drawing location for the player
+		for(Player p : playerList) {
+			p.draw(g);
+		}
 	}
 	
 

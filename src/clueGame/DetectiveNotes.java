@@ -23,6 +23,7 @@ public class DetectiveNotes extends JDialog {
 	public DetectiveNotes(Board board) {
 		setTitle("Detective Notes");
 		setSize(700, 700);
+		
 		setLayout(new GridLayout(3, 2));
 		add(showPeople(board));
 		add(showPersonGuess(board));

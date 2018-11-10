@@ -3,10 +3,15 @@ package clueGame;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
@@ -31,23 +36,57 @@ public class GameControlGUI extends JPanel {
 		// Create a layout with 2 rows
 		setLayout(new GridLayout(2, 0));
 		JPanel panel = new JPanel();
+		//JPanel board = boardPanel();
+		
 		panel.setLayout(new GridLayout(1, 2));
 		JPanel intermediatePanel = new JPanel();
 		intermediatePanel.setLayout(new GridLayout(1, 3));
 		JButton nextPlayerButton = new JButton("Next Player"); // creates the button
 		JButton accusationButton = new JButton("Make an accuasation");
-
+		//add(boardPanel()); // adding the board
 		add(panel); // adds it to the first row
 		add(intermediatePanel);
 		panel.add(createTurnPanel());
-		panel.add(nextPlayerButton);
+		panel.add(nextPlayerButton); // add the buttons to this panel
 		panel.add(accusationButton);
 
 		intermediatePanel.add(createRollDiePanel());
 		intermediatePanel.add(createGuessPanel());
 		intermediatePanel.add(createGuessResultPanel());
+		
 
 	}
+	
+	public JMenu createFileMenu() {
+		JMenu menu = new JMenu("File");
+		menu.add(createFileExitItem());
+		menu.add(createDetectiveFileItem());
+		return menu;
+	}
+	private JMenuItem createFileExitItem() {
+		JMenuItem exit = new JMenuItem("Exit");
+		class MenuItemListener implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+			System.exit(0);
+		}
+			
+		}
+		exit.addActionListener(new MenuItemListener());
+		return exit;
+	}
+	private JMenuItem createDetectiveFileItem() {
+		JMenuItem detectiveNotes = new JMenuItem("Show Notes");
+		class MenuItemListener implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+		    Board board = Board.getInstance();
+			DetectiveNotes notes = new DetectiveNotes(board);
+		}
+			
+		}
+		detectiveNotes.addActionListener(new MenuItemListener());
+		return detectiveNotes;
+	}
+
 
 	/**
 	 * display of the roll of the die
@@ -128,21 +167,12 @@ public class GameControlGUI extends JPanel {
 		panel.setBorder(new TitledBorder(new EtchedBorder(), "Guess Result"));
 		return panel;
 	}
-
 	/**
-	 * main method to display the panel
-	 * 
-	 * @param args
+	 * Create the board panel
+	 * @return
 	 */
-	public static void main(String[] args) {
-		// Create a JFrame with all the normal functionality
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("Clue Game");
-		frame.setSize(500, 500);
-		// Create the JPanel and add it to the JFrame
-	//	GameControlGUI gui = new GameControlGUI();
-	//	frame.add(gui, BorderLayout.CENTER);
+	private JPanel boardPanel() {
+		//JPanel panel = new JPanel();
 		Board board;
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
@@ -153,9 +183,29 @@ public class GameControlGUI extends JPanel {
 		// Initialize will load BOTH config files 
 		board.initialize();
 		board.dealCards();
-		//board.paintComponent(g);
-		frame.add(board, BorderLayout.CENTER );
-		// Now let's view it
+		//panel.add(board);
+		return board;
+		
+	}
+	/**
+	 * main method to display the panel
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// Create a JFrame with all the normal functionality
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setTitle("Clue Game");
+		frame.setSize(950, 950);
+		// Create the JPanel and add it to the JFrame
+		GameControlGUI gui = new GameControlGUI();
+		frame.add(gui, BorderLayout.SOUTH);
+		frame.add(gui.boardPanel(), BorderLayout.CENTER);
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.add(gui.createFileMenu());
+		frame.setJMenuBar(menuBar);
+
 		frame.setVisible(true);
 		
 	}

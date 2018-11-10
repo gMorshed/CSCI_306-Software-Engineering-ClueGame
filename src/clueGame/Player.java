@@ -5,11 +5,14 @@ package clueGame;
 *
 * */
 import java.awt.Color;
+import java.awt.Graphics;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Player {
+
+	private static final int WIDTH = 30;
 
 	private String playerName;
 	
@@ -93,6 +96,13 @@ public class Player {
 	
 	public boolean isHuman() {
 		return human;
+	}
+
+	public void draw(Graphics g) {
+		int y= this.getColumn() * WIDTH;
+		int x= this.getRow() * WIDTH;
+		g.setColor(this.getColor());
+		g.fillOval(y,x, WIDTH-3, WIDTH-3);
 	}
 
 
