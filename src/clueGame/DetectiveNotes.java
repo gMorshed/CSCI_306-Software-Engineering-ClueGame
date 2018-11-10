@@ -18,15 +18,17 @@ import clueGame.Board;
  * @author Abhaya Shrestha, Kirwinlvinodaq S Lawrence, Gazi Mahbub Morshed 
  * 
  * Creates the detective note which is a dialog box that has several panels, such as weapon guess, people guess,
- * etc. show in the diagram for the assignment. 
+ * etc. show in the diagram for the assignment. This dialog box is later used in the GameControlGUI class. 
  * 
  *
  */
 public class DetectiveNotes extends JDialog {
 	//instance variables
-	private JComboBox<String> personGuess, roomGuess, weaponGuess;
+	private JComboBox<String> personGuess, roomGuess, weaponGuess; // use the respective named combo box for each guess panel
 	/**
 	 * Constructor
+	 * Sets up a dialog box of size 700 by 700, and adds all the panels (weapon guess,
+	 * people guess etc.) into the dialog box
 	 */
 	public DetectiveNotes(Board board) { 
 		setTitle("Detective Notes");
@@ -68,15 +70,13 @@ public class DetectiveNotes extends JDialog {
 	 */
 	
 	public JPanel showPersonGuess(Board board) {
-		personGuess = new JComboBox<String>();
+		personGuess = new JComboBox<String>(); 
 		for(Card card: board.getAllCards()) {
 			if(card.getCardType() == CardType.PERSON) {
 			personGuess.addItem(card.getCardName());
 			}
 		}
-		personGuess.addItem("Unsure");
-		//JPanel interPanel = new JPanel();
-		//interPanel.add(personGuess);
+		personGuess.addItem("Unsure"); // adding an unsure combo box item for the best guess 
 		JPanel personGuessPanel = new JPanel();
 		personGuessPanel.add(personGuess);
 		personGuessPanel.setBorder(new TitledBorder(new EtchedBorder(), "Person Guess"));

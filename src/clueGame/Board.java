@@ -580,11 +580,21 @@ public class Board extends JPanel{
 		}
 		return card;
 	}
-
+	/**
+	 * getter for allCards instance variable
+	 * @return
+	 */
 	public ArrayList<Card> getAllCards() {
 		return allCards;
 	}
 	
+	/**
+	 * paint component paints the gird using the BoardCell draw method
+	 * for each cell in the grid. It also draws the players using the draw
+	 * player method.
+	 * It also names the rooms respectively. 
+	 * 
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		for(int i = 0 ; i < numRows; i++) {
@@ -593,7 +603,7 @@ public class Board extends JPanel{
 			}
 			
 		}
-		//just magic draw jazz hands
+		//naming the rooms with the set color and drawstring method
 		g.setColor(Color.BLACK);
 		g.drawString("Presidential Suite", 1*30, 3*30);
 		g.drawString("Library", 8*30, 2*30);

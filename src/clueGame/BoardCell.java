@@ -114,23 +114,28 @@ public class BoardCell {
 		return "( " + row + ", " + column + ", " + initial + " )";
 	}
 	
+	/**
+	 * Using the graphics draws the BoardCell object
+	 * Colors the walkway cells yellow, the room cells light gray, and then doorway a mix of light gray and blue
+	 * where blue is color of the door direction. 
+	 * @param g
+	 */
 	public void draw(Graphics g) {
 		int x = row * WIDTH;
 		int y = column*WIDTH;
 		
 		if(this.isWalkway()) {
-			g.setColor(Color.YELLOW);
+			g.setColor(Color.YELLOW); // if it is a walkway then we just color it yellow
 			g.fillRect(y, x, WIDTH, WIDTH);
 			g.setColor(Color.BLACK);
 			g.drawRect(y, x, WIDTH, WIDTH);
 		}
 		else if(this.isDoorway()) {
-			g.setColor(Color.LIGHT_GRAY);
+			g.setColor(Color.LIGHT_GRAY); // if it is a doorway we color it light gray first
 			g.fillRect(y, x, WIDTH, WIDTH);
 			g.setColor(Color.BLUE);
 			if(this.doorDirection == DoorDirection.RIGHT) {
-				//g.drawRect(x+WIDTH-DOOR_LENGTH, y, DOOR_LENGTH, WIDTH);
-				g.drawRect(y+WIDTH-DOOR_LENGTH, x, DOOR_LENGTH, WIDTH );
+				g.drawRect(y+WIDTH-DOOR_LENGTH, x, DOOR_LENGTH, WIDTH ); // with respective coordinates, we color the door length rectangle
 				g.fillRect(y+WIDTH-DOOR_LENGTH, x, DOOR_LENGTH, WIDTH );
 			}
 			else if(this.doorDirection == DoorDirection.LEFT) {
@@ -147,7 +152,7 @@ public class BoardCell {
 			}
 		}
 		else {
-			g.setColor(Color.LIGHT_GRAY);
+			g.setColor(Color.LIGHT_GRAY); // else just color it light gray
 			g.fillRect(y, x, WIDTH, WIDTH);
 		}	
 	}

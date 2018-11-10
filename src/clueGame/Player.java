@@ -2,7 +2,8 @@ package clueGame;
 /**
 *
 * @author Abhaya Shrestha, Kirwinlvinodaq S Lawrence, Gazi Mahbub Morshed
-*
+*	Player class for the board
+*	Describes each player with the components
 * */
 import java.awt.Color;
 import java.awt.Graphics;
@@ -98,11 +99,18 @@ public class Player {
 		return human;
 	}
 
+	/**
+	 * Draws the graphics for the player.
+	 * Sets the color of the player with the respective color,
+	 * and draws the player in x and y coordinate scaled accordingly to the width of the board.
+	 * 
+	 * @param g
+	 */
 	public void draw(Graphics g) {
 		int y= this.getColumn() * WIDTH;
 		int x= this.getRow() * WIDTH;
 		g.setColor(this.getColor());
-		g.fillOval(y,x, WIDTH-3, WIDTH-3);
+		g.fillOval(y,x, WIDTH, WIDTH);
 	}
 
 

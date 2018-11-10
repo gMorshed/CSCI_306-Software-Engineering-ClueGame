@@ -56,13 +56,23 @@ public class GameControlGUI extends JPanel {
 		
 
 	}
-	
+	/**
+	 * Creates the menu bar with the options to exit the game
+	 * and to see the detective notes
+	 * @return
+	 */
 	public JMenu createFileMenu() {
 		JMenu menu = new JMenu("File");
 		menu.add(createFileExitItem());
 		menu.add(createDetectiveFileItem());
 		return menu;
 	}
+	/**
+	 * Creates the exit menu option for the menu bar
+	 * This has an action listner for when you click exit,
+	 * it will exit the game
+	 * @return
+	 */
 	private JMenuItem createFileExitItem() {
 		JMenuItem exit = new JMenuItem("Exit");
 		class MenuItemListener implements ActionListener {
@@ -74,6 +84,12 @@ public class GameControlGUI extends JPanel {
 		exit.addActionListener(new MenuItemListener());
 		return exit;
 	}
+	/**
+	 * Creates the Show Notes menu option for the menu bar
+	 * This has an action listener for when you click Show Notes,
+	 * it will show the detective notes for the game
+	 * @return
+	 */
 	private JMenuItem createDetectiveFileItem() {
 		JMenuItem detectiveNotes = new JMenuItem("Show Notes");
 		class MenuItemListener implements ActionListener {
@@ -189,7 +205,7 @@ public class GameControlGUI extends JPanel {
 	}
 	/**
 	 * main method to display the panel
-	 * 
+	 * This will display the frame with the board, game control gui, and the menu with detective notes. 
 	 * @param args
 	 */
 	public static void main(String[] args) {
