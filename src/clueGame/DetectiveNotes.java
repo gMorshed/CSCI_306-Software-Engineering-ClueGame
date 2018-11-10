@@ -13,14 +13,22 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import clueGame.Board;
-
+/**
+ * 
+ * @author Abhaya Shrestha, Kirwinlvinodaq S Lawrence, Gazi Mahbub Morshed 
+ * 
+ * Creates the detective note which is a dialog box that has several panels, such as weapon guess, people guess,
+ * etc. show in the diagram for the assignment. 
+ * 
+ *
+ */
 public class DetectiveNotes extends JDialog {
 	//instance variables
 	private JComboBox<String> personGuess, roomGuess, weaponGuess;
 	/**
 	 * Constructor
 	 */
-	public DetectiveNotes(Board board) {
+	public DetectiveNotes(Board board) { 
 		setTitle("Detective Notes");
 		setSize(700, 700);
 		

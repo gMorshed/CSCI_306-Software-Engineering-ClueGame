@@ -586,6 +586,7 @@ public class Board extends JPanel{
 	}
 	
 	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		for(int i = 0 ; i < numRows; i++) {
 			for(int j = 0 ; j < numColumns; j++) {
 				grid[i][j].draw(g);
