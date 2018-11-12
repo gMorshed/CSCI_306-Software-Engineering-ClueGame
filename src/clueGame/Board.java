@@ -154,16 +154,6 @@ public class Board extends JPanel{
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
 		}
-//		roomNamesCoordinate.add(grid[1][3]); // coordinates represent the place where we want to name the rooms
-//		roomNamesCoordinate.add(grid[8][2]);
-//		roomNamesCoordinate.add(grid[15][3]);
-//		roomNamesCoordinate.add(grid[1][12]);
-//		roomNamesCoordinate.add(grid[14][12]);
-//		roomNamesCoordinate.add(grid[1][20]);
-//		roomNamesCoordinate.add(grid[7][20]);
-//		roomNamesCoordinate.add(grid[15][16]);
-//		roomNamesCoordinate.add(grid[14][21]);
-//		roomNamesCoordinate.add(grid[9][11]);
 		roomNamesCoordinate.add(grid[3][1]); // coordinates represent the place where we want to name the rooms
 		roomNamesCoordinate.add(grid[2][8]);
 		roomNamesCoordinate.add(grid[3][15]);
