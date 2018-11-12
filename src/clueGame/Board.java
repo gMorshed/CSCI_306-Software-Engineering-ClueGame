@@ -52,8 +52,9 @@ public class Board extends JPanel{
 	private ArrayList <Player> playerList; // list of players in the game
 	private ArrayList<Card> deckOfCards, allCards; // deck of cards, and allCards is the copy
 	private Solution gameSolution; // Solution for the game
+	private ArrayList<BoardCell> roomNamesCoordinate;
 	
-	private boolean isName=false;
+	//private boolean isName=false;
 	
 	public Solution getGameSolution() {
 		return gameSolution;
@@ -108,12 +109,8 @@ public class Board extends JPanel{
 		deckOfCards = new ArrayList<Card>();
 		gameSolution = new Solution("", "", "");
 		allCards = new ArrayList<Card>();
-		//setBackground(Color.PINK); //find me the color
-		//setLayout(new GridLayout(1,0));
-//		JLabel textField = new JLabel("Presidential Suite"); // textfield with 3 columns
-//		//textField.setFont(new Font("Presidential Suite", Font.BOLD, 12));
-//		textField.setLocation(18, 8);
-//		add(textField);
+		roomNamesCoordinate = new ArrayList<BoardCell>(); // list for coordinates for naming the room
+		
 		setVisible(true);
 	}
 	// this method returns the only Board
@@ -153,10 +150,29 @@ public class Board extends JPanel{
 			calcAdjacencies();// then calculating our adjacencies for our matrix
 			loadPeoplecConfigFile();
 			loadDeckOfCards();
+			
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
 		}
-
+//		roomNamesCoordinate.add(grid[1][3]); // coordinates represent the place where we want to name the rooms
+//		roomNamesCoordinate.add(grid[8][2]);
+//		roomNamesCoordinate.add(grid[15][3]);
+//		roomNamesCoordinate.add(grid[1][12]);
+//		roomNamesCoordinate.add(grid[14][12]);
+//		roomNamesCoordinate.add(grid[1][20]);
+//		roomNamesCoordinate.add(grid[7][20]);
+//		roomNamesCoordinate.add(grid[15][16]);
+//		roomNamesCoordinate.add(grid[14][21]);
+//		roomNamesCoordinate.add(grid[9][11]);
+		roomNamesCoordinate.add(grid[3][1]); // coordinates represent the place where we want to name the rooms
+		roomNamesCoordinate.add(grid[2][8]);
+		roomNamesCoordinate.add(grid[3][15]);
+		roomNamesCoordinate.add(grid[12][1]);
+		roomNamesCoordinate.add(grid[12][14]);
+		roomNamesCoordinate.add(grid[20][1]);
+		roomNamesCoordinate.add(grid[20][7]);
+		roomNamesCoordinate.add(grid[16][15]);
+		roomNamesCoordinate.add(grid[21][14]);
 	}
 
 	/**
@@ -604,21 +620,14 @@ public class Board extends JPanel{
 			
 		}
 		//naming the rooms with the set color and drawstring method
-		g.setColor(Color.BLACK);
-		g.drawString("Presidential Suite", 1*30, 3*30);
-		g.drawString("Library", 8*30, 2*30);
-		g.drawString("Study", 15*30, 3*30);
-		g.drawString("Billiard Room", 1*30, 12*30);
-		g.drawString("Family Room", 14*30, 12*30);
-		g.drawString("Mancave", 1*30, 20*30);
-		g.drawString("Dining room", 7*30, 20*30);
-		g.drawString("Nursery", 15*30, 16*30);
-		g.drawString("Home Office", 14*30, 21*30);
-		g.drawString("Closet", 9*30, 11*30);
-		// drawing location for the player
+		for(BoardCell cell : roomNamesCoordinate) {
+			cell.drawName(g, legend.get(cell.getInitial()));
+		}
+		//drawing the players
 		for(Player p : playerList) {
 			p.draw(g);
 		}
+		
 	}
 	
 

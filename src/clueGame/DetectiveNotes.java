@@ -32,7 +32,7 @@ public class DetectiveNotes extends JDialog {
 	 */
 	public DetectiveNotes(Board board) { 
 		setTitle("Detective Notes");
-		setSize(700, 700);
+		setSize(800, 700);
 		
 		setLayout(new GridLayout(3, 2));
 		add(showPeople(board));
@@ -160,19 +160,19 @@ public class DetectiveNotes extends JDialog {
 	/**
 	 * Main method to test
 	 */
-	public static void main(String[] args) {
-		Board board;
-		// Board is singleton, get the only instance
-		board = Board.getInstance();
-		// set the file names to use my config files
-		board.setConfigFiles("Board_Layout.csv", "ClueRooms.txt");	
-		board.setPlayerConfigFile("people.txt");
-		board.setWeaponConfigFile("weapon.txt");
-		// Initialize will load BOTH config files 
-		board.initialize();
-		board.dealCards();
-		DetectiveNotes detectiveNotes = new DetectiveNotes(board);
-	}
+//	public static void main(String[] args) {
+//		Board board;
+//		// Board is singleton, get the only instance
+//		board = Board.getInstance();
+//		// set the file names to use my config files
+//		board.setConfigFiles("Board_Layout.csv", "ClueRooms.txt");	
+//		board.setPlayerConfigFile("people.txt");
+//		board.setWeaponConfigFile("weapon.txt");
+//		// Initialize will load BOTH config files 
+//		board.initialize();
+//		board.dealCards();
+//		DetectiveNotes detectiveNotes = new DetectiveNotes(board);
+//	}
 	
 	
 	
