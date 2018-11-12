@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,8 +13,10 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
@@ -27,6 +30,11 @@ import javax.swing.border.TitledBorder;
  */
 public class GameControlGUI extends JPanel {
 	private JTextField textField; // used for text field
+	private String humanPlayerName="";
+	private Player humanPlayer;
+	public String getHumanPlayerName() {
+		return humanPlayerName;
+	}
 
 	/**
 	 * The game Control GUI constructor will add all the panels and the buttons
@@ -199,9 +207,47 @@ public class GameControlGUI extends JPanel {
 		// Initialize will load BOTH config files 
 		board.initialize();
 		board.dealCards();
+		ArrayList<Player>players = board.getPlayerList();
+		for(Player p : players) { //i am getting the name of the human player so that 
+			//I can print it in the game starting display message
+			if(p.isHuman()) {
+				humanPlayer = p;
+				humanPlayerName = p.getPlayerName();
+				break;
+			}
+		}
 		//panel.add(board);
+		
 		return board;
 		
+	}
+	private JPanel humanPlayerCardPanel() {
+		JPanel cardsPanel = new JPanel();
+		cardsPanel.setLayout(new GridLayout(humanPlayer.getPlayersCards().size(), 0));
+		cardsPanel.setBorder(new TitledBorder(new EtchedBorder(), "My Cards"));
+		for(Card card: (humanPlayer.getPlayersCards() ) ){
+			JPanel aCard = new JPanel();
+			aCard.setLayout(new GridLayout(1, 1));
+			aCard.setBorder(new TitledBorder(new EtchedBorder(),  CardInString(card.getCardType())));
+			JTextField text =new JTextField(10);
+			text.setText(card.getCardName());
+			text.setHorizontalAlignment(JLabel.CENTER);
+			text.setEditable(false);
+			aCard.add(text);
+			cardsPanel.add(aCard);
+		}
+		return cardsPanel;
+	}
+	private String CardInString(CardType card) {
+		switch(card) {
+		case PERSON:
+			return "People";
+		case WEAPON:
+			return "Weapons";
+		case ROOM:
+			return "Rooms";
+		}
+		return null; //it's never gonna hit here		
 	}
 	/**
 	 * main method to display the panel
@@ -213,7 +259,7 @@ public class GameControlGUI extends JPanel {
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Clue Game");
-		frame.setSize(950, 950);
+		frame.setSize(750, 950);
 		// Create the JPanel and add it to the JFrame
 		GameControlGUI gui = new GameControlGUI();
 		frame.add(gui, BorderLayout.SOUTH);
@@ -221,8 +267,10 @@ public class GameControlGUI extends JPanel {
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.add(gui.createFileMenu());
 		frame.setJMenuBar(menuBar);
-
+		frame.add(gui.humanPlayerCardPanel(), BorderLayout.EAST);
 		frame.setVisible(true);
+		//When the game starts, you should display a message
+		JOptionPane.showMessageDialog(frame, "You are "+gui.getHumanPlayerName()+ ", press Next Player To begin play", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
 		
 	}
 
