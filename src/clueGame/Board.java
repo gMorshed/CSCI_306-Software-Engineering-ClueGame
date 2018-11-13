@@ -52,9 +52,7 @@ public class Board extends JPanel{
 	private ArrayList <Player> playerList; // list of players in the game
 	private ArrayList<Card> deckOfCards, allCards; // deck of cards, and allCards is the copy
 	private Solution gameSolution; // Solution for the game
-	
-	private ArrayList<BoardCell> roomNamesCoordinate;
-	
+	private ArrayList<BoardCell> roomNamesCoordinate;	
 	public Solution getGameSolution() {
 		return gameSolution;
 	}
@@ -108,7 +106,7 @@ public class Board extends JPanel{
 		deckOfCards = new ArrayList<Card>();
 		gameSolution = new Solution("", "", "");
 		allCards = new ArrayList<Card>();
-		roomNamesCoordinate = new ArrayList <BoardCell>();
+		roomNamesCoordinate = new ArrayList<BoardCell>(); // list for coordinates for naming the room
 		setVisible(true);
 	}
 	// this method returns the only Board
@@ -148,6 +146,7 @@ public class Board extends JPanel{
 			calcAdjacencies();// then calculating our adjacencies for our matrix
 			loadPeoplecConfigFile();
 			loadDeckOfCards();
+			
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
 		}
@@ -610,10 +609,11 @@ public class Board extends JPanel{
 		for(BoardCell cell : roomNamesCoordinate) {
 			cell.drawName(g, legend.get(cell.getInitial()));
 		}
-		// drawing location for the player
+		//drawing the player
 		for(Player p : playerList) {
 			p.draw(g);
 		}
+		
 	}
 	
 
