@@ -156,4 +156,17 @@ public class BoardCell {
 			g.fillRect(y, x, WIDTH, WIDTH);
 		}	
 	}
+	/**
+	 * Names the room in the board
+	 * @param g
+	 * @param string
+	 */
+	public void drawName(Graphics g, String string) {
+		// TODO Auto-generated method stub
+		int y = this.getRow()*WIDTH;
+		int x = this.getColumn()*WIDTH;
+		g.setColor(Color.BLACK);
+		g.drawString(string, x, y);
+		
+	}
 }

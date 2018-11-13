@@ -44,8 +44,6 @@ public class GameControlGUI extends JPanel {
 		// Create a layout with 2 rows
 		setLayout(new GridLayout(2, 0));
 		JPanel panel = new JPanel();
-		//JPanel board = boardPanel();
-		
 		panel.setLayout(new GridLayout(1, 2));
 		JPanel intermediatePanel = new JPanel();
 		intermediatePanel.setLayout(new GridLayout(1, 3));

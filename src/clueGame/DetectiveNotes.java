@@ -156,29 +156,4 @@ public class DetectiveNotes extends JDialog {
 		
 		return weaponGuessPanel;
 	}
-	
-	/**
-	 * Main method to test
-	 */
-	public static void main(String[] args) {
-		Board board;
-		// Board is singleton, get the only instance
-		board = Board.getInstance();
-		// set the file names to use my config files
-		board.setConfigFiles("Board_Layout.csv", "ClueRooms.txt");	
-		board.setPlayerConfigFile("people.txt");
-		board.setWeaponConfigFile("weapon.txt");
-		// Initialize will load BOTH config files 
-		board.initialize();
-		board.dealCards();
-		DetectiveNotes detectiveNotes = new DetectiveNotes(board);
-	}
-	
-	
-	
-	
-	
-	
-	
-	
 }
