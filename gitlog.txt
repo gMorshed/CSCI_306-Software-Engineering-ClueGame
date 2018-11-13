@@ -1,4 +1,376 @@
-// we did most of the work as pair programming, still the commits are pretty even out between all the team members.
+We have been doing pair programming, so git log file doesn't do justice to group contribution
+All of our partners have contributed. 
+commit 4b294d88e725aee34b7b07a841f8fb0e318eed3d
+Author: Gazi Morshed <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Tue Nov 13 14:41:35 2018 -0700
+
+    changed the way we were drawing rooms in the board, before we were hard coding, now we made an arraylist with the boardcell where we are going to draw the name and calling draw method on them
+
+commit 95cd1411fcb8796f3f9826adb5b6a43009712987
+Author: Gazi Morshed <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Fri Nov 9 19:52:10 2018 -0700
+
+    Display of cards dealt to human
+
+commit 299ea94c36647b7846fbc3aaf4d8fad88515bdd3
+Merge: 02ddd9b 41ed9c3
+Author: Gazi Morshed <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Fri Nov 9 18:40:08 2018 -0700
+
+    Merge branch 'master' of https://github.com/kslawren/ClueGame
+
+commit 02ddd9bb253735310d56dae443fac4251cbef500
+Author: Gazi Morshed <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Fri Nov 9 18:39:44 2018 -0700
+
+    added the pop up window that displays the welcome message
+
+commit 41ed9c3e5b7e173b18ee9034fb73304efeac920b
+Author: Abhaya Shrestha <ashrestha@mines.edu>
+Date:   Fri Nov 9 18:33:23 2018 -0700
+
+    Finalized the comments for the C21A assignment
+
+commit 8f0aaf1d8c38d5221fe8fa31728253ac3cbc669a
+Author: Abhaya Shrestha <ashrestha@mines.edu>
+Date:   Fri Nov 9 18:09:10 2018 -0700
+
+    Made the players be on the edge of the board.
+
+commit 8a35c10a781a0111346a5ba568694785643639f1
+Author: Abhaya Shrestha <ashrestha@mines.edu>
+Date:   Fri Nov 9 17:53:08 2018 -0700
+
+    Made the clue board, players, and the menu bar
+
+commit 5fcfb63c2014f7324aad9ee1bf8f77160cb78f24
+Author: Kirwin <kslawren@mines.edu>
+Date:   Thu Nov 8 17:38:56 2018 -0700
+
+    Made the Board GUI, just need to fix its orientation
+
+commit 5d3304c5277e2b28a344281e6c074b447dc7ca89
+Author: Abhaya Shrestha <ashrestha@mymail.mines.edu>
+Date:   Thu Nov 8 14:44:29 2018 -0700
+
+    Made the detective notes JDialog
+
+commit c674b28703ed19e989dd7f29611fbed8d2c2d70f
+Author: Kirwin <kslawren@mines.edu>
+Date:   Tue Nov 6 16:24:20 2018 -0700
+
+    Made the comments for the game Control GUI
+
+commit ed2711479ab7a11fe14092a95f5d398dd25c6ad9
+Author: Kirwin <kslawren@mines.edu>
+Date:   Tue Nov 6 16:18:10 2018 -0700
+
+    Made the game control gui look better
+
+commit 0836e26aa6c9ac0308ebdf0afc508401af247c7d
+Author: Abhaya Shrestha <ashrestha@mymail.mines.edu>
+Date:   Tue Nov 6 14:11:41 2018 -0700
+
+    Made changes to the size of the main panel
+
+commit 1de6a04bd506137a7f453297d8d2e4b5e4a9a16f
+Author: Abhaya Shrestha <ashrestha@mymail.mines.edu>
+Date:   Tue Nov 6 13:59:53 2018 -0700
+
+    Merged the GUI code with the original branch
+
+commit f02f080164766eedc104bac5d9eaf7c9ec1009f5
+Merge: 36a7158 c998f3e
+Author: Abhaya Shrestha <ashrestha@mymail.mines.edu>
+Date:   Tue Nov 6 08:55:39 2018 -0700
+
+    Merge branch 'GUI'
+
+commit c998f3e490edcf2488c1a2b660cebd0cd7e8dc26
+Author: Abhaya Shrestha <ashrestha@mymail.mines.edu>
+Date:   Tue Nov 6 08:52:02 2018 -0700
+
+    Made the GUI so that only one panel will be used to display everything.
+
+commit 36a71583f9f0a47d845faa3dfd03fea4dc781af9
+Author: Gazi Morshed <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Mon Nov 5 19:12:06 2018 -0700
+
+    commented and explained some of the methods for computer player, all good to go
+
+commit 26b81bc26cb79f329b967ace2eda3918ff1f4114
+Author: Gazi Morshed <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Mon Nov 5 17:28:47 2018 -0700
+
+    passing all passing tests
+
+commit c31ace2f85b0bfe39588d3633ddc27014b72ec5f
+Author: Gazi Morshed <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Mon Nov 5 15:19:52 2018 -0700
+
+    failing all the tests for the handleSuggestion()
+
+commit d45a75dbf614bf7aa3de748bd929087da6bcff14
+Author: kirwin lvinodaq <sonkirwin@hotmail.com>
+Date:   Mon Nov 5 10:44:32 2018 -0700
+
+    pushing in all passing tests test4disproveSuggestion()
+
+commit a3e749501356df2cb866986e73a4a04dc18693a7
+Author: kirwin lvinodaq <sonkirwin@hotmail.com>
+Date:   Mon Nov 5 00:43:58 2018 -0700
+
+    created all successful failing test for test4disproveSuggestion and a stub for handlesuggestion with a small setup but not testing yet
+
+commit 7bd47388a5fda5a938ab687ee92006055e6f7298
+Author: Abhaya Shrestha <ashrestha@mymail.mines.edu>
+Date:   Sun Nov 4 13:41:40 2018 -0700
+
+    Added the clue game gui java file
+
+commit af19ce95fc8230da30e9147272d7c7e676372815
+Merge: d96bffc b1eb9c4
+Author: Gazi Morshed's Home <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Sun Nov 4 09:06:59 2018 -0700
+
+    fixed merge conflict
+
+commit d96bffc3868f98ffc440bc6dd7ae9a22cc1281ff
+Author: Gazi Morshed's Home <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Sun Nov 4 08:59:51 2018 -0700
+
+    all tests passing for create suggestion
+
+commit e6356d9d3db37d9cc28384eb836c9dce02356908
+Author: Gazi Morshed's Home <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Sun Nov 4 08:20:14 2018 -0700
+
+    all the tests for createSuggestions are failing now
+
+commit 2f85cd2859b84e73990aef51b5e0daf6e961a7a6
+Author: Gazi Morshed's Home <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Sat Nov 3 23:43:56 2018 -0600
+
+    failing tests in create suggestions for random weapon choice
+
+commit 52265cb91738609b1b2d830ee662c5f0ac69b0a9
+Author: Gazi Morshed's Home <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Sat Nov 3 23:39:01 2018 -0600
+
+    starting failing test for createSuggestion, failing for randomly choosing person
+
+commit b1eb9c4167b9cde8a2155e2de8dc2a2ae0fc44eb
+Author: kirwin lvinodaq <sonkirwin@hotmail.com>
+Date:   Sat Nov 3 22:53:20 2018 -0600
+
+     completed all passing test test2makeAccusation to ensure all conditions for making accusations pass
+
+commit 14e6d204c754bfa3e3b68efe8b010ba9b3a83aa8
+Author: kirwin lvinodaq <sonkirwin@hotmail.com>
+Date:   Sat Nov 3 20:29:44 2018 -0600
+
+    changed the failing test to fail properly with initialization of solution into board itself first before checking
+
+commit 6a253c1c81231adf4b51736a38b4eb4a9641a0e5
+Author: kirwin lvinodaq <sonkirwin@hotmail.com>
+Date:   Sat Nov 3 19:47:58 2018 -0600
+
+    Added failing tests for test2makeAccusation() for makign accusations
+
+commit b1d88f89772f7d35cfac1a59f596ded8dba24b6b
+Author: Gazi Morshed's Home <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Sat Nov 3 15:25:54 2018 -0600
+
+    added failing tests for the room selection for the target location
+
+commit 8d2edfbd61828429221b4244d819dab7df186e58
+Author: Gazi Morshed <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Fri Nov 2 16:59:35 2018 -0600
+
+    Still working on the failing tests.
+
+commit 0d3f74f9c9b556ec2390a56f9f879e7f03690bda
+Author: Gazi Morshed <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Fri Nov 2 16:34:16 2018 -0600
+
+    starting the gameAction tests, first random target location without any room within target fails
+
+commit 866165f4a4e98129acd7a6cd4bb7501c94c0e05e
+Author: Abhaya Shrestha <ashrestha@mines.edu>
+Date:   Wed Oct 31 17:00:22 2018 -0600
+
+    Made the board class have a solution for the game.
+
+commit b0d098f1f801c41a3ea8bfd2b578ca38ae404ccd
+Author: Kirwin <kslawren@mines.edu>
+Date:   Tue Oct 30 19:22:51 2018 -0600
+
+    everything finalized for the players tests part 1 and all tests pass
+
+commit 68395325fb49bc3c5c8da5924b8e193c1e863553
+Author: Kirwin <kslawren@mines.edu>
+Date:   Tue Oct 30 18:54:33 2018 -0600
+
+    Completed dealing cards and all test passing for c18A-players
+
+commit be2bd9589dd109148f2f265691755856e48b6f97
+Author: Kirwin <kslawren@mines.edu>
+Date:   Tue Oct 30 16:55:49 2018 -0600
+
+    failing tests for dealing cards
+
+commit 85d2fc5db884ab919fa8f341c359aa6ee48cd81f
+Author: Abhaya Shrestha <ashrestha@mines.edu>
+Date:   Tue Oct 30 15:51:12 2018 -0600
+
+    passing all load deck of cards
+
+commit e310cbcf3cd66dec37c90d1179e1acb0c31acf9c
+Author: Gazi Morshed <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Tue Oct 30 15:18:12 2018 -0600
+
+    Halfway through passing the tests for deck of cards
+
+commit 1aba9fd4470b08f100c95c937d99b1345bf251e2
+Author: Gazi Morshed <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Tue Oct 30 14:44:36 2018 -0600
+
+    failing tests for loading the deck of cards
+
+commit 2deb7f2e12657b7153925bd433b376746709ae3e
+Author: Abhaya Shrestha <ashrestha@mymail.mines.edu>
+Date:   Tue Oct 30 14:21:44 2018 -0600
+
+    Made the deck of Cards test.
+
+commit 6a6d103ad7259864b653e1ef9686606d1d7b0389
+Author: Gazi Morshed's Home <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Mon Oct 29 23:21:46 2018 -0600
+
+    tests for players are passing
+
+commit 53a1542489734731c57a44bce392d20faa78ad31
+Author: Gazi Morshed's Home <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Mon Oct 29 21:43:11 2018 -0600
+
+    failing tests for some rows and columns added
+
+commit c37d73b283eeb8fb4f335b3a2b9ab37904649dae
+Author: Gazi Morshed's Home <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Mon Oct 29 21:42:24 2018 -0600
+
+    failing tests to check if they are human
+
+commit 709b2b87d33c0b81eb80d5f03872669b937a812e
+Author: Gazi Morshed's Home <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Mon Oct 29 21:41:37 2018 -0600
+
+    failing tests for player for their color
+
+commit e51e76ec9a56a1492b12d90910f6835686eb70d7
+Author: Gazi Morshed's Home <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Mon Oct 29 21:40:13 2018 -0600
+
+    failing test for people by checking their name
+
+commit 5a3c06aa96fbdf4f7ebb1e5303a4ab78f6cc66c1
+Author: Abhaya Shrestha <ashrestha@mines.edu>
+Date:   Mon Oct 29 16:33:42 2018 -0600
+
+    Made all the specificed new classes from the UML
+
+commit ec3f09b590773f7df271b9fdd2c9559bd392f2ab
+Author: Abhaya Shrestha <ashrestha@mymail.mines.edu>
+Date:   Sun Oct 28 10:51:25 2018 -0600
+
+    Refactor: Made all the comments in the Board.java code make sense after modifying it.
+
+commit 51c298037725eb4142e821bbc2b484a64ad4fe69
+Author: Abhaya Shrestha <ashrestha@mymail.mines.edu>
+Date:   Sun Oct 28 10:05:22 2018 -0600
+
+    Refactor: Modified the calcAdjacencies method and made the Board.java code approximately 50 lines shorter
+
+commit 384fd83e4c3d534b7a8f51b3f097570ee97c6c23
+Author: Gazi Morshed's Home <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Sat Oct 27 21:30:22 2018 -0600
+
+    changed a couple of variable name to adhere to naming covention and merged a couple of if statements for code simplicity and ease of understanding
+
+commit ae9df5443b55fda74c33e8262a7f5467b4790dcb
+Author: Gazi Morshed's Home <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Sat Oct 27 20:31:46 2018 -0600
+
+    changed the if-else statements to direct return statement as sonarLint recommended
+
+commit bdde54b34e9786c6eaf27b7a4554ef24f398781d
+Author: Gazi Morshed's Home <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Sat Oct 27 20:17:27 2018 -0600
+
+    fixed a resource leak bug pointed out by sonarLint
+
+commit b4460605079f9793c3fdec0849c2768f780baf76
+Author: Gazi Morshed's Home <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Sat Oct 27 20:02:48 2018 -0600
+
+    changed 'board' to 'grid' as it makes more sense becasue the class is named Board, so it's wise to not have variable with same name
+
+commit 637122b23d8c103e552bffb02f7f11bbd98caaa2
+Author: kirwin lvinodaq <sonkirwin@hotmail.com>
+Date:   Sat Oct 27 16:29:41 2018 -0600
+
+    Update src/clueGame/Board.java
+    
+    Refactor: changed calctargetshelper to private since only used in board
+
+commit 3748915bae1d88f5e991b3e4edbb111c7f941a47
+Author: Abhaya Shrestha <ashrestha@mymail.mines.edu>
+Date:   Sat Oct 27 16:21:21 2018 -0600
+
+    Refactor: Changed the order of the functions in the board class to have getters and setters first then the particular functions for the board class.
+
+commit 91ea26c8ae83a5456fb9ed86042d43667b281ded
+Author: kirwin lvinodaq <sonkirwin@hotmail.com>
+Date:   Sat Oct 27 16:02:53 2018 -0600
+
+    commit on refactor
+    
+    Refactor: changed exception catching in badconfigformat to Return the detail message string of this throwable
+    
+    Refactor: changed exception in initialize for board.java to work with local instance of room and board config
+    
+    Refactor: changed exception in loadroomconfig for board.java to spit out a detailed message
+
+commit b75b89171983b7f0f6e1126c89e9da81cc4c4464
+Author: Abhaya Shrestha <ashrestha@mymail.mines.edu>
+Date:   Sat Oct 27 15:24:17 2018 -0600
+
+    Ignore this commit: Fixed the error of the javadoc pushing
+
+commit de39ad3289e6c4101ffdd019ed22e773cfc347e1
+Author: Abhaya Shrestha <ashrestha@mymail.mines.edu>
+Date:   Sat Oct 27 15:14:19 2018 -0600
+
+    Refactoring: got rid of the enum magic constants and made the code less bug prone by setting constants inside the enum
+
+commit 9ae992e4ba018527f80e246639af49cd9859c996
+Author: Abhaya Shrestha <ashrestha@mines.edu>
+Date:   Thu Oct 25 15:15:18 2018 -0600
+
+    Refactoring: made the comments make sense on BadConfig, Board,and DoorDirection files
+
+commit d2e98973aa186f2125a1f6d574a650223879293d
+Author: Gazi Morshed <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Fri Oct 19 17:13:29 2018 -0600
+
+    fixed some comments and added author name
+
+commit 390a4225580ed49029b2b8c1b061a6bdac69fbc1
+Author: Gazi Morshed <gmdmahbubmorshed@mymail.mines.edu>
+Date:   Fri Oct 19 17:06:34 2018 -0600
+
+    added the spreadsheet file
+
 commit b6b149713317f58a38cb58acaeef87fbb15c7dc0
 Author: Gazi Morshed <gmdmahbubmorshed@mymail.mines.edu>
 Date:   Fri Oct 19 16:50:53 2018 -0600
