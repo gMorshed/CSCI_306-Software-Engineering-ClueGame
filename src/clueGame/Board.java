@@ -21,8 +21,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-
-
 /**
  *
  * @author Abhaya Shrestha, Kirwinlvinodaq S Lawrence, Gazi Mahbub Morshed
@@ -34,7 +32,7 @@ import javax.swing.JTextField;
  *         which read the .csv and .txt files respectively.
  * 
  */
-public class Board extends JPanel implements MouseListener{
+public class Board extends JPanel implements MouseListener {
 	// public constants
 	public static final int MAX_BOARD_SIZE = 50; // we do not know how big the grid might be
 	public static final int MIN_BOARD_SIZE = 0; // we do not know what is the minimum a grid can go
@@ -50,23 +48,23 @@ public class Board extends JPanel implements MouseListener{
 	private Set<BoardCell> targets; // used after calculating targets
 	private String boardConfigFile; // the file name for the csv file which represents the baord
 	private String roomConfigFile; // the file name for the txt file which stores what the initial is for each room
-	private String playerConfigFile; 
+	private String playerConfigFile;
 	private String weaponConfigFile;
 	private static Board theInstance = new Board(); // since there is only one Board we make it static
 	private Set<BoardCell> visited; // the visited list that gets changed every time a square is visited
-	private ArrayList <Player> playerList; // list of players in the game
+	private ArrayList<Player> playerList; // list of players in the game
 	private ArrayList<Card> deckOfCards, allCards; // deck of cards, and allCards is the copy
 	private Solution gameSolution; // Solution for the game
-	private ArrayList<BoardCell> roomNamesCoordinate;	
-	private int calcStack;
+	private ArrayList<BoardCell> roomNamesCoordinate;
+
 	public Solution getGameSolution() {
 		return gameSolution;
 	}
-	
+
 	public void setGameSolution(Solution answer) {
 		gameSolution = answer;
 	}
-	
+
 	public void setPlayerList(ArrayList<Player> playerList) {
 		this.playerList = playerList;
 	}
@@ -117,7 +115,6 @@ public class Board extends JPanel implements MouseListener{
 	}
 	// this method returns the only Board
 
-	
 	public static Board getInstance() {
 		return theInstance;
 	}
@@ -152,7 +149,7 @@ public class Board extends JPanel implements MouseListener{
 			calcAdjacencies();// then calculating our adjacencies for our matrix
 			loadPeoplecConfigFile();
 			loadDeckOfCards();
-			
+
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
 		}
@@ -325,8 +322,10 @@ public class Board extends JPanel implements MouseListener{
 		}
 	}
 
-	/** initialize the adjMatrix 
-	 * So that we know all the adjacencies for each cell in the grid*/
+	/**
+	 * initialize the adjMatrix So that we know all the adjacencies for each cell in
+	 * the grid
+	 */
 	public void calcAdjacencies() {
 
 		for (int i = 0; i < numRows; i++) {
@@ -353,8 +352,10 @@ public class Board extends JPanel implements MouseListener{
 			}
 		}
 	}
+
 	/**
-	 * This method will calculate all the targets within a pathLength for the game*/
+	 * This method will calculate all the targets within a pathLength for the game
+	 */
 	public void calcTargets(int row, int column, int pathLength) {
 		targets.clear(); // we have to clear our targets and visited every time we call the recursive
 							// method
@@ -373,8 +374,9 @@ public class Board extends JPanel implements MouseListener{
 
 				visited.add(adjCell); // add adjCell to visited list
 				if (pathLength == 1) {
-					//if(adjCell.isDoorway() || adjCell.isWalkway()) // trying to add this as targets if it is only walkway or is door way NOT WORKING
-						targets.add(adjCell); // where targets is initialized
+					// if(adjCell.isDoorway() || adjCell.isWalkway()) // trying to add this as
+					// targets if it is only walkway or is door way NOT WORKING
+					targets.add(adjCell); // where targets is initialized
 
 				} else {
 					// else we recursively call calcTargets again passing in adjacent cell
@@ -393,56 +395,62 @@ public class Board extends JPanel implements MouseListener{
 	public void setPlayerConfigFile(String playerConfigFile) {
 		this.playerConfigFile = playerConfigFile;
 	}
+
 	/**
 	 * 
-	 * @throws BadConfigFormatException
-	 * the loadpeopleconfigfile method reads in the playercongfig file and parses accordingly based on the format we decided
-	 * into human and computer player and their starting locations
+	 * @throws BadConfigFormatException the loadpeopleconfigfile method reads in the
+	 *                                  playercongfig file and parses accordingly
+	 *                                  based on the format we decided into human
+	 *                                  and computer player and their starting
+	 *                                  locations
 	 */
 	public void loadPeoplecConfigFile() throws BadConfigFormatException {
 		try {
-			FileReader reader= new FileReader(playerConfigFile);
+			FileReader reader = new FileReader(playerConfigFile);
 			Scanner in = new Scanner(reader);
-			while(in.hasNextLine()) {
+			while (in.hasNextLine()) {
 				String tempStrArray[] = in.nextLine().split(", ");
-				if(tempStrArray.length != 5) { //the length of each line is 5
+				if (tempStrArray.length != 5) { // the length of each line is 5
 					throw new BadConfigFormatException("bad format in " + playerConfigFile);
 				}
 				Color color;
-				color= convertColor(tempStrArray[1]);
+				color = convertColor(tempStrArray[1]);
 				int playerRow = Integer.parseInt(tempStrArray[3]);
 				int playerCol = Integer.parseInt(tempStrArray[4]);
-				if(tempStrArray[2].equals("Human")) {
-					HumanPlayer hplayer= new HumanPlayer(playerRow, playerCol, color, tempStrArray[0]);
+				if (tempStrArray[2].equals("Human")) {
+					HumanPlayer hplayer = new HumanPlayer(playerRow, playerCol, color, tempStrArray[0]);
 					playerList.add(hplayer);
-				}
-				else {
-					ComputerPlayer cPlayer= new ComputerPlayer(playerRow, playerCol, color, tempStrArray[0]);
+				} else {
+					ComputerPlayer cPlayer = new ComputerPlayer(playerRow, playerCol, color, tempStrArray[0]);
 					playerList.add(cPlayer);
 				}
 			}
 			in.close();
 		} catch (FileNotFoundException e) {
-			
+
 			e.getMessage();
 		}
 	}
+
 	public ArrayList<Player> getPlayerList() {
 		return playerList;
 	}
+
 	/**
-	 *  convertcolor uses reflection with the in built color class for each players piece color
+	 * convertcolor uses reflection with the in built color class for each players
+	 * piece color
+	 * 
 	 * @param strColor
 	 * @return
 	 */
-	
+
 	private Color convertColor(String strColor) {
 		Color color;
 		try {
 			Field field = Class.forName("java.awt.Color").getField(strColor);
-			color =(Color)field.get(null);
+			color = (Color) field.get(null);
 		} catch (Exception e) {
-			color=null;
+			color = null;
 		}
 		return color;
 	}
@@ -451,33 +459,37 @@ public class Board extends JPanel implements MouseListener{
 		// TODO Auto-generated method stub
 		return deckOfCards;
 	}
+
 	/**
 	 * set the weapon config file
+	 * 
 	 * @param weaponConfigFile
 	 */
 	public void setWeaponConfigFile(String weaponConfigFile) {
 		this.weaponConfigFile = weaponConfigFile;
 	}
+
 	/**
-	 * loaddeckofcards method ensures the deck is loaded with all the different types of cards from three different atrributes
-	 * althuogh the rooms were made to remove walkway and closet
+	 * loaddeckofcards method ensures the deck is loaded with all the different
+	 * types of cards from three different atrributes althuogh the rooms were made
+	 * to remove walkway and closet
 	 */
-	public void loadDeckOfCards() { 
+	public void loadDeckOfCards() {
 		Set<Character> keys = legend.keySet();
 		keys.remove('W');
 		keys.remove('X');
-		for(Character character : keys) {
-			Card card= new Card(legend.get(character), CardType.ROOM);
+		for (Character character : keys) {
+			Card card = new Card(legend.get(character), CardType.ROOM);
 			deckOfCards.add(card);
 		}
-		for(Player player : playerList) {
-			Card card= new Card(player.getPlayerName(), CardType.PERSON);
+		for (Player player : playerList) {
+			Card card = new Card(player.getPlayerName(), CardType.PERSON);
 			deckOfCards.add(card);
 		}
 		try {
-			FileReader reader= new FileReader(weaponConfigFile);
+			FileReader reader = new FileReader(weaponConfigFile);
 			Scanner in = new Scanner(reader);
-			while(in.hasNextLine()) {
+			while (in.hasNextLine()) {
 				Card card = new Card(in.nextLine(), CardType.WEAPON);
 				deckOfCards.add(card);
 			}
@@ -485,173 +497,175 @@ public class Board extends JPanel implements MouseListener{
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
-		 
+
 	}
+
 	/**
-	 * dealcards method just deals the card in random order to simulate shuffling and distributes them to
-	 *  each player until deck is empty
+	 * dealcards method just deals the card in random order to simulate shuffling
+	 * and distributes them to each player until deck is empty
 	 */
-	public void dealCards(){
+	public void dealCards() {
 		for (int i = 0; i < deckOfCards.size(); i++) {
-			int j = (int)(Math.random() *  deckOfCards.size()); // Get a random index out of 52
+			int j = (int) (Math.random() * deckOfCards.size()); // Get a random index out of 52
 			Card temp = deckOfCards.get(i); // Swap the cards
 			deckOfCards.set(i, deckOfCards.get(j));
 			deckOfCards.set(j, temp);
 		}
-		
-		//Solution must be placed into list 
-		
-		for(Card card : deckOfCards) { // must place a weapon into solution
-			
-			if(card.getCardType() == CardType.WEAPON) {
+
+		// Solution must be placed into list
+
+		for (Card card : deckOfCards) { // must place a weapon into solution
+
+			if (card.getCardType() == CardType.WEAPON) {
 				gameSolution.setWeapon(card.getCardName());
 				allCards.add(card); // copy all the cards
 				deckOfCards.remove(card);
 				break;
 			}
 		}
-		for(Card card : deckOfCards) { // must place a person into solution
-			if(card.getCardType() == CardType.PERSON) {
+		for (Card card : deckOfCards) { // must place a person into solution
+			if (card.getCardType() == CardType.PERSON) {
 				gameSolution.setPerson(card.getCardName());
 				allCards.add(card);
 				deckOfCards.remove(card);
 				break;
 			}
 		}
-		for(Card card : deckOfCards) { // must place a room into solution
-			if(card.getCardType() == CardType.ROOM) {
+		for (Card card : deckOfCards) { // must place a room into solution
+			if (card.getCardType() == CardType.ROOM) {
 				gameSolution.setRoom(card.getCardName());
 				allCards.add(card);
 				deckOfCards.remove(card);
 				break;
 			}
 		}
-		
+
 		// dealing the remaining deck of cards to the players
-		while(!deckOfCards.isEmpty()) {
-			for(Player player : playerList)  {	
-				if(!deckOfCards.isEmpty() ) {
-						
-				player.receiveCard(deckOfCards.get(0));
-				allCards.add(deckOfCards.get(0)); 
-				deckOfCards.remove(deckOfCards.get(0));	
+		while (!deckOfCards.isEmpty()) {
+			for (Player player : playerList) {
+				if (!deckOfCards.isEmpty()) {
+
+					player.receiveCard(deckOfCards.get(0));
+					allCards.add(deckOfCards.get(0));
+					deckOfCards.remove(deckOfCards.get(0));
 				}
-				
-				}
+
 			}
-		
+		}
 
 	}
-	
-	
+
 	/**
-	 * checkAccusation method checks a an accusation passed in as solution type and if accusation matches all three
-	 * conditions then its a pass if not then false
+	 * checkAccusation method checks a an accusation passed in as solution type and
+	 * if accusation matches all three conditions then its a pass if not then false
+	 * 
 	 * @param accusation
 	 * @return
 	 */
-	
 
 	public boolean checkAccusation(Solution accusation) {
-		
-		
-		if((gameSolution.getPerson().equals(accusation.person)) && (gameSolution.getWeapon().equals(accusation.weapon)))  {
-			if((gameSolution.getRoom().equals(accusation.room))) {
+
+		if ((gameSolution.getPerson().equals(accusation.person))
+				&& (gameSolution.getWeapon().equals(accusation.weapon))) {
+			if ((gameSolution.getRoom().equals(accusation.room))) {
 				return true;
 			}
 		}
-		
+
 		return false;
 
-		
 	}
+
 	/**
-	 * handlesuggestion method cross check the suggestion made by th eplayer with every other player in the list 
-	 * and returns the dissaprovable card if possible and if not then it will return null
-	 * first for loop is from next to player to end and next is from begiining to before player
+	 * handlesuggestion method cross check the suggestion made by th eplayer with
+	 * every other player in the list and returns the dissaprovable card if possible
+	 * and if not then it will return null first for loop is from next to player to
+	 * end and next is from begiining to before player
+	 * 
 	 * @param suggested
 	 * @param player
 	 * @return
 	 */
 
 	public Card handleSuggestion(Solution suggested, Player player) {
-		Card card =null;
-		for(int i=playerList.indexOf(player)+1; i<playerList.size(); i++) { //start after the player
+		Card card = null;
+		for (int i = playerList.indexOf(player) + 1; i < playerList.size(); i++) { // start after the player
 			card = (playerList.get(i)).disproveSuggestion(suggested);
-			if(card != null) {
+			if (card != null) {
 				return card;
 			}
 		}
-		for(int i=0; i<playerList.indexOf(player); i++) { //start after the player
+		for (int i = 0; i < playerList.indexOf(player); i++) { // start after the player
 			card = (playerList.get(i)).disproveSuggestion(suggested);
-			if(card != null) {
+			if (card != null) {
 				return card;
 			}
 		}
 		return card;
 	}
+
 	/**
 	 * getter for allCards instance variable
+	 * 
 	 * @return
 	 */
 	public ArrayList<Card> getAllCards() {
 		return allCards;
 	}
-	
+
 	/**
-	 * paint component paints the gird using the BoardCell draw method
-	 * for each cell in the grid. It also draws the players using the draw
-	 * player method.
-	 * It also names the rooms respectively. 
+	 * paint component paints the gird using the BoardCell draw method for each cell
+	 * in the grid. It also draws the players using the draw player method. It also
+	 * names the rooms respectively.
 	 * 
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		for(int i = 0 ; i < numRows; i++) {
-			for(int j = 0 ; j < numColumns; j++) {
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
 				grid[i][j].draw(g);
 			}
-			
+
 		}
-		//naming the rooms with the set color and drawstring method
-		for(BoardCell cell : roomNamesCoordinate) {
+		// naming the rooms with the set color and drawstring method
+		for (BoardCell cell : roomNamesCoordinate) {
 			cell.drawName(g, legend.get(cell.getInitial()));
 		}
-		//drawing the player
-		for(Player p : playerList) {
+		// drawing the player
+		for (Player p : playerList) {
 			p.draw(g);
 		}
-		
-		//Display the targets in light blue if thep layer has not lost yet
+
+		// Display the targets in light blue if thep layer has not lost yet
 		calcTargets((playerList.get(3)).getColumn(), (playerList.get(3)).getRow(), 1);
-		for(BoardCell b : targets) {
+		for (BoardCell b : targets) {
 			b.reDraw(g);
 		}
-		
+
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -659,11 +673,7 @@ public class Board extends JPanel implements MouseListener{
 		JDialog invaildDialog = new JDialog();
 		JOptionPane invalidPane = new JOptionPane();
 		JButton okButton = new JButton("OK");
-		
-	}
-	
-	
-	
 
+	}
 
 }
