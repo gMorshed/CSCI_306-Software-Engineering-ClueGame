@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 
 import java.io.FileReader;
@@ -12,7 +14,10 @@ import java.io.Reader;
 import java.lang.reflect.Field;
 import java.util.*;
 
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -29,7 +34,7 @@ import javax.swing.JTextField;
  *         which read the .csv and .txt files respectively.
  * 
  */
-public class Board extends JPanel{
+public class Board extends JPanel implements MouseListener{
 	// public constants
 	public static final int MAX_BOARD_SIZE = 50; // we do not know how big the grid might be
 	public static final int MIN_BOARD_SIZE = 0; // we do not know what is the minimum a grid can go
@@ -53,6 +58,7 @@ public class Board extends JPanel{
 	private ArrayList<Card> deckOfCards, allCards; // deck of cards, and allCards is the copy
 	private Solution gameSolution; // Solution for the game
 	private ArrayList<BoardCell> roomNamesCoordinate;	
+	private int calcStack;
 	public Solution getGameSolution() {
 		return gameSolution;
 	}
@@ -360,14 +366,16 @@ public class Board extends JPanel{
 	}
 
 	private void calcTargetsHelper(int row, int column, int pathLength) {
-		visited.add(getCellAt(row, column)); // we always add our startCell for visited list first
+		visited.add(getCellAt(row, column));
 		for (BoardCell adjCell : adjMatrix.get(getCellAt(row, column))) {
 
 			if (!(visited.contains(adjCell))) {
 
 				visited.add(adjCell); // add adjCell to visited list
 				if (pathLength == 1) {
-					targets.add(adjCell); // where targets is initialized
+					//if(adjCell.isDoorway() || adjCell.isWalkway()) // trying to add this as targets if it is only walkway or is door way NOT WORKING
+						targets.add(adjCell); // where targets is initialized
+
 				} else {
 					// else we recursively call calcTargets again passing in adjacent cell
 					if (adjCell.isDoorway()) {
@@ -614,7 +622,47 @@ public class Board extends JPanel{
 			p.draw(g);
 		}
 		
+		//Display the targets in light blue if thep layer has not lost yet
+		calcTargets((playerList.get(3)).getColumn(), (playerList.get(3)).getRow(), 1);
+		for(BoardCell b : targets) {
+			b.reDraw(g);
+		}
+		
 	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		JDialog invaildDialog = new JDialog();
+		JOptionPane invalidPane = new JOptionPane();
+		JButton okButton = new JButton("OK");
+		
+	}
+	
+	
 	
 
 

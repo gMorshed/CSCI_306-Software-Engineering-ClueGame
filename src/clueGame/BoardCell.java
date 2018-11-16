@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.util.Set;
 
 import javax.swing.JLabel;
 
@@ -30,6 +31,8 @@ public class BoardCell {
 	private char initial;
 
 	private DoorDirection doorDirection;
+	
+	private Color color;
 	
 	//private Color color; // color of the board cell
 	
@@ -151,6 +154,7 @@ public class BoardCell {
 				g.fillRect(y, x, WIDTH, DOOR_LENGTH);
 			}
 		}
+		
 		else {
 			g.setColor(Color.LIGHT_GRAY); // else just color it light gray
 			g.fillRect(y, x, WIDTH, WIDTH);
@@ -169,4 +173,19 @@ public class BoardCell {
 		g.drawString(string, x, y);
 		
 	}
+	
+	/**
+	 * Method used to paint the BoardCell when selecting targets
+	 * 
+	 * @param g
+	 */
+	public void reDraw(Graphics g) {
+		int y = this.getRow()*WIDTH;
+		int x = this.getColumn()*WIDTH;
+		g.setColor(Color.CYAN); // if it is a walkway then we just color it yellow
+		g.fillRect(y, x, WIDTH, WIDTH);
+		g.setColor(Color.BLACK);
+		g.drawRect(y, x, WIDTH, WIDTH);
+	}
+	
 }

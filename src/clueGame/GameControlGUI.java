@@ -2,6 +2,7 @@ package clueGame;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -68,11 +69,29 @@ public class GameControlGUI extends JPanel {
 	
 	private JButton nextPlayerButton(){
 		JButton nextPlayerButton = new JButton("Next Player");
-		
-		
+
 		class NextPlayerListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
+//				Board board;
+//				board= Board.getInstance();
+				Graphics g = null;
 				int roll = (int)((Math.random()*6) + 1);
+//				ArrayList <Player> playerList= board.getPlayerList();
+//				for(Player player : playerList) {
+//					turn.setText(player.getPlayerName());
+//					board.calcTargets(player.getRow(), player.getColumn(), roll);
+//					BoardCell playerLoc = new BoardCell(player.getRow(), player.getColumn());
+//					
+//					//player.get
+//					if(player.isHuman()) {
+//						
+//					}
+//				}
+				
+				
+				
+				
+				
 				die.setText(Integer.toString(roll));
 				//turn.setText(board.getPlayerList()); // WE ARE STUCK HERE
 		}
