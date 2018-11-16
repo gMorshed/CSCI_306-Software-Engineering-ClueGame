@@ -29,9 +29,12 @@ import javax.swing.border.TitledBorder;
  * 
  */
 public class GameControlGUI extends JPanel {
-	private JTextField textField; // used for text field
+	private JTextField textField, die, turn; // used for text field 
 	private String humanPlayerName="";
 	private Player humanPlayer;
+	private JPanel rollDiePanel;
+	private  Board board = Board.getInstance();
+
 	public String getHumanPlayerName() {
 		return humanPlayerName;
 	}
@@ -40,20 +43,20 @@ public class GameControlGUI extends JPanel {
 	 * The game Control GUI constructor will add all the panels and the buttons
 	 */
 	public GameControlGUI() {
-		
+		//rollDiePanel = createRollDiePanel("");
 		// Create a layout with 2 rows
 		setLayout(new GridLayout(2, 0));
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1, 2));
 		JPanel intermediatePanel = new JPanel();
 		intermediatePanel.setLayout(new GridLayout(1, 3));
-		JButton nextPlayerButton = new JButton("Next Player"); // creates the button
+		//JButton nextPlayerButton = new JButton("Next Player"); // creates the button
 		JButton accusationButton = new JButton("Make an accuasation");
 		//add(boardPanel()); // adding the board
 		add(panel); // adds it to the first row
 		add(intermediatePanel);
 		panel.add(createTurnPanel());
-		panel.add(nextPlayerButton); // add the buttons to this panel
+		panel.add(nextPlayerButton()); // add the buttons to this panel
 		panel.add(accusationButton);
 
 		intermediatePanel.add(createRollDiePanel());
@@ -61,6 +64,24 @@ public class GameControlGUI extends JPanel {
 		intermediatePanel.add(createGuessResultPanel());
 		
 
+	}
+	
+	private JButton nextPlayerButton(){
+		JButton nextPlayerButton = new JButton("Next Player");
+		
+		
+		class NextPlayerListener implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+				int roll = (int)((Math.random()*6) + 1);
+				die.setText(Integer.toString(roll));
+				//turn.setText(board.getPlayerList()); // WE ARE STUCK HERE
+		}
+	}
+		
+		nextPlayerButton.addActionListener(new NextPlayerListener());
+		
+		return nextPlayerButton;
+		
 	}
 	/**
 	 * Creates the menu bar with the options to exit the game
@@ -81,6 +102,7 @@ public class GameControlGUI extends JPanel {
 	 */
 	private JMenuItem createFileExitItem() {
 		JMenuItem exit = new JMenuItem("Exit");
+		
 		class MenuItemListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 			System.exit(0);
@@ -100,7 +122,7 @@ public class GameControlGUI extends JPanel {
 		JMenuItem detectiveNotes = new JMenuItem("Show Notes");
 		class MenuItemListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
-		    Board board = Board.getInstance();
+		   // Board board = Board.getInstance();
 			DetectiveNotes notes = new DetectiveNotes(board);
 		}
 			
@@ -112,6 +134,7 @@ public class GameControlGUI extends JPanel {
 
 	/**
 	 * display of the roll of the die
+	 * @param textField2 
 	 * 
 	 * @return
 	 */
@@ -121,13 +144,15 @@ public class GameControlGUI extends JPanel {
 		// Use a grid layout, 1 row, 2 elements (label, text)
 		diePanel.setLayout(new GridLayout(2, 2));
 		JLabel nameLabel = new JLabel("Roll");
-		textField = new JTextField(5);
+		die = new JTextField(5);
 		nameLabel.setHorizontalAlignment(JLabel.CENTER);
 		nameLabel.setVerticalAlignment(JLabel.CENTER);
 		diePanel.setBorder(new TitledBorder(new EtchedBorder(), "Die")); // titling the border Die
-		textField.setEditable(false); // can't edit this text field
+		die.setEditable(false); // can't edit this text field
+		
 		diePanel.add(nameLabel); // add the nameLabel and the textfield in the panel
-		diePanel.add(textField);
+		diePanel.add(die);
+		//rollDiePanel=diePanel;
 		return diePanel;
 	}
 
@@ -142,11 +167,11 @@ public class GameControlGUI extends JPanel {
 		JLabel nameLabel = new JLabel("Whose turn?");
 		nameLabel.setHorizontalAlignment(JLabel.CENTER);
 		nameLabel.setVerticalAlignment(JLabel.CENTER);
-		textField = new JTextField(20);
-		textField.setEditable(false);
+		turn = new JTextField(20);
+		turn.setEditable(false);
 
 		panel.add(nameLabel); // this is just going to be a panel rather than having the border as well
-		panel.add(textField);
+		panel.add(turn);
 		JPanel panelBackground = new JPanel();
 		panelBackground.add(panel);
 		return panelBackground;
