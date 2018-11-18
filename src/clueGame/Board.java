@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
@@ -16,6 +18,7 @@ import java.util.*;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -32,7 +35,7 @@ import javax.swing.JTextField;
  *         which read the .csv and .txt files respectively.
  * 
  */
-public class Board extends JPanel implements MouseListener {
+public class Board extends JPanel {
 	// public constants
 	public static final int MAX_BOARD_SIZE = 50; // we do not know how big the grid might be
 	public static final int MIN_BOARD_SIZE = 0; // we do not know what is the minimum a grid can go
@@ -56,6 +59,7 @@ public class Board extends JPanel implements MouseListener {
 	private ArrayList<Card> deckOfCards, allCards; // deck of cards, and allCards is the copy
 	private Solution gameSolution; // Solution for the game
 	private ArrayList<BoardCell> roomNamesCoordinate;
+	public int currentPlayer; // the current player who is making a turn
 
 	public Solution getGameSolution() {
 		return gameSolution;
@@ -112,6 +116,7 @@ public class Board extends JPanel implements MouseListener {
 		allCards = new ArrayList<Card>();
 		roomNamesCoordinate = new ArrayList<BoardCell>(); // list for coordinates for naming the room
 		setVisible(true);
+		addMouseListener(new BoardListener());
 	}
 	// this method returns the only Board
 
@@ -361,22 +366,23 @@ public class Board extends JPanel implements MouseListener {
 							// method
 		visited.clear(); // this is because it will remember what the targets and visited list was which
 							// will give
-		// incorrect target boardcells.
+		visited.add(getCellAt(row, column));
 		calcTargetsHelper(row, column, pathLength);
 
 	}
 
-	private void calcTargetsHelper(int row, int column, int pathLength) {
-		visited.add(getCellAt(row, column));
+	public void calcTargetsHelper(int row, int column, int pathLength) {
+	
 		for (BoardCell adjCell : adjMatrix.get(getCellAt(row, column))) {
 
 			if (!(visited.contains(adjCell))) {
 
 				visited.add(adjCell); // add adjCell to visited list
-				if (pathLength == 1) {
-					// if(adjCell.isDoorway() || adjCell.isWalkway()) // trying to add this as
+				if ((pathLength == 1) && (adjCell.isWalkway() || adjCell.isDoorway())) {
+				   //if(adjCell.isDoorway()) {// trying to add this as
 					// targets if it is only walkway or is door way NOT WORKING
-					targets.add(adjCell); // where targets is initialized
+					targets.add(adjCell);
+					//} // where targets is initialized
 
 				} else {
 					// else we recursively call calcTargets again passing in adjacent cell
@@ -387,8 +393,32 @@ public class Board extends JPanel implements MouseListener {
 				}
 				visited.remove(adjCell);
 			}
-
+			
 		}
+
+
+		
+//		for(BoardCell adjCell: adjMatrix.get(getCellAt(row, column))) {
+//			
+//			// if it is in the visited list skip the rest of this
+//			if(visited.contains(adjCell)) {
+//				// do nothing 
+//			}
+//			
+//			// add adjCell to the visitied list
+//			// if pathLength == 1, add adjCell to targets
+//			visited.add(adjCell);
+//			if(pathLength == 1) {
+//				targets.add(adjCell);
+//			}
+//			// else call findAllTargets with adjCell, pathLength-1
+//			else {
+//				calcTargets(adjCell.getRow(), adjCell.getColumn(), pathLength-1);
+//			}
+//			
+//			// remove adjCell from visited list
+//			visited.remove(adjCell);
+//		}
 
 	}
 
@@ -631,49 +661,70 @@ public class Board extends JPanel implements MouseListener {
 		for (BoardCell cell : roomNamesCoordinate) {
 			cell.drawName(g, legend.get(cell.getInitial()));
 		}
+		// Display the targets in light blue 
+		if((playerList.get(currentPlayer)).isHuman()) { // if the currentplayer we are at is human
+			for (BoardCell b : targets) { // we calculate the targets, and paint them
+				b.reDraw(g);
+			}
+
+		}
 		// drawing the player
 		for (Player p : playerList) {
 			p.draw(g);
 		}
+	}
 
-		// Display the targets in light blue if thep layer has not lost yet
-		calcTargets((playerList.get(3)).getColumn(), (playerList.get(3)).getRow(), 1);
-		for (BoardCell b : targets) {
-			b.reDraw(g);
+	/**
+	 * Action listener for the board class
+	 * @author AbbyA
+	 *
+	 */
+	private class BoardListener implements MouseListener{
+	
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+
 		}
 
-	}
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
 
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			BoardCell selected = new BoardCell((arg0.getY()), (arg0.getX()));
+			if(playerList.get(currentPlayer).isHuman())
+			{
+				if(!(targets.contains(selected))) {
+					JFrame frame = new JFrame();
+					JOptionPane.showMessageDialog(frame, "Invalid square, please select the highlighted squares", "Error messagge", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+			
+		}
+	}
+	
+	public void incrementCurrentPlayer() {
 		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		JDialog invaildDialog = new JDialog();
-		JOptionPane invalidPane = new JOptionPane();
-		JButton okButton = new JButton("OK");
-
+		if(currentPlayer >= playerList.size()) {
+			currentPlayer = 0;
+		}
+		currentPlayer = (currentPlayer+1)%playerList.size();
 	}
 
 }

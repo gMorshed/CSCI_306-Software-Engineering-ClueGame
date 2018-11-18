@@ -98,6 +98,16 @@ public class Player {
 	public boolean isHuman() {
 		return human;
 	}
+	
+	/**
+	 * Sets the location of the player
+	 * @param row
+	 * @param column
+	 */
+	public void setLocation(int row, int column) {
+		setRow(row);
+		setColumn(column);
+	}
 
 	/**
 	 * Draws the graphics for the player.

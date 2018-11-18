@@ -1,5 +1,6 @@
 package clueGame;
 
+import clueGame.Board;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -7,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -33,8 +35,8 @@ public class GameControlGUI extends JPanel {
 	private JTextField textField, die, turn; // used for text field 
 	private String humanPlayerName="";
 	private Player humanPlayer;
-	private JPanel rollDiePanel;
 	private  Board board = Board.getInstance();
+	public int roll;
 
 	public String getHumanPlayerName() {
 		return humanPlayerName;
@@ -72,28 +74,25 @@ public class GameControlGUI extends JPanel {
 
 		class NextPlayerListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
-//				Board board;
-//				board= Board.getInstance();
-				Graphics g = null;
-				int roll = (int)((Math.random()*6) + 1);
-//				ArrayList <Player> playerList= board.getPlayerList();
-//				for(Player player : playerList) {
-//					turn.setText(player.getPlayerName());
-//					board.calcTargets(player.getRow(), player.getColumn(), roll);
-//					BoardCell playerLoc = new BoardCell(player.getRow(), player.getColumn());
-//					
-//					//player.get
-//					if(player.isHuman()) {
-//						
-//					}
-//				}
-				
-				
-				
-				
-				
+				roll = (int)((Math.random()*6) + 1);
+				roll = 3;
 				die.setText(Integer.toString(roll));
-				//turn.setText(board.getPlayerList()); // WE ARE STUCK HERE
+				if(((board.getPlayerList()).get(board.currentPlayer)).isHuman()) {
+					int x = ((board.getPlayerList()).get(board.currentPlayer)).getRow();
+					int y = ((board.getPlayerList()).get(board.currentPlayer)).getColumn();
+					board.calcTargets(y, x, roll);
+					board.repaint();
+				}
+				else {
+					int x = ((board.getPlayerList()).get(board.currentPlayer)).getRow();
+					int y = ((board.getPlayerList()).get(board.currentPlayer)).getColumn();
+					board.calcTargets(y, x, roll);
+					ComputerPlayer compPlayer = (ComputerPlayer) (board.getPlayerList().get(board.currentPlayer));
+					BoardCell cell = compPlayer.pickLocation(board.getTargets());
+					((board.getPlayerList()).get(board.currentPlayer)).setLocation(cell.getColumn(), cell.getColumn());
+					board.repaint();
+					board.incrementCurrentPlayer();
+				}
 		}
 	}
 		

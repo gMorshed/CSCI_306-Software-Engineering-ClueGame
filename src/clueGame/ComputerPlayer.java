@@ -88,4 +88,10 @@ public class ComputerPlayer extends Player {
 		seenCards.clear();
 	}
 	
+	public void makeMove(int row, int column) {
+		super.setColumn(column);
+		super.setRow(row);
+		
+	}
+	
 }
