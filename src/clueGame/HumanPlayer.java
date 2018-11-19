@@ -5,9 +5,9 @@ package clueGame;
 
 * */
 import java.awt.Color;
+import java.awt.Graphics;
 
 public class HumanPlayer extends Player {
-
 	public HumanPlayer(int row, int column, Color color, String playerName) {
 		super(row, column, color, playerName);
 	}

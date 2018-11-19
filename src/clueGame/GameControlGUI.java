@@ -80,17 +80,17 @@ public class GameControlGUI extends JPanel {
 				die.setText(Integer.toString(roll));
 				turn.setText((board.getPlayerList()).get(board.currentPlayer).getPlayerName());
 				if(((board.getPlayerList()).get(board.currentPlayer)).isHuman() ) {
-					if(board.getPlayerList().get(board.currentPlayer).hasMoved) {
-						
-						int x = ((board.getPlayerList()).get(board.currentPlayer)).getRow();
-						int y = ((board.getPlayerList()).get(board.currentPlayer)).getColumn();
-						board.calcTargets(x, y, GameControlGUI.roll);
-						for (BoardCell b : board.getTargets()) {
-							//System.out.println(targetSet.size());
-							
-							b.reDraw(g);
-						}
-						repaint();
+					if( board.getPlayerList().get(board.currentPlayer).hasMoved) {
+//						int x = ((board.getPlayerList()).get(board.currentPlayer)).getRow();
+//						int y = ((board.getPlayerList()).get(board.currentPlayer)).getColumn();
+//						board.calcTargets(x, y, GameControlGUI.roll);
+//						for (BoardCell b : board.getTargets()) {
+//							//System.out.println(targetSet.size());
+//							
+//						//	b.reDraw(g);
+//						}
+//						repaint();
+						 board.getPlayerList().get(board.currentPlayer).hasMoved = false;
 						System.out.println("make move");
 					}
 					else {

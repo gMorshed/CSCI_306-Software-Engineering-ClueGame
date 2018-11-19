@@ -669,7 +669,7 @@ public class Board extends JPanel implements MouseListener {
 		for (Player p : playerList) {
 			p.draw(g); //player class draw method
 		}
-		if (playerList.get(currentPlayer).isHuman()) {
+		if (playerList.get(currentPlayer).isHuman() && ! playerList.get(currentPlayer).hasMoved ) {
 			int x = playerList.get(currentPlayer).getRow();
 			int y = playerList.get(currentPlayer).getColumn();
 			calcTargets(x, y, 2);
