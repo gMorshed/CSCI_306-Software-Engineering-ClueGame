@@ -33,9 +33,10 @@ public class BoardCell {
 	private DoorDirection doorDirection;
 	
 	private Color color;
+
 	
 	//private Color color; // color of the board cell
-	
+
 	// Constants variables used for the draw method
 	public static final int WIDTH = 30;
 	public static final int DOOR_LENGTH = 5;

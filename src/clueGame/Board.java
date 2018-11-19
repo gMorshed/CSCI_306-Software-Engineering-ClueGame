@@ -62,6 +62,7 @@ public class Board extends JPanel implements MouseListener {
 	private Solution gameSolution; // Solution for the game
 	private ArrayList<BoardCell> roomNamesCoordinate;
 	public int currentPlayer; // the current player who is making a turn
+	public boolean gameHasBegun; // determines whether game has begun
 
 	public Solution getGameSolution() {
 		return gameSolution;
@@ -118,6 +119,7 @@ public class Board extends JPanel implements MouseListener {
 		allCards = new ArrayList<Card>();
 		currentPlayer=0;
 		roomNamesCoordinate = new ArrayList<BoardCell>(); // list for coordinates for naming the room
+		gameHasBegun = false;
 		addMouseListener(this);
 		setVisible(true);
 		
@@ -400,30 +402,6 @@ public class Board extends JPanel implements MouseListener {
 			
 		}
 
-
-		
-//		for(BoardCell adjCell: adjMatrix.get(getCellAt(row, column))) {
-//			
-//			// if it is in the visited list skip the rest of this
-//			if(visited.contains(adjCell)) {
-//				// do nothing 
-//			}
-//			
-//			// add adjCell to the visitied list
-//			// if pathLength == 1, add adjCell to targets
-//			visited.add(adjCell);
-//			if(pathLength == 1) {
-//				targets.add(adjCell);
-//			}
-//			// else call findAllTargets with adjCell, pathLength-1
-//			else {
-//				calcTargets(adjCell.getRow(), adjCell.getColumn(), pathLength-1);
-//			}
-//			
-//			// remove adjCell from visited list
-//			visited.remove(adjCell);
-//		}
-
 	}
 
 	public void setPlayerConfigFile(String playerConfigFile) {
@@ -670,15 +648,18 @@ public class Board extends JPanel implements MouseListener {
 			p.draw(g); //player class draw method
 		}
 		
-		if (playerList.get(currentPlayer).isHuman() && !playerList.get(currentPlayer).hasMoved) { // if the player is human and has not moved
+		
+		if (playerList.get(currentPlayer).isHuman() &&  !playerList.get(currentPlayer).hasMoved ) {
+			if(GameControlGUI.buttonpressed == true) {
 			int x = playerList.get(currentPlayer).getRow();
 			int y = playerList.get(currentPlayer).getColumn();
 			calcTargets(x, y, GameControlGUI.roll);
 			for( BoardCell b : targets) {
 				b.reDraw(g);
 			}
-		//	makeMove();
-		} 
+			}
+		}
+		
 		
 		// Display the targets in light blue 
 		// drawing the player
@@ -724,8 +705,6 @@ public class Board extends JPanel implements MouseListener {
 			Rectangle temp = new Rectangle();
 			for (BoardCell p : targets){
 				temp.setBounds(p.getRow() * 30, p.getColumn() * 30, 30, 30);
-				System.out.println(temp);
-				System.out.println(new Point(e.getY(), e.getX() ));
 				if(temp.contains(new Point(e.getY(), e.getX() ))){
 					playerList.get(currentPlayer).setColumn(p.getColumn());
 					playerList.get(currentPlayer).setRow(p.getRow());
