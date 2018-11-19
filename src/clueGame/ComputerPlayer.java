@@ -88,10 +88,15 @@ public class ComputerPlayer extends Player {
 		seenCards.clear();
 	}
 	
-	public void makeMove(int row, int column) {
-		super.setColumn(column);
-		super.setRow(row);
-		
+	/**
+	 * Makes the move for the computer player
+	 * This method will later implement handling suggestion and accusation
+	 * @param board
+	 */
+	public void makeMove(Board board) {
+		BoardCell cell = this.pickLocation(board.getTargets());
+		((board.getPlayerList()).get(board.currentPlayer)).setLocation(cell.getRow(), cell.getColumn());
+		(board.getPlayerList()).get(board.currentPlayer).hasMoved = true;
 	}
 	
 }

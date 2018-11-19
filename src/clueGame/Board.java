@@ -117,7 +117,7 @@ public class Board extends JPanel implements MouseListener {
 		deckOfCards = new ArrayList<Card>();
 		gameSolution = new Solution("", "", "");
 		allCards = new ArrayList<Card>();
-		currentPlayer=0;
+		currentPlayer= 3;
 		roomNamesCoordinate = new ArrayList<BoardCell>(); // list for coordinates for naming the room
 		gameHasBegun = false;
 		addMouseListener(this);
@@ -630,9 +630,10 @@ public class Board extends JPanel implements MouseListener {
 	 * in the grid. It also draws the players using the draw player method. It also
 	 * names the rooms respectively.
 	 * 
+	 * It also highlights the targets for the human player if it is his/her turn and he/she has not moved.
+	 * 
 	 */
 	public void paintComponent(Graphics g) {
-		this.g=g;
 		super.paintComponent(g);
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numColumns; j++) {
@@ -649,13 +650,13 @@ public class Board extends JPanel implements MouseListener {
 		}
 		
 		
-		if (playerList.get(currentPlayer).isHuman() &&  !playerList.get(currentPlayer).hasMoved ) {
-			if(GameControlGUI.buttonpressed == true) {
+		if (playerList.get(currentPlayer).isHuman() &&  !playerList.get(currentPlayer).hasMoved ) { // Human player turn 
+			if(GameControlGUI.buttonpressed == true) { // until the next player button has been pressed, we are not going to go through this
 			int x = playerList.get(currentPlayer).getRow();
 			int y = playerList.get(currentPlayer).getColumn();
 			calcTargets(x, y, GameControlGUI.roll);
 			for( BoardCell b : targets) {
-				b.reDraw(g);
+				b.reDraw(g); // paint the target cells by using the reDraw method
 			}
 			}
 		}
@@ -667,13 +668,11 @@ public class Board extends JPanel implements MouseListener {
 	}
 	
 
-	/**
-	 * Action listener for the board class
-	 * @author AbbyA
-	 *
-	 */
-
 	
+
+	/**
+	 * incrementCurrentPlayer moves on to the next player
+	 */
 	public void incrementCurrentPlayer() {
 		currentPlayer++;
 		currentPlayer = currentPlayer % playerList.size();
@@ -704,12 +703,12 @@ public class Board extends JPanel implements MouseListener {
 		if (playerList.get(currentPlayer).isHuman()) {
 			Rectangle temp = new Rectangle();
 			for (BoardCell p : targets){
-				temp.setBounds(p.getRow() * 30, p.getColumn() * 30, 30, 30);
-				if(temp.contains(new Point(e.getY(), e.getX() ))){
+				temp.setBounds(p.getRow() * BoardCell.WIDTH, p.getColumn() * BoardCell.WIDTH, BoardCell.WIDTH, BoardCell.WIDTH);
+				if(temp.contains(new Point(e.getY(), e.getX() ))){ // where ever the player is clicking, find if the click contains within the rectangle
 					playerList.get(currentPlayer).setColumn(p.getColumn());
 					playerList.get(currentPlayer).setRow(p.getRow());
-					found = true;
-					playerList.get(currentPlayer).hasMoved = true;
+					found = true; // found is set to true because the player clicked a valid location
+					playerList.get(currentPlayer).hasMoved = true; // set it's moved to true so that we can move to the next player
 					repaint();
 					incrementCurrentPlayer();
 				}
@@ -728,17 +727,6 @@ public class Board extends JPanel implements MouseListener {
 	
 		
 	}
-	private Graphics g;
-//	public void makeMove() {
-//		int x = ((getPlayerList()).get(currentPlayer)).getRow();
-//		int y = ((getPlayerList()).get(currentPlayer)).getColumn();
-//		calcTargets(x, y, GameControlGUI.roll);
-//		for (BoardCell b : targets) {
-//			//System.out.println(targetSet.size());
-//			b.reDraw(g);
-//		}
-//		repaint();
-//		System.out.println("make move");
-//	}
+
 
 }

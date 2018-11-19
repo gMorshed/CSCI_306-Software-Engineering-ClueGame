@@ -32,7 +32,6 @@ public class BoardCell {
 
 	private DoorDirection doorDirection;
 	
-	private Color color;
 
 	
 	//private Color color; // color of the board cell
@@ -129,14 +128,12 @@ public class BoardCell {
 		int y = column*WIDTH;
 		
 		if(this.isWalkway()) {
-			color = Color.yellow;
 			g.setColor(Color.YELLOW); // if it is a walkway then we just color it yellow
 			g.fillRect(y, x, WIDTH, WIDTH);
 			g.setColor(Color.BLACK);
 			g.drawRect(y, x, WIDTH, WIDTH);
 		}
 		else if(this.isDoorway()) {
-			color = Color.LIGHT_GRAY;
 			g.setColor(Color.LIGHT_GRAY); // if it is a doorway we color it light gray first
 			g.fillRect(y, x, WIDTH, WIDTH);
 			g.setColor(Color.BLUE);
@@ -159,18 +156,11 @@ public class BoardCell {
 		}
 		
 		else {
-			color = Color.LIGHT_GRAY;
 			g.setColor(Color.LIGHT_GRAY); // else just color it light gray
 			g.fillRect(y, x, WIDTH, WIDTH);
 		}	
 	}
-	public Color getColor() {
-		return color;
-	}
 
-	public void setColor(Color color) {
-		this.color = color;
-	}
 
 	/**
 	 * Names the room in the board
@@ -194,7 +184,6 @@ public class BoardCell {
 	public void reDraw(Graphics g) {
 		int x = this.getRow()*WIDTH;
 		int y = this.getColumn()*WIDTH;
-		color = Color.CYAN;
 		g.setColor(Color.CYAN); // if it is a walkway then we just color it yellow
 		g.fillRect(y, x, WIDTH, WIDTH);
 		g.setColor(Color.BLACK);

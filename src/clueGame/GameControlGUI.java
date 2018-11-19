@@ -28,8 +28,9 @@ import javax.swing.border.TitledBorder;
  *
  * @author Abhaya Shrestha, Kirwinlvinodaq S Lawrence, Gazi Mahbub Morshed
  * 
- * Clue game GUI for Game control panel.
- * This class will just let you play the game. 
+ * Clue game GUI for Game control panel
+ * displays buttons and text that communicate with the human player.
+ * When buttons are pressed, it calls the appropriate methods in the Board class for processing.
  * 
  */
 public class GameControlGUI extends JPanel {
@@ -37,9 +38,9 @@ public class GameControlGUI extends JPanel {
 	private String humanPlayerName="";
 	private Player humanPlayer;
 	private  Board board = Board.getInstance();
-	public static int roll;
-	public static boolean buttonpressed = false;
-	private int counter = 0;
+	public static int roll; // make the roll static because there is only one roll for the whole game
+	public static boolean buttonpressed = false; // Board needs to know when the button has been pressed or not, one copy of that variable needed
+	private int counter = 0; // counter used to see if we have gone past a first turn
 
 	public String getHumanPlayerName() {
 		return humanPlayerName;
@@ -71,31 +72,30 @@ public class GameControlGUI extends JPanel {
 		
 
 	}
-	private Graphics g;
+	
 	private JButton nextPlayerButton(){
 		JButton nextPlayerButton = new JButton("Next Player");
 		class NextPlayerListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
-				buttonpressed =  true;
+				buttonpressed =  true; // the button pressed will signal to paint the targets in the board
 				board.repaint();
 				
-				// only after next player then target and roll die
+				// only after next player is pressed or when the currentplayer has moved and the counter is not zero
+				// that way the player will not be able to roll
 				if((board.getPlayerList().get(board.currentPlayer).hasMoved && (counter !=0)) || (counter == 0)) {
-					roll = (int)((Math.random()*6) + 1);
-					//roll = 2;
+					roll = (int)((Math.random()*6) + 1); // roll is random for each player
 					die.setText(Integer.toString(roll));
 				}
 				turn.setText((board.getPlayerList()).get(board.currentPlayer).getPlayerName());
-				if(((board.getPlayerList()).get(board.currentPlayer)).isHuman() ) {
+				if(((board.getPlayerList()).get(board.currentPlayer)).isHuman() ) { //if it is a human player
 					
 					if( board.getPlayerList().get(board.currentPlayer).hasMoved) {
 
-						 board.repaint();
-						 board.getPlayerList().get(board.currentPlayer).hasMoved = false;
-						//System.out.println("make move");
+						 board.repaint(); // move the player and move it
+						 board.getPlayerList().get(board.currentPlayer).hasMoved = false; // reset has moved so that it can move it the next round
 					}
 					else if(counter !=0) {
-						JFrame frame = new JFrame();
+						JFrame frame = new JFrame(); // if the player has not finished the turn print the error message in a Jframe
 						JOptionPane.showMessageDialog(frame, "you need to finish your turn","Error message", JOptionPane.INFORMATION_MESSAGE);
 					
 					}
@@ -103,26 +103,24 @@ public class GameControlGUI extends JPanel {
 				
 				  } 
 				  
-				else {
+				else { // else if it is a computer player then just roll the die and move the computer player
 					roll = (int)((Math.random()*6) + 1);
-					//roll = 2;
 					die.setText(Integer.toString(roll));
 					int x = ((board.getPlayerList()).get(board.currentPlayer)).getRow();
 					int y = ((board.getPlayerList()).get(board.currentPlayer)).getColumn();
 					board.calcTargets(x, y, roll);
 					ComputerPlayer compPlayer = (ComputerPlayer) (board.getPlayerList().get(board.currentPlayer));
-					BoardCell cell = compPlayer.pickLocation(board.getTargets());
-					((board.getPlayerList()).get(board.currentPlayer)).setLocation(cell.getRow(), cell.getColumn());
-					(board.getPlayerList()).get(board.currentPlayer).hasMoved = true;
+					compPlayer.makeMove(board);
 					board.repaint();
-					board.incrementCurrentPlayer();
+					board.incrementCurrentPlayer(); 
 				}
 				counter ++;
 				
 		}
 	}
 		
-		nextPlayerButton.addActionListener(new NextPlayerListener());
+		nextPlayerButton.addActionListener(new NextPlayerListener()); 
+		//for this mouse clicker to be activated we need to add NextPlayerListener() 
 		
 		return nextPlayerButton;
 		
@@ -260,7 +258,7 @@ public class GameControlGUI extends JPanel {
 	 * Create the board panel
 	 * @return
 	 */
-	private JPanel boardPanel() {
+	public JPanel boardPanel() {
 
 		board.setConfigFiles("Board_Layout.csv", "ClueRooms.txt");	
 		board.setPlayerConfigFile("people.txt");
@@ -282,7 +280,11 @@ public class GameControlGUI extends JPanel {
 		return board;
 		
 	}
-	private JPanel humanPlayerCardPanel() {
+	/**
+	 * Shows the cards the human player has in a panel
+	 * @return
+	 */
+	public JPanel humanPlayerCardPanel() {
 		JPanel cardsPanel = new JPanel();
 		cardsPanel.setLayout(new GridLayout(humanPlayer.getPlayersCards().size(), 0));
 		cardsPanel.setBorder(new TitledBorder(new EtchedBorder(), "My Cards"));
@@ -309,30 +311,6 @@ public class GameControlGUI extends JPanel {
 			return "Rooms";
 		}
 		return null; //it's never gonna hit here		
-	}
-	/**
-	 * main method to display the panel
-	 * This will display the frame with the board, game control gui, and the menu with detective notes. 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// Create a JFrame with all the normal functionality
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("Clue Game");
-		frame.setSize(750, 950);
-		// Create the JPanel and add it to the JFrame
-		GameControlGUI gui = new GameControlGUI();
-		frame.add(gui, BorderLayout.SOUTH);
-		frame.add(gui.boardPanel(), BorderLayout.CENTER);
-		JMenuBar menuBar = new JMenuBar();
-		menuBar.add(gui.createFileMenu());
-		frame.setJMenuBar(menuBar);
-		frame.add(gui.humanPlayerCardPanel(), BorderLayout.EAST);
-		frame.setVisible(true);
-		//When the game starts, you should display a message
-		JOptionPane.showMessageDialog(frame, "You are "+gui.getHumanPlayerName()+ ", press Next Player To begin play", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);
-		
 	}
 
 }
