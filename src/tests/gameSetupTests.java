@@ -74,8 +74,8 @@ public class gameSetupTests {
 		//now check some of the row and columns
 		assertEquals(playerList.get(0).getRow(), 0);
 		assertEquals(playerList.get(1).getColumn(), 12);
-		assertEquals(playerList.get(3).getRow(), 6); //human
-		assertEquals(playerList.get(3).getColumn(), 2);
+		assertEquals(playerList.get(3).getRow(), 5); //human
+		assertEquals(playerList.get(3).getColumn(), 0);
 		assertEquals(playerList.get(4).getRow(), 16);
 	}
 	
