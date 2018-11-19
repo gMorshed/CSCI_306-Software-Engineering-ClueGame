@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -36,7 +37,7 @@ public class GameControlGUI extends JPanel {
 	private String humanPlayerName="";
 	private Player humanPlayer;
 	private  Board board = Board.getInstance();
-	public int roll;
+	public static int roll=2;
 
 	public String getHumanPlayerName() {
 		return humanPlayerName;
@@ -68,31 +69,47 @@ public class GameControlGUI extends JPanel {
 		
 
 	}
-	
+	private Graphics g;
 	private JButton nextPlayerButton(){
 		JButton nextPlayerButton = new JButton("Next Player");
-
 		class NextPlayerListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
+				
 				roll = (int)((Math.random()*6) + 1);
-				roll = 3;
+				roll = 2;
 				die.setText(Integer.toString(roll));
-				if(((board.getPlayerList()).get(board.currentPlayer)).isHuman()) {
-					int x = ((board.getPlayerList()).get(board.currentPlayer)).getRow();
-					int y = ((board.getPlayerList()).get(board.currentPlayer)).getColumn();
-					board.calcTargets(y, x, roll);
-					board.repaint();
+				turn.setText((board.getPlayerList()).get(board.currentPlayer).getPlayerName());
+				if(((board.getPlayerList()).get(board.currentPlayer)).isHuman() ) {
+					if(board.getPlayerList().get(board.currentPlayer).hasMoved) {
+						
+						int x = ((board.getPlayerList()).get(board.currentPlayer)).getRow();
+						int y = ((board.getPlayerList()).get(board.currentPlayer)).getColumn();
+						board.calcTargets(x, y, GameControlGUI.roll);
+						for (BoardCell b : board.getTargets()) {
+							//System.out.println(targetSet.size());
+							
+							b.reDraw(g);
+						}
+						repaint();
+						System.out.println("make move");
+					}
+					else {
+						JFrame frame = new JFrame();
+						JOptionPane.showMessageDialog(frame, "you need to finish your turn","ERROR MESSAGE", JOptionPane.INFORMATION_MESSAGE);
+					}
+					
 				}
 				else {
 					int x = ((board.getPlayerList()).get(board.currentPlayer)).getRow();
 					int y = ((board.getPlayerList()).get(board.currentPlayer)).getColumn();
-					board.calcTargets(y, x, roll);
+					board.calcTargets(x, y, roll);
 					ComputerPlayer compPlayer = (ComputerPlayer) (board.getPlayerList().get(board.currentPlayer));
 					BoardCell cell = compPlayer.pickLocation(board.getTargets());
-					((board.getPlayerList()).get(board.currentPlayer)).setLocation(cell.getColumn(), cell.getColumn());
+					((board.getPlayerList()).get(board.currentPlayer)).setLocation(cell.getRow(), cell.getColumn());
 					board.repaint();
 					board.incrementCurrentPlayer();
 				}
+				
 		}
 	}
 		
@@ -237,10 +254,10 @@ public class GameControlGUI extends JPanel {
 	 * @return
 	 */
 	private JPanel boardPanel() {
-		//JPanel panel = new JPanel();
-		Board board;
-		// Board is singleton, get the only instance
-		board = Board.getInstance();
+//		//JPanel panel = new JPanel();
+//		Board board;
+//		// Board is singleton, get the only instance
+//		board = Board.getInstance();
 		// set the file names to use my config files
 		board.setConfigFiles("Board_Layout.csv", "ClueRooms.txt");	
 		board.setPlayerConfigFile("people.txt");

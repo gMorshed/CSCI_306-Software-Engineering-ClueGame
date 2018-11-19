@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -35,7 +37,7 @@ import javax.swing.JTextField;
  *         which read the .csv and .txt files respectively.
  * 
  */
-public class Board extends JPanel {
+public class Board extends JPanel implements MouseListener {
 	// public constants
 	public static final int MAX_BOARD_SIZE = 50; // we do not know how big the grid might be
 	public static final int MIN_BOARD_SIZE = 0; // we do not know what is the minimum a grid can go
@@ -114,9 +116,11 @@ public class Board extends JPanel {
 		deckOfCards = new ArrayList<Card>();
 		gameSolution = new Solution("", "", "");
 		allCards = new ArrayList<Card>();
+		currentPlayer=0;
 		roomNamesCoordinate = new ArrayList<BoardCell>(); // list for coordinates for naming the room
+		addMouseListener(this);
 		setVisible(true);
-		addMouseListener(new BoardListener());
+		
 	}
 	// this method returns the only Board
 
@@ -650,10 +654,11 @@ public class Board extends JPanel {
 	 * 
 	 */
 	public void paintComponent(Graphics g) {
+		this.g=g;
 		super.paintComponent(g);
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numColumns; j++) {
-				grid[i][j].draw(g);
+				grid[i][j].draw(g); //draw the cells of the board FIRST
 			}
 
 		}
@@ -661,70 +666,97 @@ public class Board extends JPanel {
 		for (BoardCell cell : roomNamesCoordinate) {
 			cell.drawName(g, legend.get(cell.getInitial()));
 		}
-		// Display the targets in light blue 
-		if((playerList.get(currentPlayer)).isHuman()) { // if the currentplayer we are at is human
-			for (BoardCell b : targets) { // we calculate the targets, and paint them
+		for (Player p : playerList) {
+			p.draw(g); //player class draw method
+		}
+		if (playerList.get(currentPlayer).isHuman()) {
+			int x = playerList.get(currentPlayer).getRow();
+			int y = playerList.get(currentPlayer).getColumn();
+			calcTargets(x, y, 2);
+			for( BoardCell b : targets) {
 				b.reDraw(g);
 			}
-
 		}
+		// Display the targets in light blue 
 		// drawing the player
-		for (Player p : playerList) {
-			p.draw(g);
-		}
+		
 	}
+	
 
 	/**
 	 * Action listener for the board class
 	 * @author AbbyA
 	 *
 	 */
-	private class BoardListener implements MouseListener{
-	
-		@Override
-		public void mouseClicked(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseExited(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mousePressed(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent arg0) {
-			BoardCell selected = new BoardCell((arg0.getY()), (arg0.getX()));
-			if(playerList.get(currentPlayer).isHuman())
-			{
-				if(!(targets.contains(selected))) {
-					JFrame frame = new JFrame();
-					JOptionPane.showMessageDialog(frame, "Invalid square, please select the highlighted squares", "Error messagge", JOptionPane.INFORMATION_MESSAGE);
-				}
-			}
-			
-		}
-	}
 	
 	public void incrementCurrentPlayer() {
-		// TODO Auto-generated method stub
-		if(currentPlayer >= playerList.size()) {
-			currentPlayer = 0;
-		}
-		currentPlayer = (currentPlayer+1)%playerList.size();
+		currentPlayer++;
+		currentPlayer = currentPlayer % playerList.size();
+		
 	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		boolean found = false;
+		if (playerList.get(currentPlayer).isHuman()) {
+			Rectangle temp = new Rectangle();
+			for (BoardCell p : targets){
+				temp.setBounds(p.getRow() * 30, p.getColumn() * 30, 30, 30);
+				System.out.println(temp);
+				System.out.println(new Point(e.getY(), e.getX() ));
+				if(temp.contains(new Point(e.getY(), e.getX() ))){
+					playerList.get(currentPlayer).setColumn(p.getColumn());
+					playerList.get(currentPlayer).setRow(p.getRow());
+					found = true;
+					playerList.get(currentPlayer).hasMoved = true;
+					repaint();
+					incrementCurrentPlayer();
+				}
+				
+			}
+			if (!found){
+				JFrame frame = new JFrame();
+				JOptionPane.showMessageDialog(frame, "Invalid square, please select the highlighted squares", "Error messagge", JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	
+		
+	}
+	private Graphics g;
+//	public void makeMove() {
+//		int x = ((getPlayerList()).get(currentPlayer)).getRow();
+//		int y = ((getPlayerList()).get(currentPlayer)).getColumn();
+//		calcTargets(x, y, GameControlGUI.roll);
+//		for (BoardCell b : targets) {
+//			//System.out.println(targetSet.size());
+//			b.reDraw(g);
+//		}
+//		repaint();
+//		System.out.println("make move");
+//	}
 
 }

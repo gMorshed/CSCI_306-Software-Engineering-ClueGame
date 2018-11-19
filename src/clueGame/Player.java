@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
 
 public class Player {
 
@@ -22,8 +23,10 @@ public class Player {
 	private int column;
 	
 	private Color color;
-	private boolean human;
+	protected boolean human;
 	private ArrayList <Card> playersCards;
+
+	public boolean hasMoved;
 	
 	public ArrayList<Card> getPlayersCards() {
 		return playersCards;
@@ -35,6 +38,7 @@ public class Player {
 		this.column=column;
 		this.playerName=playerName;
 		this.human = false;
+		this.hasMoved = false;
 		playersCards = new ArrayList<Card>(); 
 	}
 	
@@ -122,6 +126,4 @@ public class Player {
 		g.setColor(this.getColor());
 		g.fillOval(y,x, WIDTH, WIDTH);
 	}
-
-
 }

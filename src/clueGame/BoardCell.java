@@ -191,8 +191,8 @@ public class BoardCell {
 	 * @param g
 	 */
 	public void reDraw(Graphics g) {
-		int y = this.getRow()*WIDTH;
-		int x = this.getColumn()*WIDTH;
+		int x = this.getRow()*WIDTH;
+		int y = this.getColumn()*WIDTH;
 		color = Color.CYAN;
 		g.setColor(Color.CYAN); // if it is a walkway then we just color it yellow
 		g.fillRect(y, x, WIDTH, WIDTH);
