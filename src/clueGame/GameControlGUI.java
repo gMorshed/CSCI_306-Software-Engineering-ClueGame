@@ -37,7 +37,7 @@ public class GameControlGUI extends JPanel {
 	private String humanPlayerName="";
 	private Player humanPlayer;
 	private  Board board = Board.getInstance();
-	public static int roll=2;
+	public static int roll;
 
 	public String getHumanPlayerName() {
 		return humanPlayerName;
@@ -76,26 +76,26 @@ public class GameControlGUI extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				roll = (int)((Math.random()*6) + 1);
-				roll = 2;
+				//roll = 2;
 				die.setText(Integer.toString(roll));
 				turn.setText((board.getPlayerList()).get(board.currentPlayer).getPlayerName());
 				if(((board.getPlayerList()).get(board.currentPlayer)).isHuman() ) {
-					if( board.getPlayerList().get(board.currentPlayer).hasMoved) {
+					if( board.getPlayerList().get(board.currentPlayer).hasMoved == true) {
 //						int x = ((board.getPlayerList()).get(board.currentPlayer)).getRow();
 //						int y = ((board.getPlayerList()).get(board.currentPlayer)).getColumn();
 //						board.calcTargets(x, y, GameControlGUI.roll);
 //						for (BoardCell b : board.getTargets()) {
 //							//System.out.println(targetSet.size());
 //							
-//						//	b.reDraw(g);
+//							b.reDraw(g);
 //						}
-//						repaint();
+						 board.repaint();
 						 board.getPlayerList().get(board.currentPlayer).hasMoved = false;
-						System.out.println("make move");
+						//System.out.println("make move");
 					}
 					else {
 						JFrame frame = new JFrame();
-						JOptionPane.showMessageDialog(frame, "you need to finish your turn","ERROR MESSAGE", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(frame, "you need to finish your turn","Error message", JOptionPane.INFORMATION_MESSAGE);
 					}
 					
 				}
@@ -106,6 +106,7 @@ public class GameControlGUI extends JPanel {
 					ComputerPlayer compPlayer = (ComputerPlayer) (board.getPlayerList().get(board.currentPlayer));
 					BoardCell cell = compPlayer.pickLocation(board.getTargets());
 					((board.getPlayerList()).get(board.currentPlayer)).setLocation(cell.getRow(), cell.getColumn());
+					(board.getPlayerList()).get(board.currentPlayer).hasMoved = false;
 					board.repaint();
 					board.incrementCurrentPlayer();
 				}

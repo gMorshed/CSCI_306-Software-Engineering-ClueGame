@@ -669,14 +669,17 @@ public class Board extends JPanel implements MouseListener {
 		for (Player p : playerList) {
 			p.draw(g); //player class draw method
 		}
-		if (playerList.get(currentPlayer).isHuman() && ! playerList.get(currentPlayer).hasMoved ) {
+		
+		if (playerList.get(currentPlayer).isHuman() && !playerList.get(currentPlayer).hasMoved) { // if the player is human and has not moved
 			int x = playerList.get(currentPlayer).getRow();
 			int y = playerList.get(currentPlayer).getColumn();
-			calcTargets(x, y, 2);
+			calcTargets(x, y, GameControlGUI.roll);
 			for( BoardCell b : targets) {
 				b.reDraw(g);
 			}
-		}
+		//	makeMove();
+		} 
+		
 		// Display the targets in light blue 
 		// drawing the player
 		
