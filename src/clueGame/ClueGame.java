@@ -10,7 +10,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 /**
  * 
- * @author 
+ * @author Abhaya Shrestha, Kirwinlvinodaq S Lawrence, Gazi Mahbub Morshed
  * This class will display the game, and is used to play the game
  * the ClueGame class provides the main GUI for the game.
  */

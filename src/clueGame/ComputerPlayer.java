@@ -20,7 +20,7 @@ public class ComputerPlayer extends Player {
 	public BoardCell pickLocation (Set<BoardCell> targets) {
 		ArrayList<BoardCell> listOfCell=new ArrayList<BoardCell>(); //we will add the cells into this list as long as they are not a doorway to room, and pick a random one
 		for(BoardCell cell: targets) {
-			if(cell.isDoorway()) { //if it is a doorway to a room, that means we will have to visit that room unless the room is the last visited one
+			if(cell.isDoorway() && cell.getInitial() != lastRoomVisited.getInitial()  ) { //if it is a doorway to a room, that means we will have to visit that room unless the room is the last visited one
 				if(!lastRoomVisited.equals(cell)) { //if it not the last visited room
 					lastRoomVisited=cell;
 					return cell;
