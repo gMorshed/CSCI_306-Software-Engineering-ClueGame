@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Player {
@@ -27,7 +28,7 @@ public class Player {
 	private ArrayList <Card> playersCards;
 
 	public boolean hasMoved;
-	
+	protected Set<Card> seenCards;
 	public ArrayList<Card> getPlayersCards() {
 		return playersCards;
 	}
@@ -40,6 +41,7 @@ public class Player {
 		this.human = false;
 		this.hasMoved = false;
 		playersCards = new ArrayList<Card>(); 
+		seenCards = new HashSet<Card>();
 	}
 	
 	public void setPlayersCards(ArrayList<Card> playersCards) {
@@ -48,6 +50,7 @@ public class Player {
 
 	public void receiveCard(Card card) {
 		playersCards.add(card);
+		seenCards.add(card);
 	}
 /**
  * disprovesuggestion randomizes or shuffles the cards in the players hand and check if the suggestion or accusation matches any one card than 
@@ -63,14 +66,21 @@ public class Player {
 			playersCards.set(j, temp);
 		}
 		
-		for(Card card : playersCards)
-		{
-			if((suggestion.getPerson().equals(card.getCardName()) ) || (suggestion.getWeapon().equals(card.getCardName())) || (suggestion.getRoom().equals(card.getCardName()) ) ) {
-				
-				return card;
-				
+		
+		for (Player p : Board.getInstance().getPlayerList()) {
+			for(Card card : p.getPlayersCards()) {	
+				if((suggestion.getPerson().equals(card.getCardName()) ) || (suggestion.getWeapon().equals(card.getCardName())) || (suggestion.getRoom().equals(card.getCardName()) ) ) {
+					
+					for(Player p1: Board.getInstance().getPlayerList()) { //I need to show the disapproved card to everyone, 
+						//so I add the disapproved card to everyone's seen list except the player who disapproved it, becasue he already have that card on his hand.
+							p1.seenCards.add(card);		
+					}
+					return card;
+					
+				}
 			}
 		}
+		
 		
 		
 		return null;

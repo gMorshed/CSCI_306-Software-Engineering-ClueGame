@@ -34,7 +34,7 @@ import javax.swing.border.TitledBorder;
  * 
  */
 public class GameControlGUI extends JPanel {
-	private JTextField textField, die, turn; // used for text field 
+	protected static JTextField die, turn, guess, guessResult; // used for text field 
 	private String humanPlayerName="";
 	private Player humanPlayer;
 	private  Board board = Board.getInstance();
@@ -58,13 +58,13 @@ public class GameControlGUI extends JPanel {
 		JPanel intermediatePanel = new JPanel();
 		intermediatePanel.setLayout(new GridLayout(1, 3));
 		//JButton nextPlayerButton = new JButton("Next Player"); // creates the button
-		JButton accusationButton = new JButton("Make an accuasation");
+		//JButton accusationButton = new JButton("Make an accuasation");
 		//add(boardPanel()); // adding the board
 		add(panel); // adds it to the first row
 		add(intermediatePanel);
 		panel.add(createTurnPanel());
 		panel.add(nextPlayerButton()); // add the buttons to this panel
-		panel.add(accusationButton);
+		panel.add(accusationButton());
 
 		intermediatePanel.add(createRollDiePanel());
 		intermediatePanel.add(createGuessPanel());
@@ -73,10 +73,30 @@ public class GameControlGUI extends JPanel {
 
 	}
 	
-	private JButton nextPlayerButton(){
-		JButton nextPlayerButton = new JButton("Next Player");
+	private JButton accusationButton(){
+		JButton accusationButton = new JButton("Make an accuasation");
+		
 		class NextPlayerListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
+			
+	//	nextPlayerButton.addActionListener(new NextPlayerListener()); 
+		//for this mouse clicker to be activated we need to add NextPlayerListener() 
+		
+		
+		
+	}
+		}
+			return accusationButton;
+	}
+	
+	private JButton nextPlayerButton(){
+		JButton nextPlayerButton = new JButton("Next Player");
+		
+		class NextPlayerListener implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+				//if there is guess or guess result to show, the strings will get overridden, otherwise this space string means no suggestions. 
+				guess.setText(" ");
+				guessResult.setText(" ");
 				buttonpressed =  true; // the button pressed will signal to paint the targets in the board
 				board.repaint();
 				
@@ -90,7 +110,6 @@ public class GameControlGUI extends JPanel {
 				if(((board.getPlayerList()).get(board.currentPlayer)).isHuman() ) { //if it is a human player
 					
 					if( board.getPlayerList().get(board.currentPlayer).hasMoved) {
-
 						 board.repaint(); // move the player and move it
 						 board.getPlayerList().get(board.currentPlayer).hasMoved = false; // reset has moved so that it can move it the next round
 					}
@@ -110,7 +129,20 @@ public class GameControlGUI extends JPanel {
 					int y = ((board.getPlayerList()).get(board.currentPlayer)).getColumn();
 					board.calcTargets(x, y, roll);
 					ComputerPlayer compPlayer = (ComputerPlayer) (board.getPlayerList().get(board.currentPlayer));
-					compPlayer.makeMove(board);
+					//have to make a solution if the landing cell is a room
+					Solution solution= compPlayer.makeMove(board);
+					if(! (solution.person.equals("INVALID") || (solution.room.equals("INVALID")) || (solution.weapon.equals("INVALID")) )  ) {
+						String strSolution = solution.person +" " + solution.room +" "+ solution.weapon;
+						guess.setText(strSolution); //printed the guess of the player
+						//now we will check if anyone could disapprove it
+						Card disAppCard = compPlayer.disproveSuggestion(solution);
+						if(disAppCard != null) {
+							guessResult.setText(disAppCard.getCardName());
+						}
+						else {
+							guessResult.setText("No new Clue");
+						}
+					}
 					board.repaint();
 					board.incrementCurrentPlayer(); 
 				}
@@ -226,12 +258,12 @@ public class GameControlGUI extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(2, 2));
 		JLabel nameLabel = new JLabel("Guess");
-		textField = new JTextField(5);
+		guess = new JTextField(5);
 		nameLabel.setHorizontalAlignment(JLabel.CENTER);
 		nameLabel.setVerticalAlignment(JLabel.CENTER);
-		textField.setEditable(false);
+		guess.setEditable(false);
 		panel.add(nameLabel);
-		panel.add(textField);
+		panel.add(guess);
 		panel.setBorder(new TitledBorder(new EtchedBorder(), "Guess"));
 		return panel;
 	}
@@ -245,12 +277,12 @@ public class GameControlGUI extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(2, 2));
 		JLabel nameLabel = new JLabel("Response");
-		textField = new JTextField(5);
+		guessResult = new JTextField(5);
 		nameLabel.setHorizontalAlignment(JLabel.CENTER);
 		nameLabel.setVerticalAlignment(JLabel.CENTER);
-		textField.setEditable(false);
+		guessResult.setEditable(false);
 		panel.add(nameLabel);
-		panel.add(textField);
+		panel.add(guessResult);
 		panel.setBorder(new TitledBorder(new EtchedBorder(), "Guess Result"));
 		return panel;
 	}

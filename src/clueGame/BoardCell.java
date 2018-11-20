@@ -102,7 +102,7 @@ public class BoardCell {
 	 * Checks if the BoardCell is a room
 	 */
 	public boolean isRoom() {
-		return (initial != 'W' || initial != 'X');
+		return ( (initial != 'W') && (initial != 'X' ));
 	}
 
 	/**

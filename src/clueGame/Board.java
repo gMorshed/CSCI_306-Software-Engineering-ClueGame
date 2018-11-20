@@ -707,6 +707,10 @@ public class Board extends JPanel implements MouseListener {
 				if(temp.contains(new Point(e.getY(), e.getX() ))){ // where ever the player is clicking, find if the click contains within the rectangle
 					playerList.get(currentPlayer).setColumn(p.getColumn());
 					playerList.get(currentPlayer).setRow(p.getRow());
+					if(getCellAt( p.getRow(), p.getColumn()).isRoom()) {
+						MakeGuessDialog guess = new MakeGuessDialog();
+						(guess.room).setText(legend.get(getCellAt(p.getRow(), p.getColumn()).getInitial()));
+					}
 					found = true; // found is set to true because the player clicked a valid location
 					playerList.get(currentPlayer).hasMoved = true; // set it's moved to true so that we can move to the next player
 					repaint();

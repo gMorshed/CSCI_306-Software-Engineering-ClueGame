@@ -145,7 +145,7 @@ public class Testcase {
 		// test the closet and walkway
 		assertEquals('X', board.getCellAt(10, 7).getInitial());
 		assertEquals('W', board.getCellAt(15, 0).getInitial());
-
+		
 	}
 
 }

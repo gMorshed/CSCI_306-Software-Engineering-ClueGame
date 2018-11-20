@@ -6,12 +6,14 @@ package clueGame;
 * */
 import java.awt.Color;
 
+
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Set;
 
 public class ComputerPlayer extends Player {
 	private BoardCell lastRoomVisited=new BoardCell(0, 0);//have to create a boardCell here
-	private ArrayList<Card> seenCards;
+	
 	/**
 	 * pickLocation picks a room to visit if it is within target as long as it is not the last visited one, otherwise choose randomly
 	 * @param targets
@@ -38,7 +40,6 @@ public class ComputerPlayer extends Player {
 
 	public ComputerPlayer(int row, int column, Color color, String playerName) {
 		super(row, column, color, playerName);
-		seenCards=new ArrayList <Card> ();
 	}
 	/**
 	 * creating a suggestion with the room that I am in and with a Person and a weapon card as long as I haven't seem them
@@ -48,27 +49,31 @@ public class ComputerPlayer extends Player {
 		Card selectedPerson = new Card("INVALID", clueGame.CardType.PERSON); //make some dummy cards 
 		Card selectedWeapon = new Card("INVALID", clueGame.CardType.WEAPON);
 		//randomize the deck
-		for (int i = 0; i < playersCard.size(); i++) { //basically shuffling the cards here by swapping them randomly
-			int j = (int)(Math.random() *  playersCard.size()); // Get a random index out of 52
-			Card temp = playersCard.get(i); // Swap the cards
-			playersCard.set(i, playersCard.get(j));
-			playersCard.set(j, temp);
-		}
-		for(Card c : playersCard) {
-			boolean haveSeen=false;
-			for(Card seenC: seenCards) { //we don't want to suggest a card that we have seen, contains doesn't work for this arraylist becasue its a custom type, so using the string comparison for this one
-				if(c.getCardName().equals(seenC.getCardName())) {
-					haveSeen=true;
-				}
+		ArrayList<Card> unseenCards=new ArrayList<Card>();
+		unseenCards.addAll(Board.getInstance().getAllCards());
+		unseenCards.removeAll(seenCards);
+		
+		int index = 0;
+		Random rand = new Random();
+		int countSuggestion =0; //I have the room as a suggestion, now I need two more suggestion to make it a package of three
+		while(countSuggestion < 2) {
+			index = rand.nextInt(unseenCards.size());
+			// Adding a person for the solution first
+			if (countSuggestion == 0) {
+				if (unseenCards.get(index).getCardType() == CardType.PERSON) {
+					selectedPerson = unseenCards.get(index);
+					unseenCards.remove(index);
+					countSuggestion++;
+				}	
 			}
-			
-			if(!haveSeen) { //as long as we haven't seen this card
-				if(c.getCardType() == clueGame.CardType.PERSON) { 
-					selectedPerson = c;
-				}
-				else if(c.getCardType() == clueGame.CardType.WEAPON) {
-					selectedWeapon = c;
-				}
+
+			// Adding a weapon for the solution second
+			else if (countSuggestion == 1) {
+				if (unseenCards.get(index).getCardType() == CardType.WEAPON) {
+					selectedWeapon = unseenCards.get(index);
+					unseenCards.remove(index);
+					countSuggestion++;
+				}	
 			}
 		}
 		Solution lastSolution = new Solution(selectedPerson.getCardName(), roomName, selectedWeapon.getCardName()); //I need to make a suggestion with a person card, the room that I am in and with a weapon card
@@ -93,10 +98,17 @@ public class ComputerPlayer extends Player {
 	 * This method will later implement handling suggestion and accusation
 	 * @param board
 	 */
-	public void makeMove(Board board) {
+	public Solution makeMove(Board board) {
+		Solution solution = new Solution("INVALID", "INVALID", "INVALID");
 		BoardCell cell = this.pickLocation(board.getTargets());
 		((board.getPlayerList()).get(board.currentPlayer)).setLocation(cell.getRow(), cell.getColumn());
 		(board.getPlayerList()).get(board.currentPlayer).hasMoved = true;
+		if(cell.isRoom()) {
+			String str = board.getLegend().get(cell.getInitial());
+			Solution soLution = createSuggestion(this.getPlayersCards(), str) ;
+			return soLution;
+		}
+		return solution;
 	}
 	
 }
