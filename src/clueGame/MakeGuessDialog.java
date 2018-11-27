@@ -11,13 +11,23 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
+/**
+ * 
+ * @author Abhaya Shrestha, Kirwinlvinodaq S Lawrence, Gazi Mahbub Morshed
+ *
+ *	Makes the guess Dialog box when the player is in a room. The room panel is automatically updated
+ * to the room the player is in. The weapon and the people panel is updated based on the player's selection
+ * of the combo box.
+ */
 public class MakeGuessDialog extends JDialog{
 	private JComboBox<String> person, weapon;
 	public JTextField room;
 	private String weapontext;
 	private String persontext;
 	private ArrayList <Card> allCards;
+	/**
+	 * Constructor for MakeGuessDialgo
+	 */
 	public MakeGuessDialog() {
 		allCards= Board.getInstance().getAllCards();
 		randomizeCards();
@@ -32,6 +42,13 @@ public class MakeGuessDialog extends JDialog{
 		
 	}
 	
+	/**
+	 * Submit button 
+	 * when human player submit's the suggestion selected, it updates the guess panel
+	 * and then the guessResult panel if anyone can disprove it and for all the computers
+	 * to know the solution if the solution could not be disproved by anyone.
+	 * @return
+	 */
 	public JButton submit() {
 		JButton submitButton = new JButton("Submit");
 		class SubmitListener implements ActionListener {
@@ -63,6 +80,11 @@ public class MakeGuessDialog extends JDialog{
 		return submitButton;
 	}
 	
+	/**
+	 * Cancel button just to cancel a suggestion for a human
+	 * when they decide not to make a suggestion.
+	 * @return
+	 */
 	public JButton cancel() {
 		JButton cancelButton = new JButton("Cancel");
 		
@@ -151,10 +173,19 @@ public class MakeGuessDialog extends JDialog{
 		panel.add(cancel());
 		return panel;
 	}
+	/**
+	 * setting the suggestion for Human that will be called
+	 * in the guess panel for the human player
+	 * @return
+	 */
 	public Solution suggestionForHuman() {
 		Solution solution = new Solution(persontext, room.getText(), weapontext);
 		return solution;
 	}
+	/**
+	 * Used to randomize the suggestion box.
+	 * 
+	 */
 	private void  randomizeCards () {
 		for (int i = 0; i < allCards.size(); i++) {
 			int j = (int) (Math.random() * allCards.size()); // Get a random index out of 52

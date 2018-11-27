@@ -43,6 +43,11 @@ public class ComputerPlayer extends Player {
 		return(listOfCell.get(j));//return a cell randomly
 	}
 	
+	/**
+	 * Controls how the computer makes an accusation
+	 * The computer makes an accusation if someone suggests the correct suggestion.
+	 * If it is not the correct suggestion, a box will display saying the accusation was incorrect
+	 */
 	public void makeAccusation() {
 		 	//Solution actualAnswer = Board.getInstance().getGameSolution();
 			Solution actualAnswer = new Solution("ABCD", "JFBI", "BHF");
@@ -74,7 +79,13 @@ public class ComputerPlayer extends Player {
 			}
 		
 	}
-
+	/**
+	 * Computer player constructor
+	 * @param row
+	 * @param column
+	 * @param color
+	 * @param playerName
+	 */
 	public ComputerPlayer(int row, int column, Color color, String playerName) {
 		super(row, column, color, playerName);
 	}

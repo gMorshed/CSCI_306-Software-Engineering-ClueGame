@@ -52,16 +52,11 @@ public class GameControlGUI extends JPanel {
 	 * The game Control GUI constructor will add all the panels and the buttons
 	 */
 	public GameControlGUI() {
-		//rollDiePanel = createRollDiePanel("");
-		// Create a layout with 2 rows
 		setLayout(new GridLayout(2, 0));
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1, 2));
 		JPanel intermediatePanel = new JPanel();
 		intermediatePanel.setLayout(new GridLayout(1, 3));
-		//JButton nextPlayerButton = new JButton("Next Player"); // creates the button
-		//JButton accusationButton = new JButton("Make an accuasation");
-		//add(boardPanel()); // adding the board
 		add(panel); // adds it to the first row
 		add(intermediatePanel);
 		panel.add(createTurnPanel());
@@ -74,7 +69,13 @@ public class GameControlGUI extends JPanel {
 		
 
 	}
-	public static boolean human_made_move=false;
+	
+	public static boolean human_made_move=false; // the human should not be making an accussation after he/she clicks a target
+	/**
+	 * Used to make an accusation Button for the game control GUI
+	 * It will make the accusation for the human
+	 * @return
+	 */
 	private JButton accusationButton(){
 		JButton accusationButton = new JButton("Make an accuasation");
 		
@@ -96,7 +97,13 @@ public class GameControlGUI extends JPanel {
 		accusationButton.addActionListener(new AccusationListener()); 
 		return accusationButton;
 	}
-	
+	/**
+	 * Next player button for the GameControlGUI. 
+	 * Makes sure that the squares are not highlighted for the player when the game begins.
+	 * Updates all the panels for the GameControlGUI depending on whether a player is a computer
+	 * or a human
+	 * @return
+	 */
 	private JButton nextPlayerButton(){
 		JButton nextPlayerButton = new JButton("Next Player");
 		
@@ -179,7 +186,7 @@ public class GameControlGUI extends JPanel {
 	}
 	/**
 	 * Creates the exit menu option for the menu bar
-	 * This has an action listner for when you click exit,
+	 * This has an action listener for when you click exit,
 	 * it will exit the game
 	 * @return
 	 */
@@ -233,7 +240,6 @@ public class GameControlGUI extends JPanel {
 		
 		diePanel.add(nameLabel); // add the nameLabel and the textfield in the panel
 		diePanel.add(die);
-		//rollDiePanel=diePanel;
 		return diePanel;
 	}
 
@@ -316,7 +322,6 @@ public class GameControlGUI extends JPanel {
 				break;
 			}
 		}
-		//panel.add(board);
 		
 		return board;
 		
@@ -342,6 +347,12 @@ public class GameControlGUI extends JPanel {
 		}
 		return cardsPanel;
 	}
+	/**
+	 * Used for the humanPlayerCardPanel
+	 * 
+	 * @param card
+	 * @return
+	 */
 	private String CardInString(CardType card) {
 		switch(card) {
 		case PERSON:
@@ -351,7 +362,7 @@ public class GameControlGUI extends JPanel {
 		case ROOM:
 			return "Rooms";
 		}
-		return null; //it's never gonna hit here		
+		return null; 		
 	}
 
 }

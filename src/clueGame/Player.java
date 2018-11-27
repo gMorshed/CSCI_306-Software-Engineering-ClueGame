@@ -29,10 +29,17 @@ public class Player {
 
 	public boolean hasMoved;
 	protected Set<Card> seenCards;
+	
 	public ArrayList<Card> getPlayersCards() {
 		return playersCards;
 	}
-
+	/**
+	 * Constructor for the player class
+	 * @param row
+	 * @param column
+	 * @param color
+	 * @param playerName
+	 */
 	public Player(int row, int column, Color color, String playerName) {
 		this.row= row;
 		this.color=color;
@@ -47,14 +54,17 @@ public class Player {
 	public void setPlayersCards(ArrayList<Card> playersCards) {
 		this.playersCards = playersCards;
 	}
-
+	/**
+	 * Used for dealing cards
+	 * @param card
+	 */
 	public void receiveCard(Card card) {
 		playersCards.add(card);
 		seenCards.add(card);
 	}
 /**
- * disprovesuggestion randomizes or shuffles the cards in the players hand and check if the suggestion or accusation matches any one card than 
- * returns that card and if not thn returns null
+ * disprove suggestion randomizes or shuffles the cards in the players hand and check if the suggestion or accusation matches any one card than 
+ * returns that card and if not then returns null
  * @param suggestion
  * @return
  */
