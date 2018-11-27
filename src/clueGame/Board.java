@@ -63,6 +63,7 @@ public class Board extends JPanel implements MouseListener {
 	private ArrayList<BoardCell> roomNamesCoordinate;
 	public int currentPlayer; // the current player who is making a turn
 	public boolean gameHasBegun; // determines whether game has begun
+	protected boolean valid_move_made;
 
 	public Solution getGameSolution() {
 		return gameSolution;
@@ -120,6 +121,7 @@ public class Board extends JPanel implements MouseListener {
 		currentPlayer= 3;
 		roomNamesCoordinate = new ArrayList<BoardCell>(); // list for coordinates for naming the room
 		gameHasBegun = false;
+		valid_move_made = false;
 		addMouseListener(this);
 		setVisible(true);
 		
@@ -553,6 +555,7 @@ public class Board extends JPanel implements MouseListener {
 		}
 
 		// dealing the remaining deck of cards to the players
+		System.out.println(gameSolution.getPerson()+ gameSolution.getRoom()+ gameSolution.getWeapon()); //FIX MEEEE
 		while (!deckOfCards.isEmpty()) {
 			for (Player player : playerList) {
 				if (!deckOfCards.isEmpty()) {
@@ -699,7 +702,7 @@ public class Board extends JPanel implements MouseListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		boolean found = false;
+		valid_move_made = false;
 		if (playerList.get(currentPlayer).isHuman()) {
 			Rectangle temp = new Rectangle();
 			for (BoardCell p : targets){
@@ -711,14 +714,15 @@ public class Board extends JPanel implements MouseListener {
 						MakeGuessDialog guess = new MakeGuessDialog();
 						(guess.room).setText(legend.get(getCellAt(p.getRow(), p.getColumn()).getInitial()));
 					}
-					found = true; // found is set to true because the player clicked a valid location
+					valid_move_made = true; // found is set to true because the player clicked a valid location
+					GameControlGUI.human_made_move = true;
 					playerList.get(currentPlayer).hasMoved = true; // set it's moved to true so that we can move to the next player
 					repaint();
 					incrementCurrentPlayer();
 				}
 				
 			}
-			if (!found){
+			if (!valid_move_made){
 				JFrame frame = new JFrame();
 				JOptionPane.showMessageDialog(frame, "Invalid square, please select the highlighted squares", "Error messagge", JOptionPane.INFORMATION_MESSAGE);
 			}

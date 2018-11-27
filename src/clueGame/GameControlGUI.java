@@ -5,6 +5,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -72,21 +74,27 @@ public class GameControlGUI extends JPanel {
 		
 
 	}
-	
+	public static boolean human_made_move=false;
 	private JButton accusationButton(){
 		JButton accusationButton = new JButton("Make an accuasation");
 		
-		class NextPlayerListener implements ActionListener {
+		class AccusationListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
-			
-	//	nextPlayerButton.addActionListener(new NextPlayerListener()); 
-		//for this mouse clicker to be activated we need to add NextPlayerListener() 
-		
+				human_made_move=false;
+				if (board.getPlayerList().get(board.currentPlayer).isHuman() && human_made_move == false && buttonpressed == true) {		
+						MakeAccusationDialog accusation = new MakeAccusationDialog();
+				}else{
+						JFrame frame = new JFrame();
+						JOptionPane.showMessageDialog(frame, "Once you click a target you can't make an accusation", "Error messagge", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+				
 		
 		
 	}
-		}
-			return accusationButton;
+		
+		accusationButton.addActionListener(new AccusationListener()); 
+		return accusationButton;
 	}
 	
 	private JButton nextPlayerButton(){
@@ -141,6 +149,7 @@ public class GameControlGUI extends JPanel {
 						}
 						else {
 							guessResult.setText("No new Clue");
+							compPlayer.setSolutionForAccusation(solution);
 						}
 					}
 					board.repaint();

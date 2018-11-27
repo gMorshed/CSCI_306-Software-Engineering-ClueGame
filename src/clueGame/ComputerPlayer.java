@@ -11,9 +11,17 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 public class ComputerPlayer extends Player {
 	private BoardCell lastRoomVisited=new BoardCell(0, 0);//have to create a boardCell here
+	private Solution solutionForAccusation=null;
 	
+	public void setSolutionForAccusation(Solution solutionForAccusation) {
+		this.solutionForAccusation = solutionForAccusation;
+	}
+
 	/**
 	 * pickLocation picks a room to visit if it is within target as long as it is not the last visited one, otherwise choose randomly
 	 * @param targets
@@ -36,6 +44,35 @@ public class ComputerPlayer extends Player {
 	}
 	
 	public void makeAccusation() {
+		 	//Solution actualAnswer = Board.getInstance().getGameSolution();
+			Solution actualAnswer = new Solution("ABCD", "JFBI", "BHF");
+			if(solutionForAccusation != null) { //when solution for accusation is not null, that means this solution couldn't be disapporved by anyone
+				for(Card card : this.getPlayersCards()) { 
+					if(! (card.getCardName().equals(solutionForAccusation.room)) ) {
+						if(  (solutionForAccusation.getPerson().equals(actualAnswer.getPerson())) &&  (solutionForAccusation.getRoom().equals(actualAnswer.getRoom())) && (solutionForAccusation.getWeapon().equals(actualAnswer.getWeapon()))   ) {
+							JFrame frame = new JFrame();
+							String winningMessage = "Computer Player won, the accustion was "+solutionForAccusation.getPerson()+" "+ solutionForAccusation.getRoom()+" "+solutionForAccusation.getWeapon()+".";
+							JOptionPane.showMessageDialog(frame, winningMessage,"LOST!!!!", JOptionPane.INFORMATION_MESSAGE);
+							System.exit(0);
+						}
+						else {
+							JFrame frame = new JFrame();
+							String losingMessage = "Ohh, NOO! That's not correct. The accusation was "+solutionForAccusation.getPerson()+" "+ solutionForAccusation.getRoom()+" "+solutionForAccusation.getWeapon()+".";
+							JOptionPane.showMessageDialog(frame,losingMessage , "Sorry", JOptionPane.INFORMATION_MESSAGE);
+							for(Player p : Board.getInstance().getPlayerList()) { //letting every computer player know that, the accusation has been rejected so don't make the accusation
+								if(!p.isHuman()) {
+									ComputerPlayer compPayer = (ComputerPlayer) p;
+									compPayer.setSolutionForAccusation(null);
+								}
+							}
+							Board.getInstance().incrementCurrentPlayer();
+							Board.getInstance().repaint();
+							break;
+						}
+					}
+				}
+			}
+		
 	}
 
 	public ComputerPlayer(int row, int column, Color color, String playerName) {
@@ -99,6 +136,7 @@ public class ComputerPlayer extends Player {
 	 * @param board
 	 */
 	public Solution makeMove(Board board) {
+		makeAccusation();
 		Solution solution = new Solution("INVALID", "INVALID", "INVALID");
 		BoardCell cell = this.pickLocation(board.getTargets());
 		((board.getPlayerList()).get(board.currentPlayer)).setLocation(cell.getRow(), cell.getColumn());
