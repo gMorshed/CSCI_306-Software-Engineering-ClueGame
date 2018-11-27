@@ -49,8 +49,7 @@ public class ComputerPlayer extends Player {
 	 * If it is not the correct suggestion, a box will display saying the accusation was incorrect
 	 */
 	public void makeAccusation() {
-		 	//Solution actualAnswer = Board.getInstance().getGameSolution();
-			Solution actualAnswer = new Solution("ABCD", "JFBI", "BHF");
+		 	Solution actualAnswer = Board.getInstance().getGameSolution(); //getting the solution of the game
 			if(solutionForAccusation != null) { //when solution for accusation is not null, that means this solution couldn't be disapporved by anyone
 				for(Card card : this.getPlayersCards()) { 
 					if(! (card.getCardName().equals(solutionForAccusation.room)) ) {

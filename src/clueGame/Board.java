@@ -555,7 +555,6 @@ public class Board extends JPanel implements MouseListener {
 		}
 
 		// dealing the remaining deck of cards to the players
-		System.out.println(gameSolution.getPerson()+ gameSolution.getRoom()+ gameSolution.getWeapon()); //FIX MEEEE
 		while (!deckOfCards.isEmpty()) {
 			for (Player player : playerList) {
 				if (!deckOfCards.isEmpty()) {
